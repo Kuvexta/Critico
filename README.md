@@ -6,8 +6,8 @@
 > **Mapeo de versiones (C2):** `VERSION` contiene el release del repo
 > (`00.02.03`); `04_critic.config.yaml → critic_version` contiene la versión de
 > la metodología congelada (`3.4.0`). El release definitivo `01.00.00` se
-> emitirá cuando el **Banco Universal de Pruebas (BUP)** esté listo y la suite
-> completa pase sobre él.
+> emitirá cuando el **Banco Universal de Pruebas (BUP)**
+> (https://github.com/Kuvexta/BUP) esté listo y la suite completa pase sobre él.
 
 ## Estructura
 
