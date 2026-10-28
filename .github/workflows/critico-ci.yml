@@ -1,0 +1,23 @@
+name: Critico CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  bateria-freeze-guarda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias
+        run: pip install -r requirements.txt
+      - name: Batería completa
+        run: PYTHONDONTWRITEBYTECODE=1 python -B probar_todo.py
+      - name: Freeze
+        run: PYTHONDONTWRITEBYTECODE=1 python -B scripts/verify_freeze.py
+      - name: Guarda de release
+        run: PYTHONDONTWRITEBYTECODE=1 python -B scripts/verificar_release.py

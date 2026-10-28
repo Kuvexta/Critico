@@ -53,6 +53,16 @@ Propuesta `CAMBIO-NN` que declara:
 - `validacion`: `verify_freeze` en verde + batería completa + conteo de
   sub-perfiles coherente + cada `suggested_dimensions ⊆ 1..108`.
 
+## Qué pasa cuando una propuesta se acepta
+
+1. En el issue/PR se deja la etiqueta de decisión y un **comentario de cierre**
+   con el `CAMBIO-NN` definitivo y el SHA-256 de la propuesta.
+2. La propuesta oficial se registra en el **archivo privado de gobernanza**
+   (fuera de este repositorio, junto con la frase de autorización).
+3. El cambio se aplica, verifica (batería + freeze + guarda) y sincroniza a
+   las copias de trabajo; `CHANGELOG.md`, `docs/HASHES.md` y `VERSION` quedan
+   actualizados.
+
 ## Límites honestos de una contribución
 
 - Los **registros de gobernanza** (propuestas históricas, actas, entregas)

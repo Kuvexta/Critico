@@ -1,0 +1,48 @@
+name: Propuesta de cambio (CAMBIO)
+description: Proponer una mejora al Crítico (dimensiones, perfiles, sub-perfiles, esquemas, código, skill…)
+title: "CAMBIO: "
+labels: ["propuesta-cambio"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Toda mejora llega como **propuesta numerada** y la decide Andrés con la
+        frase «OK <8hex>». Revisa `CONTRIBUTING.md` (mapa de archivos y qué
+        está congelado) antes de enviar. Una propuesta no es un cambio directo.
+  - type: input
+    id: id
+    attributes:
+      label: ID propuesto
+      placeholder: "CAMBIO-NN"
+    validations:
+      required: true
+  - type: textarea
+    id: titulo
+    attributes:
+      label: Título
+      placeholder: "Añadir el sub-perfil tech.X con dimensiones sugeridas"
+    validations:
+      required: true
+  - type: textarea
+    id: archivos
+    attributes:
+      label: Archivos que toca (y qué cambia exactamente en cada uno)
+      placeholder: "04_critic.config.yaml: añadir tech.X a profiles.universals.tech.sub_profiles con suggested_dimensions [..] y keywords [..]; recalcular config_hash."
+    validations:
+      required: true
+  - type: textarea
+    id: no_toca
+    attributes:
+      label: Lo que NO toca (no_toca)
+      placeholder: "03_rubric.yaml, esquemas, código, batería, freeze."
+  - type: textarea
+    id: validacion
+    attributes:
+      label: Cómo se valida
+      placeholder: "verify_freeze en verde + batería completa + conteo de sub-perfiles coherente + suggested_dimensions ⊆ 1..108."
+  - type: textarea
+    id: motivacion
+    attributes:
+      label: Motivación / problema que resuelve
+    validations:
+      required: true

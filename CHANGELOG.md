@@ -3,6 +3,13 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+github — 2026-10-28 — Proceso de interacción en GitHub mejorado
+
+- Plantillas de issues (propuesta CAMBIO estructurada, reporte de error, pregunta) y PR; `SECURITY.md` para reporte privado de vulnerabilidades.
+- CI real: `.github/workflows/critico-ci.yml` (bateria + freeze + guarda en cada push y PR); retirado el `08_critico-ci.yml` obsoleto (rutas v3.3).
+- Etiquetas de clasificacion y flujo de aceptacion documentado en CONTRIBUTING (comentario de cierre con CAMBIO id y SHA; registro en el archivo privado).
+- Autorizacion: orden directa de Andres («Que consideras que lo podamos mejorar mas ese proceso de interacion en github», 2026-10-28).
+
 ## 00.02.03+contribucion — 2026-10-28 — CONTRIBUTING.md: cómo aportar desde cualquier plataforma
 
 - `CONTRIBUTING.md` nuevo: mapa de archivos (qué se actualiza dónde, congelado sí/no), flujo de propuesta CAMBIO («OK <8hex>»), ejemplo de sub-perfil y limites honestos.

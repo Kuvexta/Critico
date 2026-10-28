@@ -39,7 +39,8 @@ humanos es [`README.md`](README.md).
    `scripts/verify_freeze.py`.
 5. **Ejecución**: la batería se corre desde la raíz con
    `PYTHONDONTWRITEBYTECODE=1 python3 -B probar_todo.py`; escribe solo en
-   `_tmp_pruebas/`.
+   `_tmp_pruebas/`. El mismo control corre en GitHub Actions (`.github/
+   workflows/critico-ci.yml`) en cada push y PR.
 
 ## Si un usuario (o tú) quiere mejorar el Crítico
 
