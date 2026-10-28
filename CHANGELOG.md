@@ -1,3 +1,16 @@
+# CHANGELOG — Crítico (sistema + documentos + carpeta)
+
+> Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
+> Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
+
+## 00.02.03+repo — 2026-10-28 — REPO-CRITICO-02: repositorio publicado a la comunidad
+
+- Kuvexta/Critico pasa a **publico** (decision de Andres): codigo MIT, documentacion CC BY-SA 4.0, etapa construccion 00.02.03 declarada como beta honesto.
+- Historia nueva sin `registros/` (borrar+recrear, patron del protocolo de cero reescritura); respaldo del historial privado conservado fuera del repositorio.
+- Correccion de textos obsoletos del README (02_FROZEN_v3.4, mapeo 3.4.0) y seccion «Comunidad».
+- Comandos slash para la comunidad: `commands/` con 14 alias — `/ojocritico` (principal), `/ojo-critico`, `/critico`, `/gateb`, `/premortem`, `/punto-ciego`, `/revision-critica`, `/devils-advocate`, `/challenge-review`, `/critical-eye`, `/steelman`, `/falsabilidad`, `/falsifiability` y `/argumento-de-acero` (la skill mantiene el id `critico`).
+- Autorizacion: orden directa de Andres (respuestas «Publico sin registros/» y «Si, como beta honesto», 2026-10-28).
+
 ## 00.02.03 — 2026-10-28 — CAMBIO-16: el freeze ancla el SHA-256 de evals/validators.py
 
 - `scripts/verify_freeze.py`: comprueba que `evals/validators.py` coincide con el SHA-256 congelado (26471259…, estado tras CAMBIO-15); el mensaje de exito pasa a «… · reglas locales congeladas · …». Cierra la leccion del CAMBIO-15: el freeze integral ahora cubre las reglas locales.
@@ -17,20 +30,6 @@
 ## 00.02.01 — 2026-10-28 — Documentación actualizada a v3.4.0/108 dimensiones
 
 - Manual (es/en), diseño universal (roadmap real), prompts, guías, golden set y cabeceras de changelog actualizados; la historia conserva «106» donde corresponde.
-
-# CHANGELOG — Crítico (sistema + documentos + carpeta)
-
-## 00.02.03+repo — 2026-10-28 — REPO-CRITICO-02: repositorio publicado a la comunidad
-
-- Kuvexta/Critico pasa a **publico** (decision de Andres): codigo MIT, documentacion CC BY-SA 4.0, etapa construccion 00.02.03 declarada como beta honesto.
-- Historia nueva sin `registros/` (borrar+recrear, patron del protocolo de cero reescritura); respaldo del historial privado conservado fuera del repositorio.
-- Correccion de textos obsoletos del README (02_FROZEN_v3.4, mapeo 3.4.0) y seccion «Comunidad».
-- Comandos slash para la comunidad: `commands/` con 14 alias — `/ojocritico` (principal), `/ojo-critico`, `/critico`, `/gateb`, `/premortem`, `/punto-ciego`, `/revision-critica`, `/devils-advocate`, `/challenge-review`, `/critical-eye`, `/steelman`, `/falsabilidad`, `/falsifiability` y `/argumento-de-acero` (la skill mantiene el id `critico`).
-- Autorizacion: orden directa de Andres (respuestas «Publico sin registros/» y «Si, como beta honesto», 2026-10-28).
-
-
-> Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
-> Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
 ## 2026-10-27 — BILINGUE-CRITICO-01
 
