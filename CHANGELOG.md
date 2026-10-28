@@ -3,6 +3,12 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+plataformas — 2026-10-28 — Variantes de skill para las 12 plataformas + universal
+
+- `plataformas/` incorpora las 13 variantes de la entrega skills-cli-ide-v1 (manifiesto SHA-256 3b0a0e3e…): opencode, claude-code, cursor, codex, cline, gemini-cli, github-copilot, kiro, openclaw, qwen-code, deepseek-harness, antigravity y universal; cada una con README (ruta exacta), LICENSE y AUTORIA.
+- README: tabla de plataformas con destinos de instalacion.
+- Autorizacion: orden directa de Andres («el dice skill para opencode pero debe mencionar a todos los que hicimos para cada plataforma», 2026-10-28).
+
 ## 00.02.03+readme — 2026-10-28 — README ampliado para la comunidad
 
 - Qué es (GATE B, objeciones falsables, steelman, veredicto, outcomes), requisitos (Python >=3.10), flujo GATE B en 6 pasos, CLI completo, dimensiones/perfiles, limites honestos y repos hermanos.

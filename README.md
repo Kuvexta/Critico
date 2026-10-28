@@ -103,9 +103,32 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
   declara; el release definitivo `01.00.00` llegará cuando BUP esté listo y la
   suite completa pase.
 - **Licencia:** código MIT · documentación CC BY-SA 4.0 (ver `LICENSE`).
-- **Skill para OpenCode:** copiar `skills/critico/` a
+- **Skill para OpenCode (distribución principal):** copiar `skills/critico/` a
   `~/.config/opencode/skills/critico/` (Linux/macOS) o
   `%USERPROFILE%\.config\opencode\skills\critico` (Windows).
+- **Variantes por plataforma (`plataformas/`):** el mismo Crítico empaquetado
+  para 12 clientes más una variante universal; cada carpeta incluye su
+  README con la ruta exacta de instalación, LICENSE y AUTORIA:
+
+| Plataforma | Carpeta | Destino de proyecto |
+|---|---|---|
+| OpenCode | `plataformas/opencode` | `.opencode/skills/critico` |
+| Claude Code | `plataformas/claude-code` | `.claude/skills/critico` |
+| Cursor | `plataformas/cursor` | `.cursor/skills/critico` |
+| OpenAI Codex | `plataformas/codex` | `.agents/skills/critico` |
+| Cline | `plataformas/cline` | `.cline/skills/critico` |
+| Gemini CLI | `plataformas/gemini-cli` | `.gemini/skills/critico` |
+| GitHub Copilot | `plataformas/github-copilot` | `.github/skills/critico` |
+| Kiro | `plataformas/kiro` | `.kiro/skills/critico` |
+| OpenClaw | `plataformas/openclaw` | `skills/critico` |
+| Qwen Code | `plataformas/qwen-code` | `.qwen/skills/critico` |
+| DeepSeek Harness | `plataformas/deepseek-harness` | `.dsh/skills/critico` |
+| Antigravity (Google) | `plataformas/antigravity` | `.agents/skills/critico` |
+| Universal (otros clientes) | `plataformas/universal` | raíz de skills del cliente |
+
+  Las variantes provienen de la entrega `skills-cli-ide-v1` (manifiesto
+  SHA-256 `3b0a0e3e…`): mismas comprobaciones 172/172, sin scripts, sin
+  MCP, sin hooks; instalación y permisos corresponden a cada destino.
 - **Comandos slash:** copiar `commands/*.md` a `~/.config/opencode/command/`
   (Linux/macOS) o `%USERPROFILE%\.config\opencode\command` (Windows); quedan
   disponibles como `/ojocritico`, `/ojo-critico`, `/critico`, `/gateb`,

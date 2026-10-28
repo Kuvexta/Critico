@@ -1,0 +1,18 @@
+# Licencia del producto Crítico
+
+- **Documentación** (todos los .md): Creative Commons BY-SA 4.0
+  (atribución + compartir igual). https://creativecommons.org/licenses/by-sa/4.0/
+- **Código** (critico_cli.py, scripts/, evals/, 06_migration/, probar_todo.py): MIT
+  Copyright (c) 2026 — se concede uso, copia y modificación sin garantía.
+
+Uso responsable (ver README_PRODUCTO.md): los perfiles de seguridad, forense,
+ingeniería inversa y afines son herramientas de análisis DEFENSIVO. No se autoriza
+su uso para actividades ilícitas o que violen la ley aplicable (dimensión 75).
+
+---
+Autor del proyecto: KUVEXTA GROUP.
+Atribución incorporada el 27/10/2026 por instrucción de Andrés.
+Esta atribución no modifica las concesiones ni restricciones del texto anterior.
+Las alternativas de licencias/ son referencias o borradores NO ACTIVADOS; su
+inclusión no cambia la licencia aplicable. Ver AUTORIA.md y licencias/README.md.
+Se conservan la autoría y los términos propios de materiales de terceros.

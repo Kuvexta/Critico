@@ -1,0 +1,6 @@
+interface:
+  display_name: "Critic / Crítico"
+  short_description: "Evidence-based review / Revisión con evidencia"
+  default_prompt: "Use $critico to review this proposal in read-only mode, responding in my language. / Usa $critico para revisar esta propuesta en solo lectura y responder en mi idioma."
+policy:
+  allow_implicit_invocation: false
