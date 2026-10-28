@@ -1,7 +1,16 @@
 # Crítico — metodología congelada de análisis, GATE B y gobernanza
 
+**¿Qué es?** El Crítico convierte una propuesta, decisión o documento en un
+expediente auditable (GATE B): **triage** con dimensiones activas, **objeciones
+falsables** (cada una con su steelman —la versión más fuerte de lo que ataca—,
+supuestos contrastados, contrafactual, condición de falsación, severidad y
+confianza), **veredicto** (PASA / PASA_CON_CONDICIONES / NO_PASA) y
+**seguimiento de outcomes** con métricas (surprise_rate, calibración). Principio
+rector: **nada se simula y nada se declara demostrado sin evidencia
+verificable** (diseñado ≠ demostrado).
+
 - **Release del repositorio: `00.02.03`** (etapa construcción · regla 00/01)
-- **Metodología congelada: `v3.4.0`** (rúbrica, esquemas y config — verificada por `verify_freeze`)
+- **Metodología congelada: `v3.4.0`** (rúbrica de 108 dimensiones, 8 esquemas y config — verificada por `verify_freeze`)
 
 > **Mapeo de versiones (C2):** `VERSION` contiene el release del repo
 > (`00.02.03`); `04_critic.config.yaml → critic_version` contiene la versión de
@@ -9,51 +18,100 @@
 > emitirá cuando el **Banco Universal de Pruebas (BUP)**
 > (https://github.com/Kuvexta/BUP) esté listo y la suite completa pase sobre él.
 
+## Requisitos
+
+- Python **≥ 3.10**
+- `pip install -r requirements.txt` (`pyyaml>=6.0`, `jsonschema>=4.20`)
+
 ## Estructura
 
 | Carpeta / archivo | Contenido |
 |---|---|
 | `critico_cli.py` · `critic_i18n.py` · `probar_todo.py` · `run_tests.py` | CLI, i18n y batería (regresión compartida) |
 | `03_rubric.yaml` · `04_critic.config.yaml` | Rúbrica de 108 dimensiones y configuración congelada |
-| `05_schema/` · `templates/` · `prompts/` · `locales/` · `skills/` | Esquemas, plantillas, prompts, idiomas y skill de solo lectura |
+| `05_schema/` · `templates/` · `prompts/` · `locales/` | Esquemas, plantillas, prompts e idiomas (es/en) |
+| `skills/critico/` | Skill de **solo lectura** para asistentes (invocación manual) |
+| `commands/` | Comandos slash para OpenCode (`/ojocritico` y 13 alias) |
 | `evals/` · `scripts/` · `09_golden_set/` · `06_migration/` | Validadores, métricas, herramientas, golden set y migración |
 | `01_Manual_…` · `02_FROZEN_v3.4.md` · `13_Diseno_…` | Manual, referencia congelada y diseño universal |
-| `registros/` | **Registros inmutables** (ID+hash): propuestas, entregas, licencias, actas — corrección solo por adenda |
 | `docs/HASHES.md` | Registro central de hashes de documentos |
 
-## Uso
+> Los **registros de gobernanza** (propuestas, actas, entregas) no están en este
+> repositorio público: se conservan en un archivo privado fuera de él; las rutas
+> `registros/…` citadas en el CHANGELOG apuntan a ese archivo.
 
+## Uso — GATE B en 6 pasos
+
+```bash
+# 1 · Triage: generar el borrador y completarlo con tus dimensiones activas
+python3 critico_cli.py triage --artefacto MI-DOC --perfil tech --sub tech.design
+
+# 2 · Objeciones (2–4 propias) y veredicto
+python3 critico_cli.py plantilla --tipo objecion
+python3 critico_cli.py plantilla --tipo verdict
+
+# 3 · Validación de cada pieza (corrige hasta exit 0)
+python3 critico_cli.py validar --triage triage.yaml
+python3 critico_cli.py validar --objecion obj1.yaml   # una por cada objeción
+python3 critico_cli.py validar --verdict verdict.yaml
+
+# 4 · Coherencia cruzada con el artefacto real (crea antes la bitácora vacía)
+python3 critico_cli.py verificar --triage triage.yaml --verdict verdict.yaml \
+        --artefacto <archivo-revisado> --bitacora bitacora.jsonl
+
+# 5 · Outcome (seguimiento de objeciones) y métricas
+python3 scripts/outcome_runner.py init --verdict verdict.yaml --objeciones obj1.yaml obj2.yaml
+python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
 ```
-PYTHONDONTWRITEBYTECODE=1 python3 -B critico_cli.py --help
-PYTHONDONTWRITEBYTECODE=1 python3 -B probar_todo.py
-PYTHONDONTWRITEBYTECODE=1 python3 -B scripts/verify_freeze.py
-```
 
-## Reglas
+**Otros comandos del CLI** (`python3 critico_cli.py --help`): `validar
+--outcome`, `plantilla --tipo triage|objecion|verdict|outcome|…`, `perfiles`
+(lista macro-perfiles y sub-perfiles con su guía de dimensiones) y `hash`
+(SHA-256 de un archivo para evidencias).
 
-- Rúbrica, esquemas y config **congelados en v3.4.0**; cualquier cambio exige
-  propuesta numerada con protocolo (OK-escribir/OK) y actualización del freeze.
-- Los **registros** no se editan: una corrección es una adenda que referencia el
-  original por hash.
-- Los borrados los hace Andrés, por ítem con hash y acta.
-- Suite histórica de 153 tests: pendiente hasta que el banco BUP esté listo.
+## Dimensiones y perfiles
+
+- **108 dimensiones** en la rúbrica congelada (`03_rubric.yaml`); el triage
+  activa un subconjunto (máx. 40) elegido por el revisor.
+- **Macro-perfiles** (`tech`, `ops`, `legal`, `business`) con **sub-perfiles**
+  (`tech.design`, `tech.migration`, …): `triage --sub <sub>` imprime su guía
+  **no vinculante** de dimensiones; `perfiles` lista todos.
+
+## Reglas (gobernanza)
+
+- Rúbrica, esquemas y config **congelados en v3.4.0**: cualquier cambio exige
+  propuesta numerada con protocolo y la frase canónica de autorización
+  **«OK <8hex>»**, más la actualización del freeze.
+- Los registros no se editan: una corrección es una **adenda** que referencia
+  el original por hash.
+- Los borrados los hace **Andrés**, por ítem, con hash y acta.
+- Batería actual del repo: **100/100** · suite histórica de **153 tests**:
+  pendiente hasta que el banco BUP esté listo.
+
+## Límites honestos (beta)
+
+- Herramienta de análisis **defensivo**; no sustituye la decisión humana: las
+  autorizaciones y decisiones son siempre del usuario.
+- Una revisión textual con la skill **no certifica** cumplimiento de esquemas;
+  eso exige correr el CLI sobre el artefacto real.
+- **Sin certificación independiente declarada**: lo que no se demuestra, se
+  declara como pendiente.
 
 ## Comunidad (repositorio público)
 
-- **Etapa: construcción `00.02.03`** — beta honesto: lo no demostrado se declara;
-  el release definitivo `01.00.00` llegará cuando el Banco Universal de Pruebas
-  (BUP) esté listo y la suite completa pase.
+- **Etapa: construcción `00.02.03`** — beta honesto: lo no demostrado se
+  declara; el release definitivo `01.00.00` llegará cuando BUP esté listo y la
+  suite completa pase.
 - **Licencia:** código MIT · documentación CC BY-SA 4.0 (ver `LICENSE`).
-- **Gobernanza:** los registros de gobernanza (propuestas, actas, entregas) se
-  conservan en un archivo privado fuera de este repositorio; las rutas
-  `registros/…` citadas en el CHANGELOG apuntan a ese archivo.
 - **Skill para OpenCode:** copiar `skills/critico/` a
   `~/.config/opencode/skills/critico/` (Linux/macOS) o
   `%USERPROFILE%\.config\opencode\skills\critico` (Windows).
 - **Comandos slash:** copiar `commands/*.md` a `~/.config/opencode/command/`
-  (Linux/macOS) o `%USERPROFILE%\.config\opencode\command` (Windows);
-  quedan disponibles como `/ojocritico`, `/ojo-critico`, `/critico`, `/gateb`,
+  (Linux/macOS) o `%USERPROFILE%\.config\opencode\command` (Windows); quedan
+  disponibles como `/ojocritico`, `/ojo-critico`, `/critico`, `/gateb`,
   `/premortem`, `/punto-ciego`, `/revision-critica`, `/devils-advocate`,
   `/challenge-review`, `/critical-eye`, `/steelman`, `/falsabilidad`,
   `/falsifiability` y `/argumento-de-acero` (alias del mismo Crítico; la skill
   mantiene el id `critico`).
+- **Repos hermanos:** BUP https://github.com/Kuvexta/BUP · Videoteca
+  https://github.com/Kuvexta/videoteca

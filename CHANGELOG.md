@@ -3,6 +3,12 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+readme — 2026-10-28 — README ampliado para la comunidad
+
+- Qué es (GATE B, objeciones falsables, steelman, veredicto, outcomes), requisitos (Python >=3.10), flujo GATE B en 6 pasos, CLI completo, dimensiones/perfiles, limites honestos y repos hermanos.
+- Correcciones: la tabla de estructura ya no lista `registros/` (fuera del repo publico) y la regla cita la frase canonica corregida «OK <8hex>» (sin «OK-escribir»).
+- Autorizacion: orden directa de Andres («Actualizar todas las documentaciones y repositorios y sincronizar o coordinar lo que consideres», 2026-10-28).
+
 ## 00.02.03+repo — 2026-10-28 — REPO-CRITICO-02: repositorio publicado a la comunidad
 
 - Kuvexta/Critico pasa a **publico** (decision de Andres): codigo MIT, documentacion CC BY-SA 4.0, etapa construccion 00.02.03 declarada como beta honesto.
