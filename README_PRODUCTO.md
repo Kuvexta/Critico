@@ -1,6 +1,12 @@
 # Crítico — versión asistida local, cierre-v1
 
+> **Documento histórico (cierre-v1, entrega local).** El repositorio público
+> actual se describe en el [`README.md`](README.md) canónico. Las rutas que
+> este documento cita (`entrega/…`, `licencias/…`) pertenecen al **archivo
+> privado**, fuera de este repositorio.
+
 **Autor del proyecto: KUVEXTA GROUP.** Véase [AUTORIA.md](AUTORIA.md).
+
 
 Actualización documental del 27/10/2026: [catálogo de licencias](licencias/README.md) con textos de referencia, comparativa y borradores para decidir más adelante. **Ninguna alternativa nueva está activada.** La declaración abreviada existente en LICENSE se conserva y requiere revisión antes de distribuir.
 

@@ -3,6 +3,14 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+estructura — 2026-10-28 — Orientación para agentes y estructura del repo
+
+- `AGENTS.md` nuevo: orientación para cualquier agente (entrada rápida, reglas de solo lectura, instalación por plataforma).
+- `skills/critico/` actualizada a la versión de la entrega (cláusula de seguridad: «solo tras solicitud explícita del usuario» y autoría).
+- `LEEME.md` reescrito como puntero al README canónico; `README_PRODUCTO.md` con nota de documento histórico (sus rutas entrega/ y licencias/ viven en el archivo privado).
+- README: advertencia de instalar una sola variante y enlace a AGENTS.md.
+- Autorizacion: orden directa de Andres («revisar si cualquier agente no se pierda que todo este bien estructurado», 2026-10-28).
+
 ## 00.02.03+plataformas — 2026-10-28 — Variantes de skill para las 12 plataformas + universal
 
 - `plataformas/` incorpora las 13 variantes de la entrega skills-cli-ide-v1 (manifiesto SHA-256 3b0a0e3e…): opencode, claude-code, cursor, codex, cline, gemini-cli, github-copilot, kiro, openclaw, qwen-code, deepseek-harness, antigravity y universal; cada una con README (ruta exacta), LICENSE y AUTORIA.

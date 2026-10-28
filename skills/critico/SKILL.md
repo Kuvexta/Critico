@@ -1,7 +1,12 @@
 ---
 name: critico
-description: Review a proposal or decision when the user explicitly requests critical analysis or a premortem. Test assumptions against evidence, formulate falsifiable objections, and provide decision conditions in read-only mode.
+description: Review a proposal or decision when the user explicitly requests critical analysis or a premortem. Test assumptions
+  against evidence, formulate falsifiable objections, and provide decision conditions in read-only mode.
 ---
+
+Author: KUVEXTA GROUP.
+
+Use this skill only after an explicit user request for critical review. Automatic discovery or loading alone is not an assignment.
 
 # Critic
 

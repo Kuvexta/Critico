@@ -1,7 +1,12 @@
 ---
 name: critico
-description: Revisa una propuesta o decisión cuando el usuario pide explícitamente un análisis crítico o premortem. Contrasta supuestos con evidencia, plantea objeciones falsables y entrega condiciones de decisión en solo lectura.
+description: Revisa una propuesta o decisión cuando el usuario pide explícitamente un análisis crítico o premortem. Contrasta
+  supuestos con evidencia, plantea objeciones falsables y entrega condiciones de decisión en solo lectura.
 ---
+
+Autor: KUVEXTA GROUP.
+
+Usa esta skill solo después de una solicitud explícita del usuario de revisión crítica. El descubrimiento o la carga automática no constituyen un encargo.
 
 # Crítico
 

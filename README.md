@@ -129,6 +129,8 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
   Las variantes provienen de la entrega `skills-cli-ide-v1` (manifiesto
   SHA-256 `3b0a0e3e…`): mismas comprobaciones 172/172, sin scripts, sin
   MCP, sin hooks; instalación y permisos corresponden a cada destino.
+  **Instala una sola variante** (la de tu cliente); no copies toda la carpeta
+  `plataformas/` a una raíz de descubrimiento automático.
 - **Comandos slash:** copiar `commands/*.md` a `~/.config/opencode/command/`
   (Linux/macOS) o `%USERPROFILE%\.config\opencode\command` (Windows); quedan
   disponibles como `/ojocritico`, `/ojo-critico`, `/critico`, `/gateb`,
@@ -136,5 +138,7 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
   `/challenge-review`, `/critical-eye`, `/steelman`, `/falsabilidad`,
   `/falsifiability` y `/argumento-de-acero` (alias del mismo Crítico; la skill
   mantiene el id `critico`).
+- **Para agentes:** `AGENTS.md` orienta a cualquier agente que trabaje con
+  este repositorio (entrada rápida, reglas, instalación).
 - **Repos hermanos:** BUP https://github.com/Kuvexta/BUP · Videoteca
   https://github.com/Kuvexta/videoteca
