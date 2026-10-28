@@ -3,6 +3,13 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+gitops — 2026-10-28 — Reconciliación automática (GitOps en miniatura)
+
+- `scripts/sincronizar_copias.py` ampliado a reconciliador completo: `--pull` (git fetch + merge --ff-only, nunca reescribe historia), `--log` (bitacora JSONL), `--bup` (espejo curado de BUP en D:\, incluidos docs/diseno e INSTALACION) y salida de ciclo sano.
+- Automatizado con systemd: `kuvexta-reconciliar.timer` (cada 10 min, Persistent) + servicio oneshot, linger activado; primer ciclo en verde (corrigio su propia deriva y completo INSTALACION.md y diseno/HASHES.md en el espejo BUP).
+- Metodologia documentada en AGENTS.md (principios OpenGitOps: declarativo, versionado, pull automatico, reconciliacion continua) + CI de GitHub como segunda red.
+- Autorizacion: orden directa de Andres («investiga como se hace con sistemas agenticos y automatiza los espejos», 2026-10-28).
+
 ## 00.02.03+sync — 2026-10-28 — Herramienta de sincronización de copias
 
 - `scripts/sincronizar_copias.py`: sincroniza producción y workspace desde el clon del repo (dry-run por defecto; copia solo lo rastreado por git, compara por SHA-256, no borra nada). Evita la deriva que dejó 37 archivos desincronizados en producción.

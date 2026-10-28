@@ -44,6 +44,17 @@ humanos es [`README.md`](README.md).
    de trabajo (producción y workspace) tras un CAMBIO:
    `scripts/sincronizar_copias.py` (dry-run) y con `--aplicar`.
 
+## Metodología: GitOps en miniatura (reconciliación continua)
+
+Siguiendo los principios OpenGitOps: el repositorio público es el **estado
+deseado** (declarativo, versionado, inmutable); un **agente reconciliador**
+hace pull automático y corrige la deriva de las copias locales
+(`scripts/sincronizar_copias.py --pull --aplicar --bup`), idempotente (aplicar
+dos veces es seguro) y con bitácora JSONL. Está **automatizado con systemd**
+(unidad `kuvexta-reconciliar.timer`, cada 10 minutos) en la estación de
+trabajo; el CI de GitHub Actions es la segunda red (verifica cada push).
+No borra archivos: los borrados los hace Andrés con hash y acta.
+
 ## Si un usuario (o tú) quiere mejorar el Crítico
 
 - Lee [`CONTRIBUTING.md`](CONTRIBUTING.md): mapa de archivos (qué se cambia
