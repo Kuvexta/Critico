@@ -1,0 +1,13 @@
+case_id: GC-004
+verdict:
+  state_class: TERMINAL
+  status: RIESGO_NO_EVALUADO
+  reason_code: TIMEBOX_EXPIRED
+objections: []
+audit_trail: []
+summary_metrics:
+  implicit_assumptions_discovered: 0
+  blockers_count: 0
+  majors_count: 0
+  active_accepted_risks: []
+  budget_consumed_pct: 12.0

@@ -1,0 +1,71 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://critico/v3.4/schema/pattern.yaml"
+title: Pattern
+description: >
+  Registro de la biblioteca de patrones del Crítico (Diseño Universal §15.3).
+  Un patrón es un modo de fallo recurrente aprendido de bitácora + outcomes.
+  La Capa 1 lo recupera por similaridad y lo cita en el triage.
+type: object
+required: [pattern_id, family, dimensions, description, severity, evidence, count]
+additionalProperties: false
+properties:
+  pattern_id:
+    type: string
+    pattern: "^PTN-[a-f0-9]{12}$"
+  family:
+    type: string
+    pattern: "^[A-S]$"
+    description: "Familia principal de la dimensión dominante"
+  dimensions:
+    type: array
+    minItems: 1
+    items: { type: string }
+    description: "Dimensiones implicadas (ids como strings)"
+  keywords:
+    type: array
+    items: { type: string }
+    description: "Términos de negocio para el retrieval por texto"
+  profiles:
+    type: array
+    items: { type: string }
+    description: "Perfiles/sub-perfiles donde se ha observado"
+  severity:
+    type: string
+    enum: [blocker, major, minor, nit]
+  description:
+    type: string
+    minLength: 10
+    description: "El modo de fallo en una frase (citable en el veredicto)"
+  steelman:
+    type: string
+    description: "La mitigación típica que SÍ funciona contra este patrón"
+  evidence:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required: [objection_id]
+      properties:
+        objection_id: { type: string, pattern: "^OBJ-[a-f0-9]{12}$" }
+        outcome_id: { type: string, pattern: "^OUT-[a-f0-9]{12}$" }
+        materialized: { type: string, enum: [si, "no", parcial, desconocido] }
+  count:
+    type: integer
+    minimum: 1
+    description: "Número de decisiones donde apareció (umbral de promoción: ≥3)"
+  confidence_gain:
+    type: number
+    minimum: 0
+    maximum: 1
+    description: "Ganancia observada de calibración al usar este patrón"
+  provenance:
+    type: object
+    properties:
+      rubric_version: { type: string }
+      created_at: { type: string, format: date-time }
+      promoted_by:
+        type: string
+        enum: [automatico, verificador, gate_c]
+
+# Regla de promoción (runtime): un cluster se promueve a patrón cuando tiene
+# count >= 3 o 1 outcome con materialized == si (falla real repetida).

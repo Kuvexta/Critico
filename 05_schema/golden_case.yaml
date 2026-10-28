@@ -1,0 +1,158 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://critico/v3.3/golden/golden_case.yaml
+title: GoldenCase
+type: object
+required:
+- case_id
+- artifact
+- triage
+- expected
+- ground_truth
+- metadata
+additionalProperties: false
+properties:
+  case_id:
+    type: string
+    pattern: ^GC-\d{3}$
+  artifact:
+    type: object
+    required:
+    - id
+    - domain_profile
+    - description
+    properties:
+      id:
+        type: string
+      domain_profile:
+        type: string
+        enum:
+        - tech
+        - legal
+        - business
+        - personal
+        - health
+        - ops
+      sub_profile:
+        type:
+        - string
+        - 'null'
+      description:
+        type: string
+        minLength: 10
+      source:
+        type:
+        - string
+        - 'null'
+  triage:
+    type: object
+    required:
+    - union_raw_count
+    - active_dimensions
+    properties:
+      union_raw_count:
+        type: integer
+        minimum: 0
+        maximum: 108
+      active_dimensions:
+        type: array
+        items:
+          type: string
+  expected:
+    type: object
+    required:
+    - verdict
+    - objections
+    properties:
+      verdict:
+        type: object
+        required:
+        - state_class
+        - status
+        properties:
+          state_class:
+            type: string
+            enum:
+            - TERMINAL
+            - OPERATIONAL_SUSPENSION
+          status:
+            type: string
+            enum:
+            - PASA
+            - PASA_CON_CONDICIONES
+            - NO_PASA
+            - NECESITA_INFO
+            - REVISION_PARCIAL
+            - RIESGO_NO_EVALUADO
+          reason_code:
+            type:
+            - string
+            - 'null'
+            enum:
+            - OPAQUE_STRUCTURE
+            - SCOPE_UNCLEAR
+            - TIMEBOX_EXPIRED
+            - BUDGET_EXHAUSTED
+            - null
+      objections:
+        type: array
+        description: Blockers/majors que GATE C validó. Son la verdad de referencia.
+        items:
+          type: object
+          required:
+          - dimension
+          - severity
+          - claim_contains
+          properties:
+            dimension:
+              type: string
+            severity:
+              type: string
+              enum:
+              - blocker
+              - major
+              - minor
+              - nit
+            claim_contains:
+              type: string
+              minLength: 3
+      audit_trail_min_size:
+        type: integer
+        minimum: 0
+      implicit_assumptions_min:
+        type: integer
+        minimum: 0
+  ground_truth:
+    type: object
+    required:
+    - gate_c_decision
+    - gate_c_date
+    properties:
+      gate_c_decision:
+        type: string
+      gate_c_date:
+        type: string
+        format: date
+      gate_c_notes:
+        type: string
+      accepted_risks:
+        type: array
+        items:
+          type: string
+  metadata:
+    type: object
+    required:
+    - human_reviewed
+    - reviewer
+    - created
+    properties:
+      human_reviewed:
+        type: boolean
+      reviewer:
+        type: string
+      created:
+        type: string
+        format: date
+      tags:
+        type: array
+        items:
+          type: string

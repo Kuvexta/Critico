@@ -1,0 +1,29 @@
+case_id: GC-002
+verdict:
+  state_class: TERMINAL
+  status: PASA_CON_CONDICIONES
+  reason_code: null
+objections:
+  - objection_id: OBJ-111111111111
+    dimension: ["20"]
+    severity: major
+    claim: "El export CSV incluye email sin enmascarar en la columna 'contact'"
+    mitigation_vector: "Enmascarar email a u***@dominio en el export"
+    mitigation_type: fix
+audit_trail:
+  - assumption: "El endpoint exige autenticación"
+    dimension: "16"
+    attack_vector: "Se verificó middleware de auth"
+    resistance_evidence: "auth_middleware en router"
+    confidence: 0.95
+  - assumption: "La paginación acota memoria"
+    dimension: "22"
+    attack_vector: "Se calculó memoria con 100 filas × N páginas"
+    resistance_evidence: "benchmark: 100 rows → 2MB"
+    confidence: 0.85
+summary_metrics:
+  implicit_assumptions_discovered: 2
+  blockers_count: 0
+  majors_count: 1
+  active_accepted_risks: []
+  budget_consumed_pct: 62.0

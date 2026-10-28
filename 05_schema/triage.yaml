@@ -1,0 +1,71 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://critico/v3.3/schema/triage.yaml"
+title: Triage
+type: object
+required: [triage_id, artifact_id, timestamp, profiles, dimensions_summary,
+           active_dimensions, pruned_families, triage_overrides, config_ref]
+additionalProperties: false
+properties:
+  triage_id:  { type: string, pattern: "^TRG-[a-f0-9]{12}$" }
+  artifact_id: { type: string }
+  timestamp:  { type: string, format: date-time }
+  # v3.3 · I1 — trazabilidad del stack origen
+  source_stack:
+    type: [string, "null"]
+    description: "Identificador del stack BZ-109 que originó la propuesta"
+  # v3.3 · I2 — relación padre-hijo
+  parent_id:
+    type: [string, "null"]
+  profiles:
+    type: object
+    required: [primary, secondary]
+    properties:
+      primary:
+        type: string
+        enum: [tech, legal, business, personal, health, ops]
+      sub_profile:
+        type: [string, "null"]
+      secondary:
+        type: array
+        maxItems: 2
+        items: { type: string, enum: [tech, legal, business, personal, health, ops] }
+  dimensions_summary:
+    type: object
+    required: [total_rubric, union_raw_count, max_active_dimensions,
+               activated_count, pruned_count]
+    properties:
+      total_rubric:           { type: integer, const: 108 }
+      union_raw_count:        { type: integer, minimum: 0, maximum: 108 }
+      max_active_dimensions:  { type: integer, const: 40 }
+      activated_count:        { type: integer, minimum: 0, maximum: 40 }
+      pruned_count:           { type: integer, minimum: 0 }
+  active_dimensions: { type: array, items: { type: string } }
+  pruned_families:   { type: array, items: { type: string, pattern: "^[A-S]$" } }
+  triage_overrides:
+    type: array
+    items:
+      type: object
+      required: [dimension, reason]
+      properties:
+        dimension: { type: string }
+        reason:    { type: string, minLength: 1 }
+  triage_split_recommendation:
+    type: [object, "null"]
+    properties:
+      detected_macro_profiles: { type: array, minItems: 4, items: { type: string } }
+      recommended_action:      { type: string, enum: [split_artifact, accept_reduced_scope] }
+      suspension_reason:       { type: string, const: SPLIT_OR_SCOPE_ACCEPTANCE_REQUIRED }
+  # v3.3 · I2 + M-B — estado agregado del plan padre
+  plan_status:
+    type: [object, "null"]
+    description: "Estado agregado del plan padre; null si el artefacto es independiente"
+    properties:
+      parent_id:       { type: string }
+      total_steps:     { type: integer, minimum: 1 }
+      steps_passed:    { type: integer, minimum: 0 }
+      steps_blocked:   { type: integer, minimum: 0 }
+      steps_pending:   { type: integer, minimum: 0 }
+      blocked_at_step: { type: [integer, "null"] }
+      plan_verdict:    { type: string, enum: [in_progress, blocked, completed, aborted] }
+  previous_suspension_questions_resolved: { type: boolean }
+  config_ref: { type: string }

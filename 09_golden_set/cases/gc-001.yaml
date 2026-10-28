@@ -1,0 +1,28 @@
+case_id: GC-001
+artifact:
+  id: PROP-HIST-001
+  domain_profile: tech
+  sub_profile: tech.infra
+  description: "Ajuste de límites de memoria de un servicio a 512Mi (antes 256Mi) para reducir OOMKills"
+  source: "bitacora://2026-01-15/PROP-001"
+triage:
+  union_raw_count: 28
+  active_dimensions: ["1", "2", "9", "11", "15", "17", "22", "24", "25", "27", "28", "45", "83", "84", "88", "94", "101"]
+expected:
+  verdict:
+    state_class: TERMINAL
+    status: PASA
+    reason_code: null
+  objections: []
+  audit_trail_min_size: 3
+  implicit_assumptions_min: 2
+ground_truth:
+  gate_c_decision: PASA
+  gate_c_date: "2026-01-20"
+  gate_c_notes: "Aprobado sin condiciones — el ajuste ya estaba testeado en staging"
+  accepted_risks: []
+metadata:
+  human_reviewed: true
+  reviewer: "human"
+  created: "2026-10-26"
+  tags: [infra, memory, sin-objeciones]

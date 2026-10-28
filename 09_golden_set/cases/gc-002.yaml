@@ -1,0 +1,31 @@
+case_id: GC-002
+artifact:
+  id: PROP-HIST-002
+  domain_profile: tech
+  sub_profile: tech.code
+  description: "Nuevo endpoint /reports/export con paginación y límite de 100 filas por página"
+  source: "bitacora://2026-02-03/PROP-002"
+triage:
+  union_raw_count: 32
+  active_dimensions: ["1", "2", "3", "4", "5", "6", "9", "10", "11", "16", "17", "18", "20", "29", "30", "31", "41", "49", "51", "52", "57", "83", "84", "88", "101", "103"]
+expected:
+  verdict:
+    state_class: TERMINAL
+    status: PASA_CON_CONDICIONES
+    reason_code: null
+  objections:
+    - dimension: "20"
+      severity: major
+      claim_contains: "PII"
+  audit_trail_min_size: 2
+  implicit_assumptions_min: 2
+ground_truth:
+  gate_c_decision: PASA_CON_CONDICIONES
+  gate_c_date: "2026-02-08"
+  gate_c_notes: "Aprobado condicionado a enmascarar email en el CSV"
+  accepted_risks: []
+metadata:
+  human_reviewed: true
+  reviewer: "human"
+  created: "2026-10-26"
+  tags: [api, pii, con-condiciones]

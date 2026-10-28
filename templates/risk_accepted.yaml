@@ -1,0 +1,15 @@
+# Plantilla de RIESGO ACEPTADO (GATE C firma) — valida con:
+#   python critico_cli.py validar --riesgo risk_accepted.yaml
+objection_id: OBJ-000000000000
+status: RISK_ACCEPTED_BY_GATE_C
+accepted_by: GATE_C
+date: "<iso8601>"
+expiration_date: "<iso8601>"           # OBLIGATORIO
+rationale: "<por qué se aceptó>"
+context_condition:
+  qualitative_trigger: "<descripción humana del contexto>"
+  quantitative_threshold: null         # {metric, comparison, metric_source, evaluation_frequency, fallback_to_qualitative}
+flag: null                             # QUANTITATIVE_UNAVAILABLE|null (R4)
+provenance:
+  verdict_id: "<id>"
+  artifact_hash: "<sha>"

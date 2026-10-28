@@ -1,0 +1,25 @@
+case_id: GC-003
+verdict:
+  state_class: TERMINAL
+  status: NO_PASA
+  reason_code: null
+objections:
+  - objection_id: OBJ-222222222222
+    dimension: ["17"]
+    severity: blocker
+    claim: "Migración destructiva sin plan de rollback probado; blast_radius irreversible"
+    mitigation_vector: "Diseñar plan de rollback con expand/contract y simulacro en staging"
+    mitigation_type: redesign_directive
+  - objection_id: OBJ-333333333333
+    dimension: ["55"]
+    severity: major
+    claim: "Rename de email rompe compatibilidad hacia atrás; consumidores no mapeados"
+    mitigation_vector: "Expand: nueva columna email_norm + dual-write durante 2 releases"
+    mitigation_type: fix
+audit_trail: []
+summary_metrics:
+  implicit_assumptions_discovered: 4
+  blockers_count: 1
+  majors_count: 1
+  active_accepted_risks: []
+  budget_consumed_pct: 71.0

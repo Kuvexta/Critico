@@ -1,0 +1,86 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://critico/v3.2/schema/risk_accepted.yaml
+title: RiskAccepted
+type: object
+required:
+- objection_id
+- status
+- accepted_by
+- date
+- expiration_date
+- context_condition
+- rationale
+additionalProperties: false
+properties:
+  objection_id:
+    type: string
+    pattern: ^OBJ-[a-f0-9]{12}$
+  status:
+    type: string
+    const: RISK_ACCEPTED_BY_GATE_C
+  accepted_by:
+    type: string
+    const: GATE_C
+  date:
+    type: string
+    format: date-time
+  expiration_date:
+    type: string
+    format: date-time
+  rationale:
+    type: string
+    minLength: 1
+  context_condition:
+    type: object
+    required:
+    - qualitative_trigger
+    properties:
+      qualitative_trigger:
+        type: string
+        minLength: 1
+      quantitative_threshold:
+        type:
+        - object
+        - 'null'
+        required:
+        - metric
+        - comparison
+        - metric_source
+        - evaluation_frequency
+        properties:
+          metric:
+            type: string
+          comparison:
+            type: string
+          metric_source:
+            type: string
+            enum:
+            - dashboard
+            - table
+            - api
+            - manual
+            - unavailable
+          evaluation_frequency:
+            type: string
+            enum:
+            - daily
+            - weekly
+            - monthly
+            - on_demand
+          fallback_to_qualitative:
+            type: boolean
+            default: true
+  flag:
+    type:
+    - string
+    - 'null'
+    enum:
+    - QUANTITATIVE_UNAVAILABLE
+    - null
+  provenance:
+    type: object
+    properties:
+      verdict_id:
+        type: string
+      artifact_hash:
+        type: string

@@ -1,0 +1,142 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://critico/v3.4/schema/outcome.yaml"
+title: Outcome
+description: >
+  Registro post-decisión del bucle de mejora continua (Diseño Universal §15).
+  Cierra el bucle: predecir → decidir → OBSERVAR → comparar → calibrar → patrones.
+  Lo emite el observador designado (autor del artefacto o auditor) y lo valida
+  el Verificador; el Crítico lo consume para recalibrar confidence y patrones.
+type: object
+required: [outcome_id, verdict_id, artifact_id, horizon, observed_at, provenance]
+additionalProperties: false
+properties:
+  outcome_id:
+    type: string
+    pattern: "^OUT-[a-f0-9]{12}$"
+  verdict_id:
+    type: string
+    pattern: "^VRD-[a-f0-9]{12}$"
+    description: "Veredicto que originó este seguimiento"
+  artifact_id:
+    type: string
+  horizon:
+    type: string
+    enum: [inmediato, corto_plazo, largo_plazo]
+    description: "Horizonte de observación programado en la decisión"
+  observed_at:
+    type: string
+    format: date-time
+  objection_outcomes:
+    type: array
+    description: "Por cada objeción emitida: ¿se materializó la falla predicha?"
+    items:
+      type: object
+      required: [objection_id, materialized]
+      additionalProperties: false
+      properties:
+        objection_id:
+          type: string
+          pattern: "^OBJ-[a-f0-9]{12}$"
+        dimension:
+          type: string
+          description: "Dimensión primaria (para calibración por dimensión)"
+        profile:
+          type: string
+          description: "Perfil del triage (para calibración por perfil)"
+        materialized:
+          type: string
+          enum: [si, "no", parcial, desconocido]
+        evidence:
+          type: string
+          minLength: 3
+        observed_cost:
+          type: [string, "null"]
+          description: "Impacto real observado si se materializó (para blast-radius real)"
+        # CAMBIO-04-rev4 (aprobado 26/10) · intervención separada de lo observado
+        mitigacion_aplicada:
+          type: [boolean, "null"]
+          description: "¿Se aplicó una mitigación? null = intervención NO informada (se reporta, no se asume)"
+        propuesta_cancelada:
+          type: [boolean, "null"]
+          description: "¿La propuesta se canceló o cambió tras la revisión? null = no informada"
+  unpredicted_failures:
+    type: array
+    description: "Fallas que NADIE predijo — el dato más valioso del bucle"
+    items:
+      type: object
+      required: [dimension, description, severity]
+      additionalProperties: false
+      properties:
+        dimension:
+          type: string
+        profile:
+          type: string
+        description:
+          type: string
+          minLength: 5
+        severity:
+          type: string
+          enum: [blocker, major, minor]
+        evidence:
+          type: string
+  calibration_sample:
+    type: [object, "null"]
+    description: "Par (confidence emitido, resultado real) para el error Brier"
+    required: [predicted_confidence, outcome]
+    additionalProperties: false
+    properties:
+      predicted_confidence:
+        type: number
+        minimum: 0
+        maximum: 1
+      outcome:
+        type: string
+        enum: [si, "no", parcial]
+  seguimiento:
+    type: object
+    required: [completo, omitidos]
+    additionalProperties: false
+    description: "CAMBIO-02 (aplicado 26/10): marca si el seguimiento es completo; si se omitieron objeciones incompatibles, completo=false y quedan registradas aquí para no confundir el resultado con un seguimiento total"
+    properties:
+      completo:
+        type: boolean
+      omitidos:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+          pattern: "^OBJ-[a-f0-9]{12}$"
+  rework:
+    type: [object, "null"]
+    description: "Si el artefacto fue rehecho tras NO_PASA/PASA_CON_CONDICIONES"
+    properties:
+      reworked:
+        type: boolean
+      new_verdict_id:
+        type: string
+      new_objections_count:
+        type: integer
+        minimum: 0
+      improved:
+        type: boolean
+        description: "¿La nueva versión pasó con menos objeciones que la anterior?"
+  provenance:
+    type: object
+    required: [rubric_version, model_version, artifact_hash]
+    properties:
+      rubric_version: { type: string }
+      model_version: { type: string }
+      artifact_hash: { type: string }
+      outcome_schema_version:
+        type: string
+        const: "3.4.0"
+      observed_by:
+        type: string
+        enum: [autor, auditor, verificador, gate_c, automatico]
+      validated_by:
+        type: [string, "null"]
+        description: "Verificador independiente que validó la observación"
+
+# Invariante de runtime (documentado como G5, no expresable en JSON Schema):
+#   objection_outcomes y/o unpredicted_failures debe(n) tener ≥1 elemento en
+#   total; un outcome vacío es inválido (no aporta al bucle).

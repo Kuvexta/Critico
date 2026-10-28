@@ -1,0 +1,46 @@
+# Plantilla de OBJECIÓN — rellena y valida con:
+#   python critico_cli.py validar --objeción objection.yaml
+objection_id: OBJ-000000000000          # 12 hex
+gate: GATE_B
+artifact_id: "<id del artefacto anclado>"
+domain_profile: tech                   # tech|legal|business|personal|health|ops
+timestamp: "<iso8601>"
+dimension: ["<id>"]                    # al menos una de las 106
+severity: blocker                      # blocker|major|minor|nit
+claim: "<afirmación falsable>"
+steelman: "<mejor versión del artefacto>"
+assumptions:
+  - text: "<supuesto>"
+    status: plausible                  # verified|plausible|unverified|contradicted
+evidence_locator:
+  - "<fuente: ruta:línea, cláusula, paso, métrica>"
+counterfactual: "Sería aceptable si..."
+falsification: "Mi objeción es inválida si..."
+mitigation_vector: "<vector, restricción o directriz>"
+mitigation_type: fix                   # fix|constraint|redesign_directive|acceptance_needed
+verification_mechanism: "<cómo comprobar que no ocurrirá>"
+blast_radius:
+  scope: puntual                       # puntual|area_proceso|sistema_completo|ecosistema_externo
+  impact_types: ["operativo"]          # financiero|operativo|reputacional|legal|salud_fisica|emocional
+  reversible: con_plan_y_costo         # trivial|con_plan_y_costo|irreversible
+time_horizon: corto_plazo              # inmediato|corto_plazo|largo_plazo
+confidence: 0.0                        # 0.0-1.0
+v1_angle: []                           # opcional: mapeo a los 11 ángulos (se autopobla con scripts/autopopulate_v1_angle.py)
+# --- v3.4 · CAMBIO-05-rev4: trazabilidad de evidencias (opcional, aditivo) ---
+# evidence_detail:                        # una entrada por evidencia
+#   - source: "<ruta local o URL>"
+#     accessed_at: "<iso8601>"            # fecha de consulta (para valorar vigencia)
+#     kind: hecho                         # hecho | inferencia | hipotesis
+#     hash: "<sha256 calculado del fichero, si es local>"   # HASH_VERIFICADO = integridad, NO veracidad
+#     vigencia_dias: 30                   # politica de vigencia declarada (opcional)
+# contradictory_evidence:                 # lo que CONTRADICE la conclusion — obliga a mostrarlo
+#   - { source: "<fuente>", accessed_at: "<iso8601>" }
+# unverified_info:                        # lo que NO pudo comprobarse
+#   - { source: "<fuente>", accessed_at: "<iso8601>" }
+provenance:
+  rubric_version: "3.3.0"
+  prompt_version: "3.3.0"
+  model_version: "<modelo>"
+  artifact_hash: "<sha>"
+# BORRADOR: fechas y marcadores deben completarse para validacion operativa.
+# Rutas relativas de evidence_detail.source y --artefacto: relativas a este documento.

@@ -1,0 +1,1624 @@
+# ============================================================
+# rubric.yaml — Crítico v3.3.0 (congelado)
+# 106 dimensiones · 19 familias (A–S) · rúbricas 0–4
+# ============================================================
+rubric_version: 3.4.0
+frozen: true
+freeze_date: "2026-10-26"
+total_dimensions: 108
+families: [A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S]
+
+# La puntuación va de 0 (no verificable) a 4 (correcto con evidencia completa).
+activation_legend:
+  core: "siempre puntuada; N/A con motivo obligatorio"
+  opt: "activada por flag"
+  dom: "activada por domain_profile/sub-perfil"
+
+# Continuidad histórica con los 11 ángulos de v1.
+v1_angle_legend:
+  1: Costos
+  2: Seguridad (P11–P15)
+  3: Datos/honestidad (P06–P10)
+  4: Personas/autonomía (P16–P20)
+  5: Dependencias
+  6: UX/accesibilidad
+  7: Legal/licencias (P14)
+  8: Coordinación (P21–P25)
+  9: Sesgo del autor
+  10: Blast-radius
+  11: Contratos e invariantes
+
+# Nota v3.1: deduplicación resuelta (43/89, 44/91). Contenido sin cambios en v3.2/v3.3.
+dimensions:
+  # ---------- FAMILIA A · Corrección y lógica ----------
+  - id: 1
+    key: correctness
+    act: core
+    v1: [1, 3, 11]
+    d: "Hace lo que declara con evidencia ejecutable."
+    r:
+      - "No verificable."
+      - "Falla en bordes."
+      - "Mayormente correcto, fallas menores."
+      - "Correcto con evidencia salvo bordes extremos."
+      - "Correcto con evidencia en todos los casos del contrato."
+    ev:
+      - "test ejecutado"
+      - "traza"
+      - "output"
+    na: "sin comportamiento declarado"
+  - id: 2
+    key: completeness
+    act: core
+    v1: [3, 8]
+    d: "Cubre todos los casos del contrato, incluidos bordes y vacíos."
+    r:
+      - "Solo camino feliz."
+      - "Faltan casos principales."
+      - "Cubre mayoría, omite bordes."
+      - "Cubre todo excepto combinaciones extremas."
+      - "Cubre todos los casos y combinaciones del contrato."
+    ev:
+      - "matriz de casos"
+      - "checklist"
+    na: "sin contrato de casos definido"
+  - id: 3
+    key: consistency
+    act: core
+    v1: [3, 11]
+    d: "No se contradice con el resto del sistema ni consigo mismo."
+    r:
+      - "Contradicción directa."
+      - "Contradicciones latentes."
+      - "Consistente en lo principal, ambigüedades en bordes."
+      - "Consistente salvo casos declarados."
+      - "Consistente con el resto del sistema y consigo mismo."
+    ev:
+      - "referencias cruzadas"
+      - "grep de consumidores"
+    na: "artefacto sin relación con el sistema"
+  - id: 4
+    key: invariants
+    act: core
+    v1: [11]
+    d: "Los invariantes declarados se preservan en todos los caminos."
+    r:
+      - "Invariante violado."
+      - "Invariante violado en caminos secundarios."
+      - "Preservado en camino feliz, no en errores."
+      - "Preservado salvo casos declarados como excepción."
+      - "Preservado en todos los caminos con evidencia."
+    ev:
+      - "lista de invariantes"
+      - "test de invariante"
+    na: "sin invariantes declarados"
+  - id: 5
+    key: edge_cases
+    act: core
+    v1: [3]
+    d: "Nulos, vacíos, límites, overflow, unicode, concurrencia."
+    r:
+      - "Ignorados."
+      - "Cubiertos algunos."
+      - "Cubiertos la mayoría."
+      - "Cubiertos salvo combinaciones exóticas."
+      - "Cubiertos todos con evidencia."
+    ev:
+      - "lista de bordes"
+      - "tests de borde"
+    na: "artefacto sin entradas variables"
+  - id: 6
+    key: error_handling
+    act: core
+    v1: [3, 5]
+    d: "Fallos se propagan, capturan y reportan con causa."
+    r:
+      - "Silenciados."
+      - "Capturados sin contexto."
+      - "Capturados con contexto parcial."
+      - "Capturados con causa y recuperación."
+      - "Capturados, con causa, recuperación y observabilidad."
+    ev:
+      - "manejadores"
+      - "logs de error"
+    na: "artefacto sin operaciones falibles"
+  - id: 7
+    key: idempotency
+    act: dom
+    v1: [10]
+    d: "Reintentos no duplican efectos."
+    r:
+      - "No idempotente."
+      - "Idempotente en camino feliz."
+      - "Idempotente con ventana de fallo."
+      - "Idempotente con clave de idempotencia."
+      - "Idempotente demostrado con reintentos."
+    ev:
+      - "clave idempotencia"
+      - "test de reintento"
+    na: "operaciones puramente de lectura"
+  - id: 8
+    key: determinism
+    act: opt
+    v1: [3]
+    d: "Mismo input → mismo output (o se declara no determinista)."
+    r:
+      - "Aleatorio no declarado."
+      - "Declarado pero inestable."
+      - "Determinista con semilla."
+      - "Determinista con semilla y versión fijada."
+      - "Determinista, versionado y reproducible."
+    ev:
+      - "semilla"
+      - "versión"
+    na: "artefacto no determinista por diseño"
+
+  # ---------- FAMILIA B · Arquitectura y contratos ----------
+  - id: 9
+    key: contract_compliance
+    act: core
+    v1: [11, 8]
+    d: "Respeta el esquema/interfaz acordado con versión."
+    r:
+      - "Rompe contrato."
+      - "Rompe campos opcionales."
+      - "Compatible con deprecaciones."
+      - "Compatible, versión declarada."
+      - "Cumple contrato completo, versión y deprecaciones declaradas."
+    ev:
+      - "esquema"
+      - "versión"
+    na: "sin contrato externo"
+  - id: 10
+    key: interface_stability
+    act: core
+    v1: [8, 11]
+    d: "No rompe consumidores; cambios incompatibles declarados."
+    r:
+      - "Rompe sin aviso."
+      - "Rompe con aviso tardío."
+      - "Rompe con plan de migración."
+      - "Compatible, deprecaciones programadas."
+      - "Compatible, deprecaciones programadas y verificadas."
+    ev:
+      - "lista de consumidores"
+      - "plan de migración"
+    na: "sin consumidores identificados"
+  - id: 11
+    key: coupling
+    act: core
+    v1: [5, 8]
+    d: "No introduce dependencias ocultas ni ciclos."
+    r:
+      - "Ciclo nuevo."
+      - "Dependencia oculta."
+      - "Acoplamiento alto justificado."
+      - "Acoplamiento moderado y declarado."
+      - "Bajo acoplamiento, dependencias explícitas."
+    ev:
+      - "grafo de dependencias"
+    na: "artefacto atómico sin dependencias"
+  - id: 12
+    key: cohesion
+    act: opt
+    v1: [8]
+    d: "Cada módulo tiene una responsabilidad clara."
+    r:
+      - "Módulo hace N cosas."
+      - "Responsabilidad difusa."
+      - "Responsabilidad clara pero mezclada."
+      - "Responsabilidad clara y separada."
+      - "Responsabilidad única y bien nombrada."
+    ev:
+      - "estructura de módulos"
+    na: "artefacto indivisible"
+  - id: 13
+    key: layering
+    act: opt
+    v1: [8]
+    d: "Respeta las capas (dominio no depende de infra)."
+    r:
+      - "Violación directa."
+      - "Violación por transitividad."
+      - "Violaciones puntuales justificadas."
+      - "Respeta capas con excepciones declaradas."
+      - "Respeta capas estrictamente."
+    ev:
+      - "diagrama de capas"
+    na: "sin arquitectura por capas"
+  - id: 14
+    key: extensibility
+    act: opt
+    v1: [8]
+    d: "Añadir un caso no requiere tocar N sitios."
+    r:
+      - "Cada caso toca N sitios."
+      - "Extensión requiere refactor."
+      - "Extensión con cambio localizado."
+      - "Extensión con punto único de cambio."
+      - "Extensión sin tocar el núcleo."
+    ev:
+      - "puntos de extensión"
+    na: "artefacto de un solo uso"
+  - id: 15
+    key: tech_debt_delta
+    act: core
+    v1: [8]
+    d: "Mide si la deuda técnica sube o baja respecto a la versión anterior."
+    r:
+      - "Sube mucho."
+      - "Sube algo."
+      - "Neutro."
+      - "Baja algo."
+      - "Baja con evidencia medible."
+    ev:
+      - "comparación con versión aprobada"
+    na: "primera versión del artefacto"
+
+  # ---------- FAMILIA C · Seguridad ----------
+  - id: 16
+    key: security
+    act: core
+    v1: [2]
+    d: "Inyección, authz, secretos, criptografía, dependencias."
+    r:
+      - "Vulnerabilidad crítica."
+      - "Vulnerabilidad alta."
+      - "Media con mitigación parcial."
+      - "Baja con plan."
+      - "Sin hallazgos; evidencia de auditoría."
+    ev:
+      - "SAST"
+      - "DAST"
+      - "revisión manual"
+    na: "artefacto sin superficie de ataque"
+  - id: 17
+    key: blast_radius
+    act: core
+    v1: [10]
+    d: "Qué rompe, cómo se detecta, radio y reversibilidad."
+    r:
+      - "Ecosistema externo, irreversible."
+      - "Sistema completo, reversible con plan."
+      - "Área de proceso, reversible con plan."
+      - "Puntual, trivial."
+      - "Sin impacto más allá del artefacto."
+    ev:
+      - "mapa de dependencias"
+      - "plan de rollback"
+    na: "artefacto aislado verificado"
+  - id: 18
+    key: least_privilege
+    act: core
+    v1: [2, 4]
+    d: "El artefacto pide solo los permisos que necesita."
+    r:
+      - "Privilegios totales."
+      - "Privilegios amplios."
+      - "Privilegios justificados."
+      - "Privilegios mínimos con justificación."
+      - "Privilegios mínimos y verificados."
+    ev:
+      - "matriz de permisos"
+    na: "artefacto sin identidad ni permisos"
+  - id: 19
+    key: supply_chain
+    act: dom
+    v1: [5, 7]
+    d: "Procedencia de dependencias, versiones fijadas, CVEs."
+    r:
+      - "Dependencias sin versión."
+      - "Versiones no fijadas."
+      - "Versiones fijadas sin CVE check."
+      - "Versiones fijadas con CVE check."
+      - "Versiones fijadas, CVE check y procedencia verificada."
+    ev:
+      - "lockfile"
+      - "SBOM"
+      - "CVE scan"
+    na: "sin dependencias externas"
+  - id: 20
+    key: data_exposure
+    act: core
+    v1: [2, 4]
+    d: "PII, logs sensibles, cifrado en reposo/tránsito."
+    r:
+      - "PII en claro."
+      - "PII en logs."
+      - "PII enmascarada, cifrado parcial."
+      - "Cifrado en tránsito y reposo, enmascarado."
+      - "Cifrado, enmascarado, retención declarada."
+    ev:
+      - "clasificación de datos"
+      - "config cifrado"
+    na: "sin datos sensibles"
+  - id: 21
+    key: prompt_injection
+    act: opt
+    v1: [2]
+    d: "Si hay LLM, resiste inyección y jailbreak."
+    r:
+      - "Inyección trivial."
+      - "Resiste casos básicos."
+      - "Resiste casos conocidos."
+      - "Resiste con guardrails."
+      - "Resiste con guardrails y red team documentado."
+    ev:
+      - "test de inyección"
+      - "guardrails"
+    na: "sin componente LLM"
+
+  # ---------- FAMILIA D · Operación y fiabilidad ----------
+  - id: 22
+    key: performance
+    act: dom
+    v1: [1]
+    d: "Latencia, throughput, memoria, complejidad."
+    r:
+      - "Excede límites."
+      - "Cerca del límite."
+      - "Dentro del límite sin margen."
+      - "Dentro del límite con margen."
+      - "Dentro con margen medido y test."
+    ev:
+      - "benchmark"
+      - "límite declarado"
+    na: "sin requisito de rendimiento"
+  - id: 23
+    key: scalability
+    act: opt
+    v1: [1]
+    d: "Comportamiento al multiplicar carga por N."
+    r:
+      - "Colapsa a 2×."
+      - "Degrada lineal."
+      - "Degrada sub-lineal."
+      - "Escala casi lineal."
+      - "Escala con evidencia hasta N×N."
+    ev:
+      - "test de carga"
+      - "curva de escalado"
+    na: "carga constante por diseño"
+  - id: 24
+    key: observability
+    act: core
+    v1: [8]
+    d: "Logs, métricas, trazas suficientes para diagnosticar."
+    r:
+      - "Sin logs."
+      - "Logs sin contexto."
+      - "Logs estructurados."
+      - "Logs + métricas + trazas."
+      - "Logs + métricas + trazas + alertas."
+    ev:
+      - "config observabilidad"
+      - "dashboards"
+    na: "artefacto sin runtime"
+  - id: 25
+    key: failure_modes
+    act: core
+    v1: [10]
+    d: "Pre-mortem: modos de fallo, detección y mitigación."
+    r:
+      - "No identificados."
+      - "Identificados sin mitigación."
+      - "Identificados con mitigación parcial."
+      - "Identificados con mitigación y detección."
+      - "Identificados con mitigación, detección y test."
+    ev:
+      - "failure mode list"
+      - "test de fallo"
+    na: "imposible enumerar por complejidad — escalar"
+  - id: 26
+    key: recoverability
+    act: core
+    v1: [10]
+    d: "Qué pasa tras el fallo: retry, rollback, estado consistente."
+    r:
+      - "Sin recuperación."
+      - "Manual."
+      - "Con runbook."
+      - "Automática con verificación."
+      - "Automática, verificada y con postmortem."
+    ev:
+      - "runbook"
+      - "test de recuperación"
+    na: "sistema stateless trivial"
+  - id: 27
+    key: cost
+    act: opt
+    v1: [1]
+    d: "Coste de ejecución (tokens, cómputo, infra) estimado y acotado."
+    r:
+      - "Sin estimación."
+      - "Estimación alta."
+      - "Estimación dentro de rango."
+      - "Estimación con tope."
+      - "Estimación con tope y monitoreo."
+    ev:
+      - "modelo de coste"
+      - "tope"
+    na: "sin coste variable"
+  - id: 28
+    key: resource_limits
+    act: opt
+    v1: [1]
+    d: "Timeouts, cuotas, backpressure definidos."
+    r:
+      - "Sin límites."
+      - "Límites parciales."
+      - "Límites declarados."
+      - "Límites declarados y probados."
+      - "Límites + monitoreo + alertas."
+    ev:
+      - "config de límites"
+    na: "sin recursos variables"
+
+  # ---------- FAMILIA E · Verificabilidad ----------
+  - id: 29
+    key: testability
+    act: core
+    v1: [11]
+    d: "El artefacto es observable y aislable para test."
+    r:
+      - "No testeable."
+      - "Testeable con esfuerzo."
+      - "Testeable con harness."
+      - "Testeable con mocks."
+      - "Testeable con harness y evals."
+    ev:
+      - "diseño de test"
+      - "mocks"
+    na: "artefacto no ejecutable"
+  - id: 30
+    key: evidence_quality
+    act: core
+    v1: [3]
+    d: "Cada afirmación tiene evidencia rastreable."
+    r:
+      - "Sin evidencia."
+      - "Evidencia anecdótica."
+      - "Evidencia documental."
+      - "Evidencia documental y reproducible."
+      - "Evidencia con provenance y reproducción."
+    ev:
+      - "referencias"
+      - "artefactos"
+    na: "artefacto puramente teórico"
+  - id: 31
+    key: falsifiability
+    act: core
+    v1: [3]
+    d: "Cada objeción declara condición de refutación."
+    r:
+      - "Ninguna falsable."
+      - "Algunas falsables."
+      - "Mayoría falsables."
+      - "Todas falsables."
+      - "Todas falsables con test de refutación."
+    ev:
+      - "campo falsification"
+    na: "objeción puramente opinativa — descartar"
+  - id: 32
+    key: reproducibility
+    act: opt
+    v1: [3]
+    d: "El fallo reportado se reproduce con pasos concretos."
+    r:
+      - "No reproducible."
+      - "Reproducible intermitente."
+      - "Reproducible con entorno."
+      - "Reproducible con script."
+      - "Reproducible con script y CI."
+    ev:
+      - "pasos"
+      - "entorno"
+    na: "artefacto no ejecutable"
+
+  # ---------- FAMILIA F · Sesgo y razonamiento ----------
+  - id: 33
+    key: author_bias
+    act: core
+    v1: [9]
+    d: "No complace al proponente ni al senior."
+    r:
+      - "Adula explícitamente."
+      - "Suaviza objeciones."
+      - "Objetivo con sesgo residual."
+      - "Objetivo."
+      - "Objetivo y con steelman previo."
+    ev:
+      - "steelman registrado"
+    na: "revisión cruzada ciega"
+  - id: 34
+    key: confirmation_bias
+    act: core
+    v1: [9]
+    d: "Busca evidencia en contra, no solo a favor."
+    r:
+      - "Solo evidencia a favor."
+      - "A favor y contra superficial."
+      - "Contra en casos obvios."
+      - "Contra en todos los casos."
+      - "Contra exhaustiva con registro."
+    ev:
+      - "lista de contra-evidencia"
+    na: "objeción puramente formal"
+  - id: 35
+    key: ambiguity
+    act: core
+    v1: [9]
+    d: "Detecta huecos y emite MISSING_INFO."
+    r:
+      - "Ignora ambigüedad."
+      - "Menciona sin bloquear."
+      - "Bloquea sin preguntar."
+      - "Emite MISSING_INFO concreta."
+      - "Emite MISSING_INFO y pausa el gate."
+    ev:
+      - "missing_info_questions"
+    na: "artefacto no ambiguo declarado"
+  - id: 36
+    key: assumption_audit
+    act: core
+    v1: [9, 3]
+    d: "Lista y clasifica supuestos implícitos."
+    r:
+      - "No lista."
+      - "Lista sin clasificar."
+      - "Clasifica la mayoría."
+      - "Clasifica todos."
+      - "Clasifica y verifica contra evidencia."
+    ev:
+      - "tabla de supuestos"
+    na: "artefacto sin supuestos — raro, escalar"
+
+  # ---------- FAMILIA G · Cumplimiento y gobierno ----------
+  - id: 37
+    key: compliance
+    act: dom
+    v1: [7]
+    d: "Normativa aplicable (GDPR, licencias, retención)."
+    r:
+      - "Incumple."
+      - "Riesgo alto."
+      - "Riesgo medio."
+      - "Cumple con reservas."
+      - "Cumple con evidencia."
+    ev:
+      - "mapeo normativo"
+    na: "sin normativa aplicable declarada"
+  - id: 38
+    key: licensing
+    act: dom
+    v1: [7]
+    d: "Compatibilidad de licencias de dependencias y código."
+    r:
+      - "Licencia incompatible."
+      - "Riesgo de incompatibilidad."
+      - "Compatible con reservas."
+      - "Compatible."
+      - "Compatible con SBOM."
+    ev:
+      - "lista de licencias"
+      - "SBOM"
+    na: "sin dependencias externas"
+  - id: 39
+    key: auditability
+    act: core
+    v1: [8, 11]
+    d: "La decisión queda registrada con procedencia completa."
+    r:
+      - "Sin registro."
+      - "Registro incompleto."
+      - "Registro básico."
+      - "Registro completo."
+      - "Registro completo y consultable."
+    ev:
+      - "bitácora"
+      - "provenance"
+    na: "decisión efímera no auditable por diseño — escalar"
+  - id: 40
+    key: policy
+    act: core
+    v1: [8, 4]
+    d: "Respeta políticas internas declaradas en el repo."
+    r:
+      - "Viola política."
+      - "Viola parcialmente."
+      - "Cumple con excepciones."
+      - "Cumple."
+      - "Cumple y referencia la política."
+    ev:
+      - "policy docs"
+    na: "sin políticas aplicables"
+
+  # ---------- FAMILIA H · Producto y negocio ----------
+  - id: 41
+    key: requirement_fit
+    act: core
+    v1: [3, 8]
+    d: "Satisface el requisito original, no uno reinterpretado."
+    r:
+      - "No satisface."
+      - "Satisface parcialmente."
+      - "Satisface el requisito literal pero no el espíritu."
+      - "Satisface requisito y espíritu."
+      - "Satisface requisito, espíritu y criterios de aceptación."
+    ev:
+      - "requisito original"
+      - "criterios"
+    na: "sin requisito origen"
+  - id: 42
+    key: user_impact
+    act: opt
+    v1: [4, 6]
+    d: "Efecto en el usuario final, incluidos casos degradados."
+    r:
+      - "Impacto negativo grave."
+      - "Impacto negativo."
+      - "Neutro."
+      - "Positivo."
+      - "Positivo y medido."
+    ev:
+      - "user research"
+      - "métricas"
+    na: "sin usuario final identificable"
+  - id: 43
+    key: accessibility
+    act: core
+    v1: [4, 6]
+    d: "Principio general de accesibilidad (física, cognitiva, digital)."
+    r:
+      - "Barrera total."
+      - "Barreras graves."
+      - "Barreras parciales."
+      - "Accesible con reservas."
+      - "Accesible con evidencia."
+    ev:
+      - "a11y checklist"
+    na: "artefacto sin superficie de interacción humana"
+  - id: 44
+    key: i18n_l10n
+    act: dom
+    v1: [6]
+    d: "Internacionalización de producto: textos, formatos."
+    r:
+      - "Hardcoded."
+      - "Parcialmente externalizado."
+      - "Externalizado sin plurales."
+      - "Externalizado con plurales."
+      - "Externalizado con plurales y formatos."
+    ev:
+      - "ficheros i18n"
+    na: "producto de un solo locale"
+  - id: 45
+    key: rollout_risk
+    act: opt
+    v1: [10]
+    d: "Riesgo de despliegue: migraciones, flags, canary."
+    r:
+      - "Big-bang sin plan."
+      - "Rollout con plan parcial."
+      - "Rollout con canary."
+      - "Rollout con canary y rollback."
+      - "Rollout con canary, rollback y feature flags."
+    ev:
+      - "rollout plan"
+      - "flags"
+    na: "cambio sin despliegue"
+
+  # ---------- FAMILIA I · Coherencia del propio Crítico ----------
+  - id: 46
+    key: internal_consistency
+    act: core
+    v1: [9]
+    d: "Sus objeciones no se contradicen entre sí."
+    r:
+      - "Contradicción directa."
+      - "Contradicciones latentes."
+      - "Consistente salvo detalle."
+      - "Consistente."
+      - "Consistente y verificado por meta-review."
+    ev:
+      - "meta-review"
+    na: "revisión con una sola objeción — raro, escalar"
+  - id: 47
+    key: verdict_coherence
+    act: core
+    v1: [8]
+    d: "Veredicto coherente con puntuaciones por dimensión."
+    r:
+      - "Contradice puntuación."
+      - "Coherencia débil."
+      - "Coherencia parcial."
+      - "Coherente."
+      - "Coherente y documentado."
+    ev:
+      - "tabla puntuaciones"
+      - "veredicto"
+    na: "sin puntuaciones — inválido por diseño"
+  - id: 48
+    key: objection_priority
+    act: core
+    v1: [10]
+    d: "Objeciones priorizadas por severidad × blast-radius."
+    r:
+      - "Sin priorizar."
+      - "Priorización parcial."
+      - "Priorización razonable."
+      - "Priorización documentada."
+      - "Priorización documentada y validada."
+    ev:
+      - "orden de objeciones"
+    na: "una sola objeción"
+  - id: 49
+    key: budget_respect
+    act: core
+    v1: [1]
+    d: "Respeta presupuesto y no entra en bucle."
+    r:
+      - "Excede sin aviso."
+      - "Excede con aviso."
+      - "Dentro con eficiencia baja."
+      - "Dentro con eficiencia."
+      - "Dentro con eficiencia y trazado."
+    ev:
+      - "budget_consumed_pct"
+    na: "presupuesto ilimitado declarado"
+  - id: 50
+    key: provenance
+    act: core
+    v1: [8]
+    d: "Cada objeción guarda rúbrica, prompt, modelo y hash."
+    r:
+      - "Sin provenance."
+      - "Provenance parcial."
+      - "Provenance con versión de rúbrica."
+      - "Provenance completa."
+      - "Provenance completa + legacy hash si migrado."
+    ev:
+      - "provenance block"
+    na: "objeción generada antes de v3.0 — migrar"
+
+  # ---------- FAMILIA J · Calidad de datos ----------
+  - id: 51
+    key: data_integrity
+    act: core
+    v1: [3, 11]
+    d: "Restricciones, claves, unicidad, integridad referencial."
+    r:
+      - "Sin restricciones."
+      - "Parciales."
+      - "Declaradas sin enforced."
+      - "Enforced."
+      - "Enforced y verificadas."
+    ev:
+      - "DDL"
+      - "constraints"
+    na: "sin datos persistidos"
+  - id: 52
+    key: data_validation
+    act: core
+    v1: [3]
+    d: "Validación en frontera: tipos, rangos, formatos."
+    r:
+      - "Sin validación."
+      - "Validación parcial."
+      - "Validación en frontera."
+      - "Validación en frontera y dominio."
+      - "Validación exhaustiva con tests."
+    ev:
+      - "schema de validación"
+    na: "artefacto sin entrada de datos"
+  - id: 53
+    key: data_freshness
+    act: opt
+    v1: [3]
+    d: "Latencia de actualización y tolerancia a obsolescencia."
+    r:
+      - "Sin SLA."
+      - "SLA no medido."
+      - "SLA medido."
+      - "SLA medido y alertado."
+      - "SLA con tolerancia declarada."
+    ev:
+      - "SLA"
+      - "alerta"
+    na: "datos estáticos"
+  - id: 54
+    key: data_lineage
+    act: opt
+    v1: [3]
+    d: "Procedencia y transformaciones del dato rastreables."
+    r:
+      - "Sin linaje."
+      - "Linaje manual."
+      - "Linaje parcial."
+      - "Linaje completo."
+      - "Linaje completo + column-level."
+    ev:
+      - "linaje documentado"
+    na: "dato de una sola fuente trivial"
+  - id: 55
+    key: schema_evolution
+    act: dom
+    v1: [11]
+    d: "Cambios de esquema compatibles hacia atrás/adelante."
+    r:
+      - "Breaking sin plan."
+      - "Breaking con plan."
+      - "Compatible en un sentido."
+      - "Compatible bidireccional."
+      - "Compatible + expand/contract probado."
+    ev:
+      - "plan de migración"
+    na: "sin esquema versionado"
+  - id: 56
+    key: data_retention
+    act: dom
+    v1: [7]
+    d: "Política de retención y borrado aplicada de verdad."
+    r:
+      - "Sin política."
+      - "Política no aplicada."
+      - "Política aplicada manual."
+      - "Política aplicada automática."
+      - "Política aplicada + verificación."
+    ev:
+      - "policy de retención"
+    na: "datos efímeros por diseño"
+  - id: 57
+    key: pii_handling
+    act: core
+    v1: [2, 7]
+    d: "Detección, minimización, enmascarado y cifrado de PII."
+    r:
+      - "PII expuesta."
+      - "PII sin minimizar."
+      - "PII parcialmente protegida."
+      - "PII minimizada y enmascarada."
+      - "PII protegida con cifrado y auditoría."
+    ev:
+      - "clasificación"
+      - "policy PII"
+    na: "sin PII declarada"
+
+  # ---------- FAMILIA K · Concurrencia y distribuidos ----------
+  - id: 58
+    key: race_conditions
+    act: core
+    v1: [2, 10]
+    d: "Ausencia de carreras en accesos compartidos."
+    r:
+      - "Carrera obvia."
+      - "Carrera latente."
+      - "Mitigación parcial."
+      - "Sin carreras conocidas."
+      - "Sin carreras + test de estrés."
+    ev:
+      - "análisis de concurrencia"
+      - "test de estrés"
+    na: "artefacto single-threaded sin estado compartido"
+  - id: 59
+    key: deadlock_livelock
+    act: opt
+    v1: [10]
+    d: "Orden de adquisición de locks y ausencia de espera infinita."
+    r:
+      - "Deadlock posible."
+      - "Livelock posible."
+      - "Timeout mitiga."
+      - "Orden estricto sin deadlock."
+      - "Orden estricto + timeout + detección."
+    ev:
+      - "orden de locks"
+      - "timeouts"
+    na: "sin locks"
+  - id: 60
+    key: atomicity
+    act: core
+    v1: [2, 11]
+    d: "Operaciones compuestas se completan o no se aplican."
+    r:
+      - "Sin atomicidad."
+      - "Atomicidad parcial."
+      - "Atomicidad con compensación."
+      - "Transaccional."
+      - "Transaccional + verificación."
+    ev:
+      - "transacción"
+      - "compensación"
+    na: "operaciones idempotentes atómicas por diseño"
+  - id: 61
+    key: ordering
+    act: opt
+    v1: [10]
+    d: "Garantías de orden de eventos/mensajes."
+    r:
+      - "Sin orden."
+      - "Orden por partición."
+      - "Orden por clave."
+      - "Orden global garantizado."
+      - "Orden global + verificación."
+    ev:
+      - "garantía de orden"
+    na: "sistema sin eventos ordenables"
+  - id: 62
+    key: partition_tolerance
+    act: opt
+    v1: [10]
+    d: "Comportamiento bajo partición de red."
+    r:
+      - "Bloqueo total."
+      - "Degradación no declarada."
+      - "Degradación declarada."
+      - "Degradación controlada."
+      - "Degradación controlada + test de caos."
+    ev:
+      - "modelo CAP"
+      - "test de partición"
+    na: "sistema single-node sin red"
+  - id: 63
+    key: consistency_model
+    act: opt
+    v1: [10]
+    d: "Modelo declarado (fuerte/eventual) se respeta."
+    r:
+      - "No declarado."
+      - "Declarado no respetado."
+      - "Respetado en casos principales."
+      - "Respetado."
+      - "Respetado + test de consistencia."
+    ev:
+      - "modelo declarado"
+    na: "consistencia trivial por diseño"
+  - id: 64
+    key: backpressure
+    act: opt
+    v1: [10]
+    d: "El sistema frena en vez de colapsar."
+    r:
+      - "Colapso."
+      - "Colapso parcial."
+      - "Timeouts."
+      - "Backpressure real."
+      - "Backpressure + observabilidad."
+    ev:
+      - "config backpressure"
+    na: "carga acotada por diseño"
+  - id: 65
+    key: clock_skew
+    act: opt
+    v1: [10]
+    d: "No asume relojes sincronizados sin justificarlo."
+    r:
+      - "Asume sincronía."
+      - "Uso de reloj sin justificar."
+      - "Mitigación parcial."
+      - "Mitigación declarada."
+      - "Mitigación + NTP verificable."
+    ev:
+      - "uso de reloj"
+      - "NTP"
+    na: "sin dependencia temporal"
+
+  # ---------- FAMILIA L · Documentación ----------
+  - id: 66
+    key: doc_completeness
+    act: core
+    v1: [8, 6]
+    d: "Qué hace, cómo se usa, qué supone, qué limita."
+    r:
+      - "Sin doc."
+      - "Doc parcial."
+      - "Doc de uso."
+      - "Doc de uso + supuestos."
+      - "Doc completa con supuestos y límites."
+    ev:
+      - "README"
+      - "doc"
+    na: "artefacto trivial autoexplicativo"
+  - id: 67
+    key: doc_accuracy
+    act: core
+    v1: [3, 8]
+    d: "La doc coincide con el comportamiento real."
+    r:
+      - "Doc desactualizada."
+      - "Doc parcialmente correcta."
+      - "Doc correcta con huecos."
+      - "Doc correcta."
+      - "Doc correcta + verificada con tests."
+    ev:
+      - "doc"
+      - "comportamiento observado"
+    na: "sin doc previa"
+  - id: 68
+    key: adr_traceability
+    act: opt
+    v1: [8]
+    d: "Decisiones arquitectónicas registradas con contexto."
+    r:
+      - "Sin ADR."
+      - "ADR con contexto insuficiente."
+      - "ADR con contexto."
+      - "ADR con alternativas."
+      - "ADR con alternativas y consecuencias."
+    ev:
+      - "ADRs"
+    na: "sin decisiones arquitectónicas nuevas"
+  - id: 69
+    key: onboarding_cost
+    act: opt
+    v1: [6]
+    d: "Un nuevo miembro puede entenderlo sin preguntar al autor."
+    r:
+      - "Imposible sin autor."
+      - "Requiere muchas preguntas."
+      - "Requiere algunas."
+      - "Entendible con doc."
+      - "Entendible con doc + ejemplos."
+    ev:
+      - "onboarding test"
+    na: "artefacto efímero de un solo uso"
+  - id: 70
+    key: changelog
+    act: core
+    v1: [8]
+    d: "Cambios visibles declarados (breaking, deprecaciones, migración)."
+    r:
+      - "Sin changelog."
+      - "Changelog incompleto."
+      - "Changelog de cambios."
+      - "Changelog con breaking."
+      - "Changelog completo + guía de migración."
+    ev:
+      - "CHANGELOG"
+    na: "primera versión sin predecesora"
+
+  # ---------- FAMILIA M · Ética y legal ----------
+  - id: 71
+    key: ethics
+    act: opt
+    v1: [4]
+    d: "Impacto en personas, equidad, no manipulación."
+    r:
+      - "Impacto dañino."
+      - "Riesgo ético alto."
+      - "Riesgo mitigado."
+      - "Sin riesgo ético identificado."
+      - "Evaluación ética documentada."
+    ev:
+      - "evaluación ética"
+    na: "artefacto sin impacto humano"
+  - id: 72
+    key: transparency
+    act: core
+    v1: [4]
+    d: "El sistema no oculta lo que hace al usuario afectado."
+    r:
+      - "Ocultamiento deliberado."
+      - "Ocultamiento pasivo."
+      - "Transparencia parcial."
+      - "Transparencia."
+      - "Transparencia + explicabilidad."
+    ev:
+      - "UX de transparencia"
+      - "explicaciones"
+    na: "sin usuario afectado"
+  - id: 73
+    key: consent
+    act: dom
+    v1: [4, 7]
+    d: "Base legal y consentimiento donde aplique."
+    r:
+      - "Sin base legal."
+      - "Base legal dudosa."
+      - "Base legal sin consentimiento explícito."
+      - "Consentimiento explícito."
+      - "Consentimiento + granularidad + revocación."
+    ev:
+      - "policy de consentimiento"
+    na: "sin datos personales"
+  - id: 74
+    key: regulatory_mapping
+    act: dom
+    v1: [7]
+    d: "Mapeo explícito a normativa aplicable."
+    r:
+      - "Sin mapeo."
+      - "Mapeo genérico."
+      - "Mapeo parcial."
+      - "Mapeo por artículo."
+      - "Mapeo por artículo + evidencia."
+    ev:
+      - "matriz normativa"
+    na: "sin normativa sectorial"
+  - id: 75
+    key: dual_use_risk
+    act: opt
+    v1: [4, 7]
+    d: "El artefacto no habilita usos dañinos no previstos."
+    r:
+      - "Uso dañino posible."
+      - "Uso dañino plausible."
+      - "Mitigación parcial."
+      - "Riesgo acotado."
+      - "Riesgo acotado + monitoreo."
+    ev:
+      - "análisis dual-use"
+    na: "artefacto de propósito interno acotado"
+
+  # ---------- FAMILIA N · IA/LLM específico ----------
+  - id: 76
+    key: hallucination_risk
+    act: opt
+    v1: [3]
+    d: "Afirmaciones sin respaldo detectable; obliga a citar o abstenerse."
+    r:
+      - "Alucina sin control."
+      - "Alucina con frecuencia."
+      - "Alucina ocasional."
+      - "Cita o se abstiene."
+      - "Cita, se abstiene y se evalúa."
+    ev:
+      - "evals de fidelidad"
+      - "abstención"
+    na: "sin componente generativo"
+  - id: 77
+    key: prompt_robustness
+    act: opt
+    v1: [2]
+    d: "Resistencia a inyección, jailbreak y fuga de system prompt."
+    r:
+      - "Vulnerable."
+      - "Vulnerable a ataques conocidos."
+      - "Resiste básicos."
+      - "Resiste conocidos."
+      - "Resiste + red team documentado."
+    ev:
+      - "test de inyección"
+    na: "sin LLM"
+  - id: 78
+    key: output_determinism
+    act: opt
+    v1: [3]
+    d: "Temperatura, semillas y variabilidad declaradas."
+    r:
+      - "Aleatorio no declarado."
+      - "Declarado no controlado."
+      - "Semilla fijada."
+      - "Semilla + temperatura."
+      - "Semilla + temperatura + versión fijada."
+    ev:
+      - "config de generación"
+    na: "modelo determinista por diseño"
+  - id: 79
+    key: eval_coverage
+    act: opt
+    v1: [3]
+    d: "El cambio está cubierto por golden set / evals."
+    r:
+      - "Sin evals."
+      - "Evals desactualizadas."
+      - "Evals parciales."
+      - "Evals completas."
+      - "Evals completas + regresión."
+    ev:
+      - "golden set"
+      - "reporte de evals"
+    na: "sin componente LLM"
+  - id: 80
+    key: model_provenance
+    act: opt
+    v1: [8]
+    d: "Versión de modelo, proveedor y fecha registrados."
+    r:
+      - "Sin provenance."
+      - "Proveedor sin versión."
+      - "Versión sin fecha."
+      - "Versión + fecha."
+      - "Versión + fecha + proveedor + hash."
+    ev:
+      - "model card"
+    na: "sin modelo externo"
+  - id: 81
+    key: teaching_value
+    act: opt
+    v1: [3]
+    d: "Qué enseña la ficha y si la pérdida supera el umbral (mejora 2)."
+    r:
+      - "Pérdida >50%."
+      - "Pérdida 10–50%."
+      - "Pérdida <10%."
+      - "Sin pérdida."
+      - "Sin pérdida + mejora."
+    ev:
+      - "eval de teaching"
+    na: "artefacto sin propósito pedagógico"
+  - id: 82
+    key: guardrail_coverage
+    act: opt
+    v1: [2]
+    d: "Filtros de entrada/salida y su tasa de FP/FN."
+    r:
+      - "Sin guardrails."
+      - "Guardrails de entrada."
+      - "Guardrails de entrada+salida."
+      - "Guardrails + métricas."
+      - "Guardrails + métricas + tuning."
+    ev:
+      - "config guardrails"
+      - "métricas FP/FN"
+    na: "sin componente generativo"
+
+  # ---------- FAMILIA O · Entrega y operación ----------
+  - id: 83
+    key: deployability
+    act: core
+    v1: [8]
+    d: "Se despliega con el proceso estándar, sin pasos ocultos."
+    r:
+      - "Imposible."
+      - "Manual con pasos ocultos."
+      - "Manual documentado."
+      - "Automático."
+      - "Automático + reproducible."
+    ev:
+      - "pipeline"
+      - "runbook"
+    na: "artefacto no desplegable"
+  - id: 84
+    key: rollback_plan
+    act: core
+    v1: [10]
+    d: "Plan de reversión probado, no teórico."
+    r:
+      - "Sin rollback."
+      - "Rollback teórico."
+      - "Rollback documentado."
+      - "Rollback probado."
+      - "Rollback probado + automatizado."
+    ev:
+      - "rollback plan"
+      - "test de rollback"
+    na: "cambio trivialmente reversible"
+  - id: 85
+    key: migration_safety
+    act: dom
+    v1: [10]
+    d: "Migraciones reversibles o con expand/contract."
+    r:
+      - "Irreversible."
+      - "Reversible manual."
+      - "Reversible con plan."
+      - "Expand/contract."
+      - "Expand/contract + verificado."
+    ev:
+      - "plan de migración"
+    na: "sin migración de datos"
+  - id: 86
+    key: feature_flag_hygiene
+    act: opt
+    v1: [8]
+    d: "Flags con dueño, fecha de caducidad y estado conocido."
+    r:
+      - "Flags huérfanos."
+      - "Flags sin dueño."
+      - "Flags con dueño."
+      - "Flags con dueño + caducidad."
+      - "Flags con dueño + caducidad + estado auditado."
+    ev:
+      - "registro de flags"
+    na: "sin feature flags"
+  - id: 87
+    key: config_drift
+    act: opt
+    v1: [8]
+    d: "Configuración versionada sin diferencias no declaradas."
+    r:
+      - "Drift grave."
+      - "Drift parcial."
+      - "Drift documentado."
+      - "Sin drift."
+      - "Sin drift + verificación automática."
+    ev:
+      - "config diff"
+    na: "config única por diseño"
+  - id: 88
+    key: secrets_management
+    act: core
+    v1: [2]
+    d: "Secretos fuera del repo, rotables, con alcance mínimo."
+    r:
+      - "Secretos en repo."
+      - "Secretos en env sin rotación."
+      - "Rotación manual."
+      - "Rotación automática."
+      - "Rotación + alcance mínimo + auditoría."
+    ev:
+      - "secrets config"
+      - "rotación"
+    na: "sin secretos"
+
+  # ---------- FAMILIA P · Experiencia y accesibilidad ----------
+  - id: 89
+    key: wcag_compliance
+    act: dom
+    v1: [4, 6]
+    d: "Estándar WCAG aplicable: contraste, foco, teclado, lector."
+    r:
+      - "Falla WCAG A."
+      - "Falla AA."
+      - "Cumple A."
+      - "Cumple AA."
+      - "Cumple AAA donde aplica."
+    ev:
+      - "auditoría a11y"
+    na: "sin UI digital"
+  - id: 90
+    key: ux_degradation
+    act: opt
+    v1: [6]
+    d: "Comportamiento en error/carga/vacío sin romper la experiencia."
+    r:
+      - "Rompe UX."
+      - "Degrada sin aviso."
+      - "Degrada con aviso."
+      - "Degrada con gracia."
+      - "Degrada con gracia + test."
+    ev:
+      - "estados UX"
+    na: "sin superficie UX"
+  - id: 91
+    key: locale_robustness
+    act: dom
+    v1: [6]
+    d: "TZ, moneda, RTL, pluralización."
+    r:
+      - "Sin soporte."
+      - "Soporte parcial."
+      - "Soporte declarado."
+      - "Soporte completo."
+      - "Soporte completo + tests de locale."
+    ev:
+      - "tests de locale"
+    na: "producto de un solo locale sin TZ"
+  - id: 92
+    key: content_clarity
+    act: opt
+    v1: [6]
+    d: "Mensajes comprensibles, sin jerga filtrada al usuario."
+    r:
+      - "Jerga incomprensible."
+      - "Jerga técnica."
+      - "Claro con tecnicismos."
+      - "Claro."
+      - "Claro + testeado con usuarios."
+    ev:
+      - "copy review"
+    na: "sin texto para usuario final"
+
+  # ---------- FAMILIA Q · Resiliencia avanzada ----------
+  - id: 93
+    key: chaos_readiness
+    act: opt
+    v1: [10]
+    d: "Comportamiento bajo fallo inyectado."
+    r:
+      - "Colapsa."
+      - "Degrada sin control."
+      - "Degrada con control."
+      - "Resiste."
+      - "Resiste + test de caos documentado."
+    ev:
+      - "chaos test"
+    na: "sistema trivial sin componentes distribuidos"
+  - id: 94
+    key: graceful_degradation
+    act: core
+    v1: [10]
+    d: "Funcionalidad reducida en vez de caída total."
+    r:
+      - "Caída total."
+      - "Caída parcial."
+      - "Degradación con aviso."
+      - "Degradación controlada."
+      - "Degradación controlada + observabilidad."
+    ev:
+      - "plan de degradación"
+    na: "artefacto sin modo reducido posible"
+  - id: 95
+    key: circuit_breaking
+    act: opt
+    v1: [10]
+    d: "Corta dependencias enfermas en vez de propagar el fallo."
+    r:
+      - "Sin circuit breaker."
+      - "Manual."
+      - "Automático básico."
+      - "Automático con métricas."
+      - "Automático + tuning."
+    ev:
+      - "config CB"
+    na: "sin dependencias externas"
+  - id: 96
+    key: incident_readiness
+    act: opt
+    v1: [8]
+    d: "Runbook, alertas y escalado existen y son accionables."
+    r:
+      - "Sin runbook."
+      - "Runbook desactualizado."
+      - "Runbook básico."
+      - "Runbook + alertas."
+      - "Runbook + alertas + simulación."
+    ev:
+      - "runbook"
+      - "alertas"
+    na: "artefacto sin operación"
+  - id: 97
+    key: postmortem_hooks
+    act: opt
+    v1: [8]
+    d: "El sistema deja evidencia suficiente para postmortem."
+    r:
+      - "Sin evidencia."
+      - "Evidencia insuficiente."
+      - "Evidencia parcial."
+      - "Evidencia suficiente."
+      - "Evidencia suficiente + retención."
+    ev:
+      - "logs"
+      - "traces"
+    na: "artefacto sin runtime"
+
+  # ---------- FAMILIA R · Mantenibilidad fina ----------
+  - id: 98
+    key: naming
+    act: opt
+    v1: [8]
+    d: "Nombres revelan intención; sin abreviaturas opacas."
+    r:
+      - "Nombres opacos."
+      - "Abreviaturas no documentadas."
+      - "Nombres claros con excepciones."
+      - "Nombres claros."
+      - "Nombres autoexplicativos."
+    ev:
+      - "revisión de nombres"
+    na: "artefacto sin identificadores propios"
+  - id: 99
+    key: dead_code
+    act: core
+    v1: [8]
+    d: "No introduce código muerto ni rutas inalcanzables."
+    r:
+      - "Código muerto abundante."
+      - "Rutas inalcanzables."
+      - "Código muerto puntual."
+      - "Sin código muerto."
+      - "Sin código muerto + verificación."
+    ev:
+      - "análisis estático"
+    na: "artefacto no ejecutable"
+  - id: 100
+    key: duplication
+    act: opt
+    v1: [8]
+    d: "No duplica lógica existente; si lo hace, lo justifica."
+    r:
+      - "Duplicación grave."
+      - "Duplicación sin justificar."
+      - "Duplicación justificada."
+      - "Sin duplicación."
+      - "Sin duplicación + refactor."
+    ev:
+      - "análisis de duplicados"
+    na: "artefacto sin lógica repetible"
+  - id: 101
+    key: complexity_delta
+    act: core
+    v1: [8]
+    d: "Complejidad ciclomática/cognitiva no sube sin justificación."
+    r:
+      - "Sube mucho."
+      - "Sube algo."
+      - "Neutro."
+      - "Baja."
+      - "Baja con evidencia."
+    ev:
+      - "métrica de complejidad"
+    na: "artefacto no medible"
+  - id: 102
+    key: dependency_freshness
+    act: opt
+    v1: [5]
+    d: "Dependencias no obsoletas ni sin mantenimiento."
+    r:
+      - "Abandonadas."
+      - "Obsoletas."
+      - "Actualizadas con deuda."
+      - "Actualizadas."
+      - "Actualizadas + política."
+    ev:
+      - "lockfile"
+      - "changelog de deps"
+    na: "sin dependencias externas"
+  - id: 103
+    key: test_depth
+    act: core
+    v1: [11]
+    d: "No solo hay tests: cubren los caminos que la crítica señala."
+    r:
+      - "Sin tests."
+      - "Tests superficiales."
+      - "Tests de caminos principales."
+      - "Tests de caminos y bordes."
+      - "Tests + property-based."
+    ev:
+      - "cobertura"
+      - "tests de borde"
+    na: "artefacto no ejecutable"
+
+  # ---------- FAMILIA S · Transversal universal ----------
+  - id: 104
+    key: opportunity_cost
+    act: core
+    v1: [1]
+    d: "No solo cuánto cuesta hacerlo, sino qué se deja de hacer por ello."
+    r:
+      - "Coste de oportunidad ignorado."
+      - "Mencionado sin cuantificar."
+      - "Cuantificado parcial."
+      - "Cuantificado."
+      - "Cuantificado + alternativas evaluadas."
+    ev:
+      - "análisis de alternativas"
+    na: "artefacto sin alternativa de asignación"
+  - id: 105
+    key: human_factor_friction
+    act: core
+    v1: [4, 6]
+    d: "Los planes fallan por fuerza de voluntad/coordinación humana irrealista."
+    r:
+      - "Ignorado."
+      - "Mencionado sin mitigar."
+      - "Mitigación parcial."
+      - "Mitigación con fricción reducida."
+      - "Mitigación + validación con usuarios reales."
+    ev:
+      - "análisis de carga humana"
+    na: "artefacto sin intervención humana"
+  - id: 106
+    key: second_order_effects
+    act: core
+    v1: [10]
+    d: "Consecuencias sistémicas indirectas (bono velocidad → cuelgue llamadas → caída retención)."
+    r:
+      - "No considerados."
+      - "Identificados sin análisis."
+      - "Analizados cualitativamente."
+      - "Analizados con evidencia."
+      - "Analizados + monitoreo de efectos."
+    ev:
+      - "análisis de efectos"
+    na: "artefacto sin efecto sistémico"
+  - id: 107
+    key: portabilidad_multiplataforma
+    act: opt
+    v1: [1, 4]
+    d: "Instalable y operable en Windows, Linux, macOS y otros, con capacidades declaradas por perfil."
+    r: ["No verificable.", "Solo un sistema operativo.", "Multiplataforma parcial con limitaciones declaradas.", "Multiplataforma con capacidades declaradas por perfil.", "Multiplataforma con capacidades verificadas en cada SO."]
+    ev: ["guia de instalacion por SO", "matriz de pruebas por SO", "capacidades del perfil"]
+    na: "artefacto sin ejecucion fuera de un unico entorno"
+
+  - id: 108
+    key: capacidades_declaradas_sin_simulacion
+    act: core
+    v1: [3]
+    d: "Toda capacidad ausente se declara; nada se presenta como disponible sin demostrarlo."
+    r: ["Simula capacidades ausentes.", "Declara parcialmente, con afirmaciones sin prueba.", "Declara ausencias con evidencia parcial.", "Declara ausencias y limitaciones con evidencia.", "Declara ausencias con prueba negativa verificable."]
+    ev: ["sondeo de capacidades", "prueba negativa", "perfil de entorno"]
+    na: "artefacto sin capacidades de entorno"

@@ -1,0 +1,34 @@
+case_id: GC-003
+artifact:
+  id: PROP-HIST-003
+  domain_profile: tech
+  sub_profile: tech.data
+  description: "Migración de tabla users: drop column legacy_id y rename email→email_norm"
+  source: "bitacora://2026-03-10/PROP-003"
+triage:
+  union_raw_count: 35
+  active_dimensions: ["1", "2", "4", "5", "9", "10", "11", "15", "17", "24", "25", "26", "51", "55", "58", "60", "83", "84", "85", "101"]
+expected:
+  verdict:
+    state_class: TERMINAL
+    status: NO_PASA
+    reason_code: null
+  objections:
+    - dimension: "17"
+      severity: blocker
+      claim_contains: "rollback"
+    - dimension: "55"
+      severity: major
+      claim_contains: "compatibilidad"
+  audit_trail_min_size: 0
+  implicit_assumptions_min: 0
+ground_truth:
+  gate_c_decision: NO_PASA
+  gate_c_date: "2026-03-15"
+  gate_c_notes: "Rechazado — sin plan de rollback probado ni expand/contract"
+  accepted_risks: []
+metadata:
+  human_reviewed: true
+  reviewer: "human"
+  created: "2026-10-26"
+  tags: [migracion, blocker, rollback]

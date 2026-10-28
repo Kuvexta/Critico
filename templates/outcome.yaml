@@ -1,0 +1,34 @@
+# Plantilla de OUTCOME (bucle de mejora) — rellena y valida con:
+# BORRADOR: completar observacion y procedencia antes de usar en metricas.
+#   python critico_cli.py validar --outcome outcome.yaml
+outcome_id: OUT-000000000000
+verdict_id: VRD-000000000000
+artifact_id: "<id del artefacto>"
+horizon: corto_plazo                   # inmediato|corto_plazo|largo_plazo
+observed_at: "<iso8601>"
+objection_outcomes:                    # por cada objeción: ¿se materializó?
+  - objection_id: OBJ-000000000000
+    dimension: "<id>"
+    profile: "<perfil del triage>"
+    materialized: desconocido          # si|no|parcial|desconocido
+    evidence: "<qué se observó y dónde>"
+    observed_cost: null                # impacto real si se materializó
+    mitigacion_aplicada: null           # true/false si se sabe; null = intervencion NO informada (se reporta)
+    propuesta_cancelada: null           # ¿la propuesta se cancelo o cambio tras la revision?
+unpredicted_failures:                  # fallas que NADIE predijo (el dato más valioso)
+  - dimension: "<id>"
+    profile: "<perfil>"
+    description: "<qué falló>"
+    severity: minor
+    evidence: "<evidencia>"
+calibration_sample: null                # al observar: {predicted_confidence: 0.0-1.0, outcome: si|no|parcial}
+seguimiento:
+  completo: true                        # false si se omitieron objeciones incompatibles (--ignorar-incompatibles)
+  omitidos: []                          # OBJ-ids omitidos — el resultado será SEGUIMIENTO PARCIAL
+provenance:
+  rubric_version: "3.3.0"
+  model_version: "<modelo>"
+  artifact_hash: "<sha>"
+  outcome_schema_version: "3.4.0"
+  observed_by: autor                   # autor|auditor|verificador|gate_c|automatico
+  validated_by: null

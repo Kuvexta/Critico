@@ -1,0 +1,124 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://critico/v3.4/schema/objection.yaml"
+title: Objection
+type: object
+required: [objection_id, gate, artifact_id, domain_profile, timestamp,
+           dimension, severity, claim, steelman, assumptions,
+           evidence_locator, counterfactual, falsification,
+           mitigation_vector, mitigation_type, verification_mechanism,
+           blast_radius, time_horizon, confidence, provenance]
+additionalProperties: false
+properties:
+  objection_id:      { type: string, pattern: "^OBJ-[a-f0-9]{12}$" }
+  gate:              { type: string, enum: [GATE_B] }
+  artifact_id:       { type: string }
+  domain_profile:    { type: string, enum: [tech, legal, business, personal, health, ops] }
+  timestamp:         { type: string, format: date-time }
+  dimension:         { type: array, minItems: 1, items: { type: string } }
+  severity:          { type: string, enum: [blocker, major, minor, nit] }
+  claim:             { type: string, minLength: 1 }
+  steelman:          { type: string, minLength: 1 }
+  assumptions:
+    type: array
+    items:
+      type: object
+      required: [text, status]
+      properties:
+        text:   { type: string }
+        status: { type: string, enum: [verified, plausible, unverified, contradicted] }
+  evidence_locator:
+    type: array
+    minItems: 1
+    items: { type: string }
+  counterfactual:    { type: string, minLength: 1 }
+  falsification:     { type: string, minLength: 1 }
+  mitigation_vector: { type: string, minLength: 1 }
+  mitigation_type:   { type: string, enum: [fix, constraint, redesign_directive, acceptance_needed] }
+  verification_mechanism: { type: string, minLength: 1 }
+  blast_radius:
+    type: object
+    required: [scope, impact_types, reversible]
+    properties:
+      scope:        { type: string, enum: [puntual, area_proceso, sistema_completo, ecosistema_externo] }
+      impact_types:
+        type: array
+        minItems: 1
+        items: { type: string, enum: [financiero, operativo, reputacional, legal, salud_fisica, emocional] }
+      reversible:   { type: string, enum: [trivial, con_plan_y_costo, irreversible] }
+  time_horizon:      { type: string, enum: [inmediato, corto_plazo, largo_plazo] }
+  confidence:        { type: number, minimum: 0.0, maximum: 1.0 }
+  # v3.3 · I2 — relación padre-hijo
+  parent_id:
+    type: [string, "null"]
+    description: "artifact_id del plan padre si este artefacto es un paso de un plan"
+  step_index:
+    type: [integer, "null"]
+    minimum: 1
+    description: "Índice del paso dentro del plan padre (T-001 = 1)"
+  # v3.3 · M-A — continuidad histórica ángulos v1
+  v1_angle:
+    type: array
+    description: "Mapeo a los 11 ángulos v1 para continuidad histórica"
+    items:
+      type: integer
+      minimum: 1
+      maximum: 11
+  # CAMBIO-05-rev4 (aprobado 26/10) · v3.4 · trazabilidad de evidencias
+  # (aditivo: evidence_locator v3.3 permanece intacto)
+  evidence_detail:
+    type: array
+    description: "Detalle estructurado de cada evidencia: fuente, fecha de consulta, tipo y hash opcional"
+    items:
+      type: object
+      additionalProperties: false
+      required: [source, accessed_at, kind]
+      properties:
+        source:
+          type: string
+          minLength: 1
+        accessed_at:
+          type: string
+          format: date-time
+        kind:
+          type: string
+          enum: [hecho, inferencia, hipotesis]
+        hash:
+          type: string
+          pattern: "^[a-f0-9]{64}$"
+          description: "SHA-256 calculado del recurso (si es fichero local). HASH_VERIFICADO demuestra integridad, NO veracidad"
+        vigencia_dias:
+          type: integer
+          minimum: 0
+          description: "Política de vigencia declarada por la organización (opcional)"
+  contradictory_evidence:
+    type: array
+    description: "Evidencia que contradice la conclusión — obliga a mostrarla, no solo lo que favorece"
+    items:
+      type: object
+      additionalProperties: false
+      required: [source, accessed_at]
+      properties:
+        source: { type: string }
+        accessed_at: { type: string, format: date-time }
+  unverified_info:
+    type: array
+    description: "Información que no pudo comprobarse — delimita lo inaccesible"
+    items:
+      type: object
+      additionalProperties: false
+      required: [source, accessed_at]
+      properties:
+        source: { type: string }
+        accessed_at: { type: string, format: date-time }
+  provenance:
+    type: object
+    required: [rubric_version, prompt_version, model_version, artifact_hash]
+    properties:
+      rubric_version:  { type: string }
+      prompt_version:  { type: string }
+      model_version:   { type: string }
+      artifact_hash:   { type: string }
+      triage_profile:  { type: string }
+      triage_rationale: { type: string }
+      migrated_from_v2: { type: boolean }
+      legacy_v2_hash:  { type: string }

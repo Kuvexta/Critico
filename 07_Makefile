@@ -1,0 +1,74 @@
+.PHONY: all install test test-m1 test-m2 test-m3 test-r1 test-r2 test-r4 \
+        test-g1 test-g2 test-rubric test-schemas test-i1 test-i2 test-i3 test-m-prod \
+        cover lint verify-freeze clean help \
+        eval eval-json eval-baseline eval-panel eval-panel-open \
+        eval-snapshot eval-history eval-history-open eval-prune
+PYTHON ?= python3
+PYTEST ?= pytest
+all: verify-freeze test eval
+help:
+	@echo "Crítico v3.3 — objetivos disponibles:"
+	@echo "  install         Instala dependencias"
+	@echo "  all             verify-freeze + test + eval"
+	@echo "  test            Suite completa (153 tests)"
+	@echo "  test-m1/m2/m3   Invariantes micro v3.1"
+	@echo "  test-r1/r2/r4   Refinamientos v3.1"
+	@echo "  test-g1/g2      Enforcement v3.2"
+	@echo "  test-i1/i2/i3   Integración v3.3"
+	@echo "  test-m-prod     Mejoras v3.3 (M-A a M-F)"
+	@echo "  test-rubric     Integridad de rubric.yaml"
+	@echo "  test-schemas    Validación estructural de schema/*.yaml"
+	@echo "  eval            Evals offline + fail-on-regression"
+	@echo "  eval-panel      Genera panel-evals.html"
+	@echo "  eval-history    Snapshot + dashboard histórico"
+	@echo "  eval-prune      Aplica retención"
+	@echo "  verify-freeze   Verifica freeze v3.3"
+	@echo "  lint            ruff + yamllint"
+	@echo "  clean           Borra caché"
+install:
+	$(PYTHON) -m pip install -r tests/requirements.txt
+test:
+	@test -d tests || { echo "[!] tests/ no materializado (ver 10_Anexo_codigo_historico.md y 16_GATE_B_Autoauditoria.md O1)"; exit 1; }
+	$(PYTEST) tests/ -v
+test-m1:   $(PYTEST) tests/test_triage_m1.py -v
+test-m2:   $(PYTEST) tests/test_triage_m2.py -v
+test-m3:   $(PYTEST) tests/test_verdict_m2_m3_r1.py -v -k "m3"
+test-r1:   $(PYTEST) tests/test_verdict_m2_m3_r1.py -v -k "r1"
+test-r2:   $(PYTEST) tests/test_migration_r2.py -v
+test-r4:   $(PYTEST) tests/test_risk_accepted_r4.py -v
+test-g1:   $(PYTEST) tests/test_verdict_enforcement_g1_g2.py -v -k "g1"
+test-g2:   $(PYTEST) tests/test_verdict_enforcement_g1_g2.py -v -k "g2"
+test-rubric:   $(PYTEST) tests/test_rubric.py -v
+test-schemas:  $(PYTEST) tests/test_schema_structural.py -v
+test-i1:   $(PYTEST) tests/test_integration_i1.py -v
+test-i2:   $(PYTEST) tests/test_integration_i2.py -v
+test-i3:   $(PYTEST) tests/test_integration_i3.py -v
+test-m-prod: $(PYTEST) tests/test_integration_improvements.py -v
+eval:
+	@test -f evals/cli.py || { echo "[!] evals/cli.py no materializado (ver 10_Anexo_codigo_historico.md)"; exit 1; }
+	$(PYTHON) -m evals.cli --mode offline --fail-on-regression
+eval-json:
+	$(PYTHON) -m evals.cli --mode offline --json
+eval-baseline:
+	$(PYTHON) -m evals.cli --mode offline --write-baseline
+eval-panel:
+	$(PYTHON) scripts/render_eval_panel.py --out panel-evals.html
+eval-panel-open:
+	$(PYTHON) scripts/render_eval_panel.py --out panel-evals.html --open
+eval-snapshot:
+	$(PYTHON) scripts/render_eval_history.py --snapshot
+eval-history:
+	$(PYTHON) scripts/render_eval_history.py --snapshot --render --out dashboard-evals.html
+eval-history-open:
+	$(PYTHON) scripts/render_eval_history.py --snapshot --render --out dashboard-evals.html --open
+eval-prune:
+	$(PYTHON) scripts/render_eval_history.py --prune
+cover:
+	$(PYTEST) tests/ --cov=tests --cov-report=term-missing
+lint:
+	@command -v ruff >/dev/null 2>&1 && ruff check tests/ migration/ scripts/ evals/ || echo "[!] ruff no instalado"
+	@command -v yamllint >/dev/null 2>&1 && yamllint -d "{extends: relaxed, rules: {line-length: {max: 200}}}" schema/ rubric.yaml critic.config.yaml || echo "[!] yamllint no instalado"
+verify-freeze:
+	@$(PYTHON) scripts/verify_freeze.py
+clean:
+	rm -rf .pytest_cache tests/__pycache__ tests/helpers/__pycache__ .coverage htmlcov .ruff_cache

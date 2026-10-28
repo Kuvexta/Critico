@@ -1,0 +1,122 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://critico/v3.4/schema/verdict.yaml"
+title: Verdict
+type: object
+required: [verdict_id, artifact_id, gate, timestamp, state_class, status]
+additionalProperties: false
+properties:
+  verdict_id:  { type: string, pattern: "^VRD-[a-f0-9]{12}$" }
+  artifact_id: { type: string }
+  gate:        { type: string, enum: [GATE_B] }
+  timestamp:   { type: string, format: date-time }
+  state_class:
+    type: string
+    enum: [TERMINAL, OPERATIONAL_SUSPENSION]
+  status:
+    type: string
+    enum: [PASA, PASA_CON_CONDICIONES, NO_PASA, NECESITA_INFO, REVISION_PARCIAL,
+           RIESGO_NO_EVALUADO]
+  reason_code:
+    type: [string, "null"]
+    enum: [OPAQUE_STRUCTURE, SCOPE_UNCLEAR, TIMEBOX_EXPIRED, BUDGET_EXHAUSTED,
+           GATE_SKIPPED, STACK_NOT_MAPPED, PLAN_BLOCKED, null]
+  suspension_control:
+    type: [object, "null"]
+    description: "Obligatorio si state_class == OPERATIONAL_SUSPENSION (G1)"
+    required: [cycle_count, max_cycles, timeout_hours, target]
+    properties:
+      cycle_count:   { type: integer, minimum: 0, maximum: 2 }
+      max_cycles:    { type: integer, const: 2 }
+      timeout_hours: { type: integer, minimum: 1 }
+      target:        { type: string, enum: [author, orchestrator] }
+      suspension_reason:
+        type: string
+        enum: [MISSING_INFO, SPLIT_OR_SCOPE_ACCEPTANCE_REQUIRED,
+               BUDGET_EXHAUSTED, STACK_NOT_MAPPED, PLAN_BLOCKED]
+      missing_info_questions: { type: array, items: { type: string } }
+      unreviewed_dimensions:  { type: array, items: { type: string } }
+      # CAMBIO-01-rev3 (aprobado 26/10) · v3.4 · M3 definitivo
+      suspension_id:
+        type: [string, "null"]
+        pattern: "^SUSP-[a-f0-9]{12}$"
+        description: "Identificador de la suspensión — vincula el hash al ciclo concreto que se reinicia"
+      artifact_hash_at_suspension:
+        type: [string, "null"]
+        pattern: "^[a-f0-9]{64}$"
+        description: "SHA-256 del artefacto EN EL MOMENTO de la suspensión (calculado, no declarado a mano)"
+  audit_trail_passed_checks:
+    type: array
+    description: "Obligatorio y con >=1 elemento si status ∈ {PASA, PASA_CON_CONDICIONES} (G2)"
+    items:
+      type: object
+      required: [assumption, dimension, attack_vector, resistance_evidence, confidence]
+      properties:
+        assumption:          { type: string }
+        dimension:           { type: string }
+        attack_vector:       { type: string }
+        resistance_evidence: { type: string }
+        confidence:          { type: number, minimum: 0, maximum: 1 }
+  summary_metrics:
+    type: object
+    required: [implicit_assumptions_discovered, blockers_count, majors_count,
+               active_accepted_risks, budget_consumed_pct]
+    properties:
+      implicit_assumptions_discovered: { type: integer, minimum: 0 }
+      blockers_count:                  { type: integer, minimum: 0 }
+      majors_count:                    { type: integer, minimum: 0 }
+      active_accepted_risks:           { type: array, items: { type: string } }
+      budget_consumed_pct:             { type: number, minimum: 0, maximum: 100 }
+      suspension_cycles_reset_reason:
+        type: [string, "null"]
+        enum: [artifact_hash_change_and_questions_resolved, null]
+      # CAMBIO-01-rev3 (aprobado 26/10) · v3.4 · M3 definitivo
+      reset_of_suspension:
+        type: [string, "null"]
+        pattern: "^SUSP-[a-f0-9]{12}$"
+        description: "Suspensión concreta que se reinicia (debe existir en la bitácora con su hash)"
+      # v3.3 · I3 + M-E
+      active_skip_incidents:
+        type: integer
+        minimum: 0
+        description: "Número de SKIP_INCIDENT vigentes (no resueltos) para este artefacto"
+      skip_incident_ids:
+        type: array
+        items: { type: string, pattern: "^SKP-[a-f0-9]{12}$" }
+        description: "IDs de incidencias de skip activas"
+allOf:
+  # G1 · OPERATIONAL_SUSPENSION ⇒ suspension_control objeto no-null
+  - if:
+      properties:
+        state_class: { const: OPERATIONAL_SUSPENSION }
+    then:
+      required: [suspension_control]
+      properties:
+        suspension_control: { type: "object" }
+  # G1-bis · TERMINAL ⇒ suspension_control null
+  - if:
+      properties:
+        state_class: { const: TERMINAL }
+    then:
+      properties:
+        suspension_control: { type: "null" }
+  # G2 · PASA / PASA_CON_CONDICIONES ⇒ audit_trail con >=1
+  - if:
+      properties:
+        status: { enum: [PASA, PASA_CON_CONDICIONES] }
+    then:
+      required: [audit_trail_passed_checks]
+      properties:
+        audit_trail_passed_checks:
+          type: array
+          minItems: 1
+  # I3 · GATE_SKIPPED solo puede aparecer en NO_PASA terminal
+  # (required en el if: sin reason_code la condición NO aplica — corrección de la
+  #  revisión independiente 26/10: antes la condición disparaba también al omitir el campo)
+  - if:
+      required: [reason_code]
+      properties:
+        reason_code: { const: GATE_SKIPPED }
+    then:
+      properties:
+        status: { const: NO_PASA }
+        state_class: { const: TERMINAL }

@@ -1,0 +1,42 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://critico/v3.3/schema/skip_incident.yaml"
+title: SkipIncident
+type: object
+required:
+  - incident_id
+  - artifact_id
+  - expected_gate
+  - detected_by
+  - detected_at
+  - severity
+  - policy_ref
+additionalProperties: false
+properties:
+  incident_id:
+    type: string
+    pattern: "^SKP-[a-f0-9]{12}$"
+  artifact_id: { type: string }
+  expected_gate:
+    type: string
+    enum: [GATE_B, GATE_C]
+  detected_by:
+    type: string
+    enum: [check_encargo_v2, manual, scheduled_audit]
+  detected_at: { type: string, format: date-time }
+  severity:
+    type: string
+    enum: [blocker, major]
+  policy_ref:
+    type: string
+    description: "Referencia a la política violada (ej. P21)"
+  evidence:
+    type: array
+    items: { type: string }
+    description: "Evidencia de la ausencia de revisión (ej. bitácora sin entrada)"
+  resolution:
+    type: [object, "null"]
+    properties:
+      resolved_at: { type: string, format: date-time }
+      resolved_by: { type: string }
+      action: { type: string, enum: [re_reviewed, risk_accepted, policy_exception] }
+      notes: { type: string }

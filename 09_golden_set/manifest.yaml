@@ -1,0 +1,24 @@
+manifest_version: 3.3.0
+total_cases: 4
+last_updated: '2026-10-26'
+cases:
+- id: GC-001
+  tag: pasa_clean
+  domain: tech
+  expected_status: PASA
+  description: Cambio de configuración con evidencia y audit trail completo
+- id: GC-002
+  tag: pasa_con_condiciones
+  domain: tech
+  expected_status: PASA_CON_CONDICIONES
+  description: Feature nueva con condiciones de levantamiento claras
+- id: GC-003
+  tag: no_pasa_blocker
+  domain: tech
+  expected_status: NO_PASA
+  description: Migración sin rollback — blocker de blast_radius
+- id: GC-004
+  tag: riesgo_no_evaluado
+  domain: ops
+  expected_status: RIESGO_NO_EVALUADO
+  description: SLA no verificado — timeout sin respuesta del autor

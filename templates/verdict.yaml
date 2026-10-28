@@ -1,0 +1,30 @@
+# Plantilla de VEREDICTO — rellena y valida con:
+# BORRADOR: --borrador solo comprueba estructura; sin esa opcion se exigen fechas reales.
+#   python critico_cli.py validar --verdict verdict.yaml
+verdict_id: VRD-000000000000
+artifact_id: "<id del artefacto>"
+gate: GATE_B
+timestamp: "<iso8601>"
+state_class: TERMINAL                  # TERMINAL|OPERATIONAL_SUSPENSION
+status: PASA_CON_CONDICIONES           # PASA|PASA_CON_CONDICIONES|NO_PASA|NECESITA_INFO|REVISION_PARCIAL|RIESGO_NO_EVALUADO
+reason_code: null                      # OPAQUE_STRUCTURE|SCOPE_UNCLEAR|TIMEBOX_EXPIRED|BUDGET_EXHAUSTED|GATE_SKIPPED|STACK_NOT_MAPPED|PLAN_BLOCKED|null
+suspension_control: null               # G1: objeto si OPERATIONAL_SUSPENSION
+                                        #   v3.4 (CAMBIO-01-rev3): al suspender, incluye:
+                                        #   suspension_id: SUSP-<12 hex>   (identifica el ciclo)
+                                        #   artifact_hash_at_suspension: <sha256 calculado del artefacto>
+audit_trail_passed_checks:             # G2: ≥1 si PASA/PASA_CON_CONDICIONES
+  - assumption: "<supuesto auditado>"
+    dimension: "<id>"
+    attack_vector: "<cómo se intentó refutar>"
+    resistance_evidence: "<por qué resistió>"
+    confidence: 0.0
+summary_metrics:
+  implicit_assumptions_discovered: 0
+  blockers_count: 0
+  majors_count: 0
+  active_accepted_risks: []
+  budget_consumed_pct: 0.0
+  suspension_cycles_reset_reason: null
+  reset_of_suspension: null            # v3.4: SUSP-<id> de la suspension que se reinicia (M3)
+  active_skip_incidents: 0             # v3.3 I3
+  skip_incident_ids: []

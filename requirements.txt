@@ -1,0 +1,5 @@
+# Dependencias del Crítico v3.3 (modo asistido)
+# Python >= 3.10
+pyyaml>=6.0
+jsonschema>=4.20
+pytest>=8.0        # para la suite (al materializar tests/)

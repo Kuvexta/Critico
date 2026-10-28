@@ -1,0 +1,379 @@
+# ============================================================
+# critic.config.yaml — Crítico v3.3 (congelado)
+# ============================================================
+critic_version: 3.4.0
+config_hash: "8cb8a84f5f0ce97f55456739ddaa99f5219db743f23f028b9fd41dccc7c7ce06"
+frozen: true
+# --- Guardrails de ejecución ---
+execution:
+  budget:
+    tokens_max: 150000
+    time_seconds_max: 900
+    llm_calls_max: 20
+  max_objections_per_round: 10
+  max_active_dimensions: 40
+  max_suspension_cycles: 2
+  suspension_timeout_hours: 48
+  kill_switch:
+    same_objections_repeated_threshold: 2
+    on_trigger: escalate_to_human
+# --- Reglas de suspensión (M3) ---
+suspension:
+  reset_conditions:
+    requires_artifact_hash_change: true
+    requires_previous_questions_resolved_in_triage: true
+# --- Invariantes de validación ---
+validation:
+  invariants:
+    triage_cap_justified:
+      expr: "!(union_raw_count > max_active_dimensions && triage_overrides == [])"
+      on_fail: reject_triage
+    split_recommendation_is_suspension:
+      expr: "triage_split_recommendation == null || verdict.status == NECESITA_INFO"
+      on_fail: reject_verdict
+    suspension_reset_requires_both:
+      expr: "suspension_cycles_reset_reason == null || suspension_cycles_reset_reason == 'artifact_hash_change_and_questions_resolved'"
+      on_fail: reject_verdict
+    skip_incident_forces_no_pasa:
+      expr: "summary_metrics.active_skip_incidents == 0 || verdict.status == NO_PASA"
+      on_fail: reject_verdict
+# --- Enforcement de esquema ---
+schema_enforcement:
+  version: "3.4.0"
+  conditional_rules:
+    - id: G1
+      schema: verdict
+      rule: "state_class == OPERATIONAL_SUSPENSION ⇒ suspension_control objeto no-null"
+      enforced_by: "schema/verdict.yaml allOf[0]"
+    - id: G1-bis
+      schema: verdict
+      rule: "state_class == TERMINAL ⇒ suspension_control null"
+      enforced_by: "schema/verdict.yaml allOf[1]"
+    - id: G2
+      schema: verdict
+      rule: "status ∈ {PASA, PASA_CON_CONDICIONES} ⇒ audit_trail_passed_checks minItems:1"
+      enforced_by: "schema/verdict.yaml allOf[2]"
+    - id: I3
+      schema: verdict
+      rule: "reason_code == GATE_SKIPPED ⇒ status == NO_PASA AND state_class == TERMINAL"
+      enforced_by: "schema/verdict.yaml allOf[3]"
+# --- v3.3 · Integración con el ecosistema ---
+integration:
+  # I1 — Mapeo stack BZ-109 → macro-perfil
+  bz109_stack_mapping:
+    stack_1:
+      macro_profile: tech
+      sub_profile: tech.code
+      description: "Automatización / scripting"
+      status: frozen
+    stack_2:
+      macro_profile: tech
+      sub_profile: tech.infra
+      description: "Infraestructura / despliegue"
+      status: frozen
+    stack_3:
+      macro_profile: tech
+      sub_profile: tech.data
+      description: "PLACEHOLDER — pendiente de confirmación por el autor del blueprint"
+      status: pending_confirmation
+    stack_4:
+      macro_profile: business
+      sub_profile: null
+      description: "Producto / operación de negocio"
+      status: frozen
+    stack_5:
+      macro_profile: legal
+      sub_profile: null
+      description: "Contratos / cumplimiento"
+      status: frozen
+    stack_seguridad:
+      macro_profile: tech
+      sub_profile: tech.code
+      description: "Sub-stack de seguridad transversal"
+      status: frozen
+  unmapped_stack_behavior:
+    action: NECESITA_INFO
+    suspension_reason: STACK_NOT_MAPPED
+    question: "¿Qué macro-perfil aplica a este stack?"
+  # I2 + M-B — Cascada de plan padre-hijo
+  plan_cascade:
+    enabled: true
+    on_step_blocked:
+      action: block_downstream_steps
+      notify_gate_c: true
+    on_all_steps_passed:
+      action: close_plan
+      notify_gate_c: true
+    triage_behavior_on_blocked_plan: NECESITA_INFO
+    suspension_reason: PLAN_BLOCKED
+  # I3 — Detección de gate saltado
+  skip_detection:
+    enabled: true
+    source: check_encargo_v2
+    on_active_skip_incident:
+      action: force_no_pasa
+      reason_code: GATE_SKIPPED
+      policy_ref: P21
+  # M-C — Contrato de check_encargo
+  check_encargo_contract:
+    version: "2.0"
+    input:
+      - "bitacora-gate-b.jsonl"
+      - "artifacts_manifest.jsonl"
+    output:
+      - "skip_incident.yaml (uno por gate faltante)"
+    invocation: "check_encargo v2 --bitacora <path> --manifest <path> --out <path>"
+    expected_behavior: |
+      Para cada artefacto del manifest con expected_gate == GATE_B,
+      si no existe veredicto terminal en bitácora, emite SKIP_INCIDENT.
+      El Crítico consume esos SKIP_INCIDENT en su siguiente revisión.
+  # M-D — Rotación de modelos
+  model_rotation:
+    enabled: false
+    policy: round_robin
+    max_consecutive_reviews_per_model: 3
+    prohibited_same_model_for:
+      - author_and_reviewer
+      - reviewer_and_verifier
+    audit_field: "provenance.model_version"
+# --- Flags (potenciadores, OFF por defecto) ---
+flags:
+  critic.llm_teach_check:       { enabled: false, condition: "API de modelos disponible" }
+  critic.pr_review:             { enabled: false, condition: "repos con PRs" }
+  critic.bash_git_show:         { enabled: false, condition: "PRs con diffs" }
+  critic.debate_mode:           { enabled: false, condition: "Defender disponible" }
+  critic.adversarial_reviewer:  { enabled: false, condition: "segundo modelo/prompt" }
+  critic.trajectory_audit:      { enabled: false, condition: "trazas capturadas" }
+  critic.golden_set:            { enabled: false, condition: "golden dataset definido" }
+  critic.red_team_mode:         { enabled: false, condition: "superficie de seguridad" }
+  critic.cost_estimator:        { enabled: false, condition: "modelo de coste conocido" }
+  critic.inspector_diferencial: { enabled: false, condition: "versiones comparables" }
+  critic.simulador_escenarios:  { enabled: false, condition: "modelo de escenarios" }
+  critic.audit_trail_strict:    { enabled: true,  condition: "exigir audit trail también en PASA_CON_CONDICIONES" }
+profiles:
+  sub_profiles_guia: "C1 CAMBIO-10: las suggested_dimensions de cada sub-perfil son GUIA NO VINCULANTE; el triage generado nunca las auto-activa y la seleccion de active_dimensions sigue siendo del autor."
+  universals:
+    tech:
+      family_priority: [C, B, A, D, R]
+      sub_profiles:
+        tech.agents: { suggested_dimensions: [21, 76, 77, 79, 82], keywords: [] }
+        tech.blockchain: { suggested_dimensions: [4, 9, 16, 60, 61], keywords: [] }
+        tech.code: { suggested_dimensions: [1, 2, 6, 99, 100, 103], keywords: [] }
+        tech.contract: { suggested_dimensions: [9, 10, 14, 55, 61], keywords: [] }
+        tech.data: { suggested_dimensions: [51, 52, 53, 54, 55, 56], keywords: [] }
+        tech.design: { suggested_dimensions: [1, 3, 9, 11, 13, 25, 26, 55, 66, 68], keywords: [diseño, arquitectura, decision] }
+        tech.docs: { suggested_dimensions: [66, 67, 69, 70, 92, 98, 3, 30], keywords: [documentacion, manual, guia, politica] }
+        tech.drones: { suggested_dimensions: [16, 25, 37, 74, 94], keywords: [] }
+        tech.esports: { suggested_dimensions: [9, 16, 42, 72, 92], keywords: [] }
+        tech.firmware: { suggested_dimensions: [16, 19, 30, 32, 38, 75], keywords: [] }
+        tech.forensics: { suggested_dimensions: [30, 32, 37, 39, 51, 56], keywords: [] }
+        tech.gamedev: { suggested_dimensions: [9, 16, 22, 42, 89, 92], keywords: [] }
+        tech.incidente: { suggested_dimensions: [6, 25, 26, 96, 97], keywords: [incidente, postmortem, leccion, rollback] }
+        tech.infra: { suggested_dimensions: [22, 23, 28, 84, 87, 95], keywords: [] }
+        tech.iot: { suggested_dimensions: [16, 19, 25, 53, 95], keywords: [] }
+        tech.legacy: { suggested_dimensions: [10, 15, 55, 67, 84, 85], keywords: [] }
+        tech.llm: { suggested_dimensions: [21, 76, 77, 78, 79, 80, 82], keywords: [] }
+        tech.migration: { suggested_dimensions: [51, 55, 60, 70, 84, 85], keywords: [migracion, esquema, rollback, forward-only] }
+        tech.mlops: { suggested_dimensions: [22, 28, 53, 79, 87], keywords: [] }
+        tech.mobile: { suggested_dimensions: [20, 43, 89, 91, 45], keywords: [] }
+        tech.policy: { suggested_dimensions: [3, 36, 37, 40, 66, 70, 72, 87], keywords: [politica, gobernanza, cumplimiento] }
+        tech.propuesta: { suggested_dimensions: [9, 17, 40, 49, 66, 70, 104], keywords: [propuesta, cambio, alcance, riesgo] }
+        tech.reverse_engineering: { suggested_dimensions: [30, 32, 37, 38, 67, 75], keywords: [] }
+        tech.spec: { suggested_dimensions: [66, 67, 68, 69, 70], keywords: [] }
+        tech.ui: { suggested_dimensions: [43, 89, 90, 91, 92], keywords: [] }
+    business:
+      family_priority: [H, D, G, S, P]
+      sub_profiles:
+        business.belleza_cuidado: { suggested_dimensions: [16, 27, 37, 42, 51, 71, 73, 92], keywords: [] }
+        business.commercial: { suggested_dimensions: [41, 42, 72, 73, 92], keywords: [] }
+        business.ecommerce: { suggested_dimensions: [9, 11, 19, 20, 27, 41, 42, 53, 89, 95], keywords: [] }
+        business.exportaciones: { suggested_dimensions: [37, 44, 55, 85, 91], keywords: [] }
+        business.franquicias: { suggested_dimensions: [9, 37, 41, 45, 106], keywords: [] }
+        business.hr: { suggested_dimensions: [40, 41, 71, 72, 73, 105], keywords: [] }
+        business.lavanderias: { suggested_dimensions: [16, 22, 25, 27, 51], keywords: [] }
+        business.market_analysis: { suggested_dimensions: [30, 33, 34, 52, 53], keywords: [] }
+        business.marketing: { suggested_dimensions: [41, 42, 72, 73, 92, 35, 106], keywords: [] }
+        business.pricing: { suggested_dimensions: [27, 41, 42, 104, 106], keywords: [] }
+        business.product: { suggested_dimensions: [41, 42, 45, 106, 92], keywords: [] }
+        business.retail: { suggested_dimensions: [22, 27, 42, 51, 92], keywords: [] }
+        business.saas: { suggested_dimensions: [9, 10, 41, 45, 87], keywords: [] }
+        business.startup: { suggested_dimensions: [27, 41, 104, 105, 106], keywords: [] }
+        business.strategy: { suggested_dimensions: [41, 104, 105, 106, 45], keywords: [] }
+    ops:
+      family_priority: [D, K, Q, G, S]
+      sub_profiles:
+        ops.automotive: { suggested_dimensions: [16, 25, 37, 51, 60], keywords: [] }
+        ops.aviation: { suggested_dimensions: [16, 25, 37, 51, 60, 96], keywords: [] }
+        ops.energy: { suggested_dimensions: [22, 25, 28, 60, 95], keywords: [] }
+        ops.facilities: { suggested_dimensions: [16, 25, 26, 28, 96], keywords: [] }
+        ops.imprentas: { suggested_dimensions: [22, 25, 27, 51, 61], keywords: [] }
+        ops.logistics: { suggested_dimensions: [22, 25, 26, 61, 91], keywords: [] }
+        ops.management_systems: { suggested_dimensions: [39, 40, 51, 66, 96], keywords: [] }
+        ops.manufacturing: { suggested_dimensions: [22, 25, 26, 60, 94], keywords: [] }
+        ops.mining: { suggested_dimensions: [16, 25, 26, 37, 60, 106], keywords: [] }
+        ops.mudanzas: { suggested_dimensions: [9, 22, 25, 26, 91], keywords: [] }
+        ops.pesca_acuicultura: { suggested_dimensions: [22, 25, 37, 51, 91, 106], keywords: [] }
+        ops.ports: { suggested_dimensions: [22, 25, 26, 37, 61, 91], keywords: [] }
+        ops.quality: { suggested_dimensions: [39, 51, 52, 66, 103], keywords: [] }
+        ops.reciclaje: { suggested_dimensions: [37, 51, 71, 74, 106], keywords: [] }
+        ops.supply_chain: { suggested_dimensions: [11, 19, 53, 95, 106], keywords: [] }
+        ops.telecom: { suggested_dimensions: [22, 25, 26, 61, 94], keywords: [] }
+    legal:
+      family_priority: [G, M, H, S, J]
+      sub_profiles:
+        legal.administrativo: { suggested_dimensions: [37, 39, 40, 72, 74], keywords: [] }
+        legal.ambiental: { suggested_dimensions: [37, 40, 71, 74, 106], keywords: [] }
+        legal.civil: { suggested_dimensions: [9, 37, 73, 74, 106], keywords: [] }
+        legal.compliance: { suggested_dimensions: [37, 39, 40, 74, 56], keywords: [] }
+        legal.consumidor: { suggested_dimensions: [37, 42, 72, 73, 92], keywords: [] }
+        legal.contracts: { suggested_dimensions: [37, 38, 74, 9, 10], keywords: [] }
+        legal.ip: { suggested_dimensions: [38, 74, 75, 72], keywords: [] }
+        legal.labor: { suggested_dimensions: [37, 39, 40, 73, 74], keywords: [] }
+        legal.litigation: { suggested_dimensions: [37, 74, 17, 25, 26], keywords: [] }
+        legal.maritimo: { suggested_dimensions: [37, 61, 74, 85, 91], keywords: [] }
+        legal.penal: { suggested_dimensions: [37, 39, 40, 74, 75], keywords: [] }
+        legal.tax: { suggested_dimensions: [37, 39, 74, 27, 52], keywords: [] }
+    health:
+      family_priority: [D, K, G, M, S]
+      sub_profiles:
+        health.clinical: { suggested_dimensions: [37, 51, 53, 56, 57, 73], keywords: [] }
+        health.dental: { suggested_dimensions: [16, 27, 37, 51, 56], keywords: [] }
+        health.deportiva: { suggested_dimensions: [22, 51, 71, 73, 94], keywords: [] }
+        health.emergency: { suggested_dimensions: [25, 26, 51, 53, 94], keywords: [] }
+        health.estetica: { suggested_dimensions: [37, 71, 73, 74, 75], keywords: [] }
+        health.fisioterapia: { suggested_dimensions: [51, 53, 66, 71, 94], keywords: [] }
+        health.mental: { suggested_dimensions: [105, 42, 71, 73, 106], keywords: [] }
+        health.nutrition: { suggested_dimensions: [51, 52, 53, 71, 73], keywords: [] }
+        health.veterinaria: { suggested_dimensions: [37, 51, 53, 56, 96], keywords: [] }
+        health.wellness: { suggested_dimensions: [105, 42, 41, 66, 104], keywords: [] }
+    personal:
+      family_priority: [S, D, H, Q, F]
+      sub_profiles:
+        personal.career: { suggested_dimensions: [104, 105, 41, 17, 25], keywords: [] }
+        personal.education: { suggested_dimensions: [104, 41, 27, 66, 69], keywords: [] }
+        personal.finance: { suggested_dimensions: [27, 104, 17, 52, 106], keywords: [] }
+        personal.jubilacion: { suggested_dimensions: [27, 33, 52, 104, 106], keywords: [] }
+        personal.mascotas: { suggested_dimensions: [27, 71, 73, 104, 105], keywords: [] }
+        personal.paternidad: { suggested_dimensions: [27, 71, 73, 104, 105], keywords: [] }
+        personal.relationships: { suggested_dimensions: [71, 73, 105, 17, 106], keywords: [] }
+        personal.relocation: { suggested_dimensions: [105, 27, 17, 73, 26], keywords: [] }
+        personal.voluntariado: { suggested_dimensions: [71, 72, 73, 104, 105], keywords: [] }
+  extension_sub_profiles:
+    agro:
+      agro.agroindustria: { suggested_dimensions: [19, 51, 52, 85, 95], keywords: [] }
+      agro.apicola: { suggested_dimensions: [22, 37, 51, 53, 91], keywords: [] }
+      agro.cafe: { suggested_dimensions: [22, 51, 53, 85, 91], keywords: [] }
+      agro.cerveza_artesanal: { suggested_dimensions: [19, 37, 51, 52, 56], keywords: [] }
+      agro.cultivos: { suggested_dimensions: [22, 53, 61, 91, 95], keywords: [] }
+      agro.ganaderia: { suggested_dimensions: [37, 51, 53, 56, 96], keywords: [] }
+      agro.riego: { suggested_dimensions: [25, 26, 28, 94, 106], keywords: [] }
+    arquitectura:
+      arquitectura.diseno: { suggested_dimensions: [9, 37, 66, 67, 74], keywords: [] }
+      arquitectura.interiores: { suggested_dimensions: [16, 41, 42, 92], keywords: [] }
+      arquitectura.licencias: { suggested_dimensions: [37, 39, 52, 74], keywords: [] }
+      arquitectura.urbanismo: { suggested_dimensions: [37, 40, 74, 106], keywords: [] }
+    construccion:
+      construccion.contratista: { suggested_dimensions: [9, 10, 37, 85, 88], keywords: [] }
+      construccion.materiales: { suggested_dimensions: [11, 19, 51, 52, 95], keywords: [] }
+      construccion.obra: { suggested_dimensions: [16, 22, 25, 26, 84], keywords: [] }
+      construccion.seguridad_obra: { suggested_dimensions: [16, 37, 40, 74, 96], keywords: [] }
+    content:
+      content.analysis: { suggested_dimensions: [30, 32, 33, 34, 66, 75], keywords: [] }
+      content.editorial: { suggested_dimensions: [38, 66, 67, 72, 75], keywords: [] }
+      content.podcast: { suggested_dimensions: [66, 72, 73, 92], keywords: [] }
+      content.social: { suggested_dimensions: [72, 73, 75, 92, 106], keywords: [] }
+      content.speaking: { suggested_dimensions: [72, 73, 92, 35, 40], keywords: [] }
+    creative:
+      creative.artesania: { suggested_dimensions: [27, 38, 41, 52, 104], keywords: [] }
+      creative.moda: { suggested_dimensions: [27, 38, 41, 52, 92], keywords: [] }
+      creative.music: { suggested_dimensions: [38, 72, 73, 104, 105], keywords: [] }
+      creative.performing: { suggested_dimensions: [16, 42, 73, 92, 96], keywords: [] }
+      creative.tatuajes: { suggested_dimensions: [16, 37, 71, 73, 74], keywords: [] }
+      creative.visual: { suggested_dimensions: [38, 66, 67, 72, 73, 75], keywords: [] }
+    education:
+      education.certification: { suggested_dimensions: [37, 39, 51, 66, 74], keywords: [] }
+      education.courses: { suggested_dimensions: [41, 66, 67, 69, 92], keywords: [] }
+      education.edtech: { suggested_dimensions: [1, 2, 9, 89, 20], keywords: [] }
+      education.guarderias: { suggested_dimensions: [16, 37, 71, 73, 96], keywords: [] }
+      education.idiomas: { suggested_dimensions: [41, 66, 69, 92], keywords: [] }
+      education.musica_danza: { suggested_dimensions: [16, 41, 66, 69, 92], keywords: [] }
+      education.programs: { suggested_dimensions: [27, 41, 73, 104, 105], keywords: [] }
+    finance:
+      finance.corporate: { suggested_dimensions: [27, 37, 52, 104, 106], keywords: [] }
+      finance.crowdfunding: { suggested_dimensions: [37, 41, 72, 73, 104], keywords: [] }
+      finance.fintech: { suggested_dimensions: [9, 16, 37, 52, 87], keywords: [] }
+      finance.investment: { suggested_dimensions: [27, 33, 34, 52, 104], keywords: [] }
+      finance.macro: { suggested_dimensions: [30, 33, 34, 52, 106], keywords: [] }
+      finance.treasury: { suggested_dimensions: [25, 26, 27, 53, 95], keywords: [] }
+    hospitality:
+      hospitality.eventos: { suggested_dimensions: [9, 25, 26, 42, 96], keywords: [] }
+      hospitality.gastronomia: { suggested_dimensions: [16, 27, 37, 51, 53, 56, 73], keywords: [] }
+      hospitality.hoteles: { suggested_dimensions: [22, 25, 42, 45, 94], keywords: [] }
+      hospitality.turismo: { suggested_dimensions: [37, 41, 42, 73, 91, 106], keywords: [] }
+    insurance:
+      insurance.actuarial: { suggested_dimensions: [27, 31, 33, 51, 52], keywords: [] }
+      insurance.generales: { suggested_dimensions: [27, 33, 37, 52, 106], keywords: [] }
+      insurance.mascotas: { suggested_dimensions: [27, 33, 51, 52, 73], keywords: [] }
+      insurance.siniestros: { suggested_dimensions: [30, 33, 39, 51, 52], keywords: [] }
+      insurance.vida: { suggested_dimensions: [27, 33, 51, 52, 73], keywords: [] }
+    pharma:
+      pharma.biotech: { suggested_dimensions: [31, 32, 37, 51, 75], keywords: [] }
+      pharma.desarrollo: { suggested_dimensions: [31, 32, 37, 51, 52], keywords: [] }
+      pharma.farmacovigilancia: { suggested_dimensions: [25, 51, 53, 56, 73], keywords: [] }
+      pharma.manufactura: { suggested_dimensions: [19, 22, 51, 56, 60], keywords: [] }
+      pharma.regulatorio: { suggested_dimensions: [37, 39, 66, 70, 74], keywords: [] }
+    public:
+      public.gobernanza: { suggested_dimensions: [39, 40, 66, 70, 72], keywords: [] }
+      public.licitaciones: { suggested_dimensions: [9, 10, 37, 39, 52], keywords: [] }
+      public.ong: { suggested_dimensions: [39, 40, 72, 73, 104], keywords: [] }
+      public.politica: { suggested_dimensions: [40, 41, 71, 72, 106], keywords: [] }
+      public.servicios: { suggested_dimensions: [42, 43, 72, 89, 92], keywords: [] }
+    realestate:
+      realestate.arriendo: { suggested_dimensions: [9, 10, 37, 40, 73, 105], keywords: [] }
+      realestate.comercial: { suggested_dimensions: [9, 37, 41, 52, 104], keywords: [] }
+      realestate.desarrollo: { suggested_dimensions: [25, 37, 45, 74, 106], keywords: [] }
+      realestate.inversion: { suggested_dimensions: [27, 104, 17, 85, 106], keywords: [] }
+    research:
+      research.clinical: { suggested_dimensions: [37, 51, 56, 57, 73], keywords: [] }
+      research.experimental: { suggested_dimensions: [31, 32, 51, 52, 8], keywords: [] }
+      research.ml: { suggested_dimensions: [21, 32, 78, 79, 80], keywords: [] }
+      research.social: { suggested_dimensions: [33, 34, 52, 71, 73], keywords: [] }
+    security:
+      security.antifraude: { suggested_dimensions: [30, 33, 39, 51, 52], keywords: [] }
+      security.audit: { suggested_dimensions: [16, 18, 19, 20, 39], keywords: [] }
+      security.compliance: { suggested_dimensions: [37, 39, 40, 56, 74], keywords: [] }
+      security.ir: { suggested_dimensions: [25, 26, 94, 96, 97], keywords: [] }
+      security.ot: { suggested_dimensions: [16, 22, 25, 60, 94], keywords: [] }
+      security.red_team: { suggested_dimensions: [16, 21, 77, 93, 97], keywords: [] }
+  extension_sub_profiles_nota: "Inactivos: activar un macro-perfil de extension requiere U2; los sub-perfiles quedan listos (CAMBIO-13)."
+  max_secondary: 2
+
+# --- Estados y transiciones ---
+states:
+  terminal: [PASA, PASA_CON_CONDICIONES, NO_PASA, RIESGO_NO_EVALUADO]
+  operational_suspension: [NECESITA_INFO, REVISION_PARCIAL]
+# --- Métricas de salud ---
+metrics:
+  discovery_rate:          { formula: "implicit_assumptions_discovered / artifacts_reviewed", target: ">= 2.0" }
+  gate_c_acceptance:       { formula: "objections_accepted / objections_emitted",              target: ">= 0.6" }
+  false_positive_blocker:  { formula: "blockers_rejected / blockers_emitted",                  target: "<= 0.15" }
+  audit_trail_coverage:    { formula: "PASA_with_trail / PASA_total",                          target: "== 1.0" }
+  suspension_reopen_valid: { formula: "reopened_valid / reopened_total",                       target: ">= 0.9" }
+  skip_incident_rate:      { formula: "active_skip_incidents / artifacts_reviewed",            target: "== 0.0" }
+# --- Deuda de diseño documentada ---
+known_gaps:
+  - id: G3
+  - id: G5
+    description: "146 sub-perfiles del diseño v1.1 §7.3 (auditoría de sub-perfiles) pendientes de incorporar al config; los macro-perfiles de extensión siguen requiriendo U2 (CAMBIO-10)"
+    status: "ejecutado — CAMBIO-13: 153 sub-perfiles de la auditoría en el config (81 activos + 72 extension inactivos)"
+  - id: G6
+    description: "Dimensiones candidatas: portabilidad_multiplataforma y capacidades_declaradas_sin_simulacion; disparadores: primera campaña multiplataforma real / expediente que oculte una capacidad simulada (CAMBIO-11)"
+    status: "candidata — requiere cambio formal de rúbrica con freeze"
+    description: "M1 (union_raw_count > cap ⇒ overrides) es invariante de negocio, no de esquema"
+    status: "por diseño — validado en helpers/validators.py + runtime"
+  - id: G4
+    description: "suspension_control.cycle_count no se resetea sin doble condición (M3) — runtime, no esquema"
+    status: "por diseño — validado en runtime via critic.config.validation.invariants"
+  - id: stack_3_pending
+    description: "Mapeo de stack_3 en BZ-109 pendiente de confirmación"
+    status: "no bloquea — regla STACK_NOT_MAPPED cubre el caso"

@@ -1,0 +1,28 @@
+case_id: GC-001
+verdict:
+  state_class: TERMINAL
+  status: PASA
+  reason_code: null
+objections: []
+audit_trail:
+  - assumption: "El incremento de 256→512Mi cabe en el nodo actual"
+    dimension: "22"
+    attack_vector: "Se comprobó capacidad del nodo y presión de memoria"
+    resistance_evidence: "node_exporter: 62% alloc, margen 38%"
+    confidence: 0.9
+  - assumption: "El coste extra no dispara el presupuesto"
+    dimension: "27"
+    attack_vector: "Se calculó coste incremental a 30 días"
+    resistance_evidence: "delta €12/mes dentro del 5% acordado"
+    confidence: 0.85
+  - assumption: "El rollback es trivial (volver a 256Mi)"
+    dimension: "84"
+    attack_vector: "Se verificó que 256Mi funcionaba antes del cambio"
+    resistance_evidence: "histórico de métricas 14 días previos"
+    confidence: 0.95
+summary_metrics:
+  implicit_assumptions_discovered: 3
+  blockers_count: 0
+  majors_count: 0
+  active_accepted_risks: []
+  budget_consumed_pct: 38.0

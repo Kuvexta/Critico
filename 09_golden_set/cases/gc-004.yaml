@@ -1,0 +1,28 @@
+case_id: GC-004
+artifact:
+  id: PROP-HIST-004
+  domain_profile: ops
+  sub_profile: null
+  description: "Contrato con proveedor logístico nuevo — SLA no especificado en propuesta"
+  source: "bitacora://2026-04-02/PROP-004"
+triage:
+  union_raw_count: 26
+  active_dimensions: ["9", "10", "11", "16", "18", "20", "25", "26", "37", "38", "40", "49", "66", "67", "70", "83", "84", "88", "96", "101"]
+expected:
+  verdict:
+    state_class: TERMINAL
+    status: RIESGO_NO_EVALUADO
+    reason_code: TIMEBOX_EXPIRED
+  objections: []
+  audit_trail_min_size: 0
+  implicit_assumptions_min: 0
+ground_truth:
+  gate_c_decision: RIESGO_NO_EVALUADO
+  gate_c_date: "2026-04-10"
+  gate_c_notes: "Autor no respondió en 48h sobre SLA; escalado a Dirección como riesgo no cubierto"
+  accepted_risks: []
+metadata:
+  human_reviewed: true
+  reviewer: "human"
+  created: "2026-10-26"
+  tags: [contrato, timeout, sla-no-verificado]

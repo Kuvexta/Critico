@@ -1,0 +1,24 @@
+# Plantilla de TRIAGE (Capa 0) — rellena y valida con:
+#   python critico_cli.py validar --triage triage.yaml
+triage_id: TRG-000000000000
+artifact_id: "<id del artefacto>"
+timestamp: "<iso8601>"
+source_stack: null                     # opcional: stack de origen (BZ-109)
+parent_id: null                        # opcional: plan padre (I2)
+profiles:
+  primary: tech
+  sub_profile: tech.code               # null o un sub-perfil del primary
+  secondary: []                        # máx. 2
+dimensions_summary:
+  total_rubric: 108
+  union_raw_count: 0                   # M1: si > 40, obligatorio triage_overrides
+  max_active_dimensions: 40
+  activated_count: 0
+  pruned_count: 0
+active_dimensions: []                 # completar ids 1..106 y conteos antes de uso operativo
+pruned_families: []                    # familias podadas A-S
+triage_overrides: []                   # obligatorio si union_raw_count > 40
+triage_split_recommendation: null      # M2: split si >3 macro-perfiles
+plan_status: null                      # opcional: estado del plan padre (I2, M-B)
+previous_suspension_questions_resolved: true
+config_ref: "<hash de critic.config.yaml>"

@@ -1,0 +1,20 @@
+# Plantilla de PATRÓN (biblioteca de errores recurrentes, §15.3) — valida con:
+#   python critico_cli.py validar --patron pattern.yaml
+pattern_id: PTN-000000000000
+family: B                              # familia principal A-S
+dimensions: ["<ids>"]
+keywords: ["<términos de negocio>"]
+profiles: ["<perfiles donde se observó>"]
+severity: major                        # blocker|major|minor|nit
+description: "<el modo de fallo en una frase, citable>"
+steelman: "<la mitigación que SÍ funciona>"
+evidence:
+  - objection_id: OBJ-000000000000
+    outcome_id: OUT-000000000000
+    materialized: si
+count: 1                               # promoción a patrón: >=3 o 1 con materialized=si
+confidence_gain: 0.0
+provenance:
+  rubric_version: "3.3.0"
+  created_at: "<iso8601>"
+  promoted_by: verificador             # automatico|verificador|gate_c

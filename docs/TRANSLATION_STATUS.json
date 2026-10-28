@@ -1,0 +1,207 @@
+{
+  "date": "2026-10-27",
+  "author": "KUVEXTA GROUP",
+  "review": "Implementing agent; not independent ratification. Structural tests supplement, not prove, semantic equivalence.",
+  "records": [
+    {
+      "source": "README_PRODUCTO.md",
+      "translation": "docs/en/README.md",
+      "source_sha256": "3cff3744f485aca057ec8307395d8394f82522755d6158de5fe1df28724a6f57",
+      "translation_sha256": "176eba26d461ca989e55415e4cf4809a7161b412471a4ba6be12368571d1f513",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "LEEME.md",
+      "translation": "docs/en/QUICKSTART.md",
+      "source_sha256": "158bae33840113985f66ba89f68b141bc1077d09a33597209b556221718052ed",
+      "translation_sha256": "267700519baff1d797eecf654c54830181eb62999a93faafdb3e47b97c266299",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "AUTORIA.md",
+      "translation": "docs/en/AUTHORSHIP.md",
+      "source_sha256": "d928678fde010b042d55f20edee90903a60a4c6fdac246837331afca6c3f3026",
+      "translation_sha256": "5aa1b98d9553e1baf554607be032ac7a0f68fc18c87aa62353186135e6f0b008",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "CHANGELOG.md",
+      "translation": "docs/en/CHANGELOG.md",
+      "source_sha256": "b939cdbeab7e2444992923722f2515e9de5deab1fec3c675cc9a1d3ab296240f",
+      "translation_sha256": "adc465f47a24408f5191f66a572dba639e26357422c689dc918d72ed106ecb25",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "LECCIONES_APRENDIDAS.md",
+      "translation": "docs/en/LESSONS_LEARNED.md",
+      "source_sha256": "0e45a10e65b0fcdee3794b3ce3e879eb8d56cb78b45395ba00a380d40cdbc438",
+      "translation_sha256": "591f09e2306f745338e21afba711b71e1388e93d2d83bc0482291f97f710413d",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "01_Manual_completo_del_Critico_v1.0.0.md",
+      "translation": "docs/en/MANUAL.md",
+      "source_sha256": "94b16e87466ddb64a3d03423aeaf8b9e16750df0ac09a19c4457243f19baa090",
+      "translation_sha256": "c6ab30387ebc98043bc702524c476156500816a946292f005552faa24f45708b",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "13_Diseno_Completo_Universal_Critico.md",
+      "translation": "docs/en/UNIVERSAL_DESIGN.md",
+      "source_sha256": "1e9518d4fdd769d98b87185482d9b71650cdd998595bea9d114b3bb7d8141a14",
+      "translation_sha256": "9ed8e46097b9a388896d3f1122b3dcd139723f60d6045d9a101ec07bf039e4b2",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "licencias/README.md",
+      "translation": "docs/en/licensing/README.md",
+      "source_sha256": "038c5b1e5af20f6d6b293410cce147be2a9065d00e1c93836e7869eefca27184",
+      "translation_sha256": "49644884733941f65e4e2ca9a9b1589b216f5349715053ae89c6b9abfd97a1ed",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "licencias/COMPARATIVA.csv",
+      "translation": "docs/en/licensing/COMPARISON.csv",
+      "source_sha256": "2c34e8dcf06376d674ce8790f2f97114660e4e9a5391ec89209512f9a655c2c4",
+      "translation_sha256": "4c5d3269432a5ecebe62cd2845c5f2fffbe9a30bc37397f100a3f127ec58e8cf",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "licencias/TERCEROS.md",
+      "translation": "docs/en/licensing/THIRD_PARTY_NOTICES.md",
+      "source_sha256": "6abf53ffab770d4e072495c21500d9cf8eafa5b39319185dedfce53def03f639",
+      "translation_sha256": "0c4784e42bc0171e82a940ef492f66ccc6384331676ca09ce01107eac113cbe7",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "licencias/PROPIETARIA-COMERCIAL.borrador.md",
+      "translation": "docs/en/licensing/PROPRIETARY-COMMERCIAL.draft.md",
+      "source_sha256": "7ae4ec219cfa3bdd26f53cccddbb2c3134429afa24776a9707a5b0e77eb40028",
+      "translation_sha256": "c3d2135287dff5f7ea71650de81171d99492e2a450490901f059938891ef02aa",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "licencias/SOURCE-AVAILABLE.borrador.md",
+      "translation": "docs/en/licensing/SOURCE-AVAILABLE.draft.md",
+      "source_sha256": "526392eaafce0f851fc73e316816d0fcf830e16caac27da1d955c08170df6495",
+      "translation_sha256": "cccb0ff67d488d1ffb422501d3b7d46014dde2e1313d7f8e6fcbaf5f9d7fd934",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "licencias/DOBLE-LICENCIA.borrador.md",
+      "translation": "docs/en/licensing/DUAL-LICENSING.draft.md",
+      "source_sha256": "dbedee56c4207a5c7cc3a5f7725053ecbceaaea9d9473047ca5cb30b747c59ae",
+      "translation_sha256": "00d16b26c6e018d41e294a88943fb9656e09a71701d3f9e8f486e4d0778b3851",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "prompts/critico_system.md",
+      "translation": "prompts/critic_system.en.md",
+      "source_sha256": "9b7d8f92f353cced5af485b4d900091439a49b7cbf195a2f35b24defe80fcc05",
+      "translation_sha256": "3791f20065eda39ea3b6255cc2c93391edb99a18881a29dbc582cf53394306fe",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "skills/critico/SKILL.es.md",
+      "translation": "skills/critico/SKILL.md",
+      "source_sha256": "138241ffbb19fdd57ff454a9f94cdca877c328791b40e10d3dd5ac351a412eca",
+      "translation_sha256": "e745c277aaab81f7d32486d3bcdda58cb3772198ef47f874ce2f528c0ebeb53f",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "skills/critico/references/metodo.md",
+      "translation": "skills/critico/references/en/method.md",
+      "source_sha256": "b07f48da3b97763f3a9dfbd757590aac5c74ba8a50f5c40d76d7dfaad35203f1",
+      "translation_sha256": "c5ec278ecc4c0164d50df93d0d56188da3e673fc523b0dd4f9a845cd27f46a26",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "skills/critico/references/kuvexta.md",
+      "translation": "skills/critico/references/en/kuvexta.md",
+      "source_sha256": "1eee9208143f544b2e58bd843807bfa01cbe0be2b2478bbaa1f804ecc3ee6ffc",
+      "translation_sha256": "909e705fed4e134ae213ad13a6f6d6d8c7e227a5e4f2bc4f990ea87c27d1c94f",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "skills/critico/references/formato-salida.md",
+      "translation": "skills/critico/references/en/output-format.md",
+      "source_sha256": "f44908a96d469db1f8cc96c20a04ea49e7b208026d3cb18c2ee1742e32499337",
+      "translation_sha256": "83e10129e6bfbdf7f10e2cb799aba93703d718770a79c5ef8c1e2b48fc2c74ad",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    },
+    {
+      "source": "docs/es/SCHEMA_GUIDE.md",
+      "translation": "docs/en/SCHEMA_GUIDE.md",
+      "source_sha256": "cfbafd1d23406cc26b8122cf01119c0b91a548fd75c0c7fe28edc02af481debb",
+      "translation_sha256": "0152fd63ede3e4125e6d19b51039270b4b9ec89b74b19787c0189982d2097896",
+      "source_language": "es",
+      "translation_language": "en",
+      "status": "complete_translation",
+      "authority": "Spanish design source; frozen schemas govern wire contracts; original legal texts remain authoritative"
+    }
+  ],
+  "unchanged_legal_notice_blocks": 14,
+  "historical_design_notice": "Historical commands, counts and implementation claims are translated as historical source statements, not current certification.",
+  "intentional_untranslated": [
+    "Wire keys/enums/IDs/hashes",
+    "User input and fixture data",
+    "Original dependency diagnostics",
+    "Original legal quotations",
+    "Legacy aliases and historical filenames"
+  ],
+  "guides": "Schema guides inventory current contracts; nested requirements remain in unchanged schemas."
+}

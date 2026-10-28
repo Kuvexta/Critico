@@ -1,0 +1,12 @@
+# Plantilla de SKIP_INCIDENT (gate saltado, v3.3 I3) — valida con:
+#   python critico_cli.py validar --skip skip_incident.yaml
+incident_id: SKP-000000000000
+artifact_id: "<id del artefacto>"
+expected_gate: GATE_B                  # GATE_B|GATE_C
+detected_by: check_encargo_v2          # check_encargo_v2|manual|scheduled_audit
+detected_at: "<iso8601>"
+severity: blocker                      # blocker|major
+policy_ref: "P21"
+evidence:
+  - "<evidencia de la ausencia de revisión>"
+resolution: null                       # {resolved_at, resolved_by, action: re_reviewed|risk_accepted|policy_exception, notes}
