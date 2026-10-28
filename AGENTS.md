@@ -40,7 +40,9 @@ humanos es [`README.md`](README.md).
 5. **Ejecución**: la batería se corre desde la raíz con
    `PYTHONDONTWRITEBYTECODE=1 python3 -B probar_todo.py`; escribe solo en
    `_tmp_pruebas/`. El mismo control corre en GitHub Actions (`.github/
-   workflows/critico-ci.yml`) en cada push y PR.
+   workflows/critico-ci.yml`) en cada push y PR. Para sincronizar las copias
+   de trabajo (producción y workspace) tras un CAMBIO:
+   `scripts/sincronizar_copias.py` (dry-run) y con `--aplicar`.
 
 ## Si un usuario (o tú) quiere mejorar el Crítico
 

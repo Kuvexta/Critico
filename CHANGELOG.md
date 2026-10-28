@@ -3,6 +3,12 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+sync — 2026-10-28 — Herramienta de sincronización de copias
+
+- `scripts/sincronizar_copias.py`: sincroniza producción y workspace desde el clon del repo (dry-run por defecto; copia solo lo rastreado por git, compara por SHA-256, no borra nada). Evita la deriva que dejó 37 archivos desincronizados en producción.
+- AGENTS.md y CONTRIBUTING.md documentan su uso en cada CAMBIO.
+- Autorizacion: orden directa de Andres («que mas te falta organizar ya que no tenia nada sincronizado», 2026-10-28).
+
 ## 00.02.03+github — 2026-10-28 — Proceso de interacción en GitHub mejorado
 
 - Plantillas de issues (propuesta CAMBIO estructurada, reporte de error, pregunta) y PR; `SECURITY.md` para reporte privado de vulnerabilidades.
