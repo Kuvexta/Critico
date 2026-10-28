@@ -3,6 +3,13 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+ecosistema — 2026-10-28 — El know-how operativo pasa a Kuvexta/Ecosistema
+
+- Nuevo repo publico **Kuvexta/Ecosistema** (00.01.00): playbooks (mutaciones, GATE B espejo, publicacion, respaldo, limpieza, replicacion), herramientas (reconciliador canonico con config por estacion, instalador systemd), unidades del loop y plantillas.
+- `scripts/sincronizar_copias.py` de este repo queda como puntero a la copia canonica (sin borrar: los borrados los hace Andres).
+- AGENTS.md apunta al nuevo repo; el timer systemd de la estacion ya usa la copia canonica.
+- Autorizacion: orden directa de Andres («organizar el know-how para replicar el ecosistema», 2026-10-28).
+
 ## 00.02.03+gitops — 2026-10-28 — Reconciliación automática (GitOps en miniatura)
 
 - `scripts/sincronizar_copias.py` ampliado a reconciliador completo: `--pull` (git fetch + merge --ff-only, nunca reescribe historia), `--log` (bitacora JSONL), `--bup` (espejo curado de BUP en D:\, incluidos docs/diseno e INSTALACION) y salida de ciclo sano.

@@ -41,8 +41,9 @@ humanos es [`README.md`](README.md).
    `PYTHONDONTWRITEBYTECODE=1 python3 -B probar_todo.py`; escribe solo en
    `_tmp_pruebas/`. El mismo control corre en GitHub Actions (`.github/
    workflows/critico-ci.yml`) en cada push y PR. Para sincronizar las copias
-   de trabajo (producción y workspace) tras un CAMBIO:
-   `scripts/sincronizar_copias.py` (dry-run) y con `--aplicar`.
+   de trabajo (producción y workspace) tras un CAMBIO: el reconciliador
+   canónico vive en **Kuvexta/Ecosistema** → `herramientas/sincronizar_copias.py`
+   (`--pull`, `--aplicar`, `--bup`); en este repo queda un puntero.
 
 ## Metodología: GitOps en miniatura (reconciliación continua)
 
