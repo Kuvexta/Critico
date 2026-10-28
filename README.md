@@ -138,6 +138,8 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
   `/challenge-review`, `/critical-eye`, `/steelman`, `/falsabilidad`,
   `/falsifiability` y `/argumento-de-acero` (alias del mismo Crítico; la skill
   mantiene el id `critico`).
+- **Para contribuir:** `CONTRIBUTING.md` (mapa de archivos, congelado y flujo
+  de propuestas CAMBIO).
 - **Para agentes:** `AGENTS.md` orienta a cualquier agente que trabaje con
   este repositorio (entrada rápida, reglas, instalación).
 - **Repos hermanos:** BUP https://github.com/Kuvexta/BUP · Videoteca

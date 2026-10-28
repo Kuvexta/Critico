@@ -41,6 +41,17 @@ humanos es [`README.md`](README.md).
    `PYTHONDONTWRITEBYTECODE=1 python3 -B probar_todo.py`; escribe solo en
    `_tmp_pruebas/`.
 
+## Si un usuario (o tú) quiere mejorar el Crítico
+
+- Lee [`CONTRIBUTING.md`](CONTRIBUTING.md): mapa de archivos (qué se cambia
+  dónde), qué está congelado, y el flujo de propuesta numerada (CAMBIO) que
+  decide Andrés con «OK <8hex>».
+- Ejemplo: un sub-perfil nuevo vive en `04_critic.config.yaml`
+  (`profiles.universals.<macro>.sub_profiles`) y exige recalcular
+  `config_hash`.
+- No apliques cambios al congelado por tu cuenta: presenta la propuesta y
+  espera la autorización.
+
 ## Si un usuario te pide instalar el Crítico
 
 - **OpenCode**: copiar `skills/critico/` a `~/.config/opencode/skills/critico/`

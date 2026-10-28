@@ -3,6 +3,12 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+contribucion — 2026-10-28 — CONTRIBUTING.md: cómo aportar desde cualquier plataforma
+
+- `CONTRIBUTING.md` nuevo: mapa de archivos (qué se actualiza dónde, congelado sí/no), flujo de propuesta CAMBIO («OK <8hex>»), ejemplo de sub-perfil y limites honestos.
+- `AGENTS.md`: seccion «Si quieres mejorar el Critico»; README: enlace a CONTRIBUTING.
+- Autorizacion: orden directa de Andres («que el agente de cualquier plataforma sepa donde se actualiza y como mejorar el Critico», 2026-10-28).
+
 ## 00.02.03+estructura — 2026-10-28 — Orientación para agentes y estructura del repo
 
 - `AGENTS.md` nuevo: orientación para cualquier agente (entrada rápida, reglas de solo lectura, instalación por plataforma).
