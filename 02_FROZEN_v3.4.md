@@ -257,6 +257,12 @@ Estos huecos están aceptados por diseño y no bloquean el freeze.
 
 ## 8. Cómo añadir un cambio (post-freeze)
 
+> **Flujo canónico vigente (2026-10-28):** `CONTRIBUTING.md` de este repo y el
+> playbook `MUTACIONES.md` de Kuvexta/Ecosistema (propuesta numerada +
+> «OK <8hex>` + batería + freeze + guarda). El procedimiento numerado de abajo
+> es el **histórico de la era v3.3** y se conserva como referencia; ante
+> conflicto, manda el flujo canónico.
+
 Procedimiento obligatorio:
 
 1. Abrir PR con el cambio.

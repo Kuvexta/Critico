@@ -3,6 +3,16 @@
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.
 
+## 00.02.03+audit — 2026-10-28 — AUDIT-CRI-01: honestidad documental y limpieza de producción
+
+- `09_golden_set/README.md`: declara lo pendiente (baseline solo v3.3.0; maquinaria no materializada) — sin promesas no demostradas.
+- `07_Makefile`: cabecera v3.4; targets test/eval marcados historicos.
+- `02_FROZEN_v3.4.md` §8: puntero al flujo canonico (CONTRIBUTING + Ecosistema MUTACIONES); el procedimiento numerado queda historico.
+- `CONTRIBUTING.md`: referencia correcta del reconciliador (Kuvexta/Ecosistema).
+- `README.md`: nota de scripts historicos.
+- Limpieza de produccion con acta (registros_privados): borrados 08_critico-ci.yml (acciones sin fijar) y _freeze_migracion.log (v3.3.0); conservada entrega/.
+- Autorizacion: `OK 34d59a62` (AUDIT-CRI-01, auditoria espejo 2026-10-28).
+
 ## 00.02.03+ecosistema — 2026-10-28 — El know-how operativo pasa a Kuvexta/Ecosistema
 
 - Nuevo repo publico **Kuvexta/Ecosistema** (00.01.00): playbooks (mutaciones, GATE B espejo, publicacion, respaldo, limpieza, replicacion), herramientas (reconciliador canonico con config por estacion, instalador systemd), unidades del loop y plantillas.

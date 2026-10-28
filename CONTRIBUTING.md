@@ -40,8 +40,9 @@ freeze (`scripts/verify_freeze.py` debe quedar en verde).
    (`PYTHONDONTWRITEBYTECODE=1 python3 -B probar_todo.py`) + freeze +
    `docs/HASHES.md` + `CHANGELOG.md` + `VERSION` — todo verificado por la
    guarda `scripts/verificar_release.py` — y la **sincronización de las
-   copias de trabajo** con `scripts/sincronizar_copias.py --aplicar`
-   (producción y workspace; dry-run primero).
+   copias de trabajo** con el reconciliador canónico de Kuvexta/Ecosistema
+   (`herramientas/sincronizar_copias.py --aplicar`; en este repo
+   `scripts/sincronizar_copias.py` es solo un puntero).
 
 ## Ejemplo: añadir un sub-perfil
 

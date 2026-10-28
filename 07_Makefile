@@ -7,10 +7,10 @@ PYTHON ?= python3
 PYTEST ?= pytest
 all: verify-freeze test eval
 help:
-	@echo "Crítico v3.3 — objetivos disponibles:"
+	@echo "Crítico v3.4 — objetivos disponibles:"
 	@echo "  install         Instala dependencias"
 	@echo "  all             verify-freeze + test + eval"
-	@echo "  test            Suite completa (153 tests)"
+	@echo "  test            HISTORICO: requiere materializar tests/ (suite de 153)"
 	@echo "  test-m1/m2/m3   Invariantes micro v3.1"
 	@echo "  test-r1/r2/r4   Refinamientos v3.1"
 	@echo "  test-g1/g2      Enforcement v3.2"

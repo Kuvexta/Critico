@@ -97,6 +97,13 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
 - **Sin certificación independiente declarada**: lo que no se demuestra, se
   declara como pendiente.
 
+## Nota sobre scripts históricos
+
+`scripts/{autopopulate_v1_angle,empaquetar_cierre,empaquetar_licencias,package_bilingual,package_cli_ide_skills}.py`
+son de **entregas históricas**: tres corresponden a paquetes ya consumidos y
+dos (`empaquetar_cierre`, `empaquetar_licencias`) referencian archivos del
+archivo privado retirados del repo público (inventario en Kuvexta/Ecosistema).
+
 ## Comunidad (repositorio público)
 
 - **Etapa: construcción `00.02.03`** — beta honesto: lo no demostrado se
