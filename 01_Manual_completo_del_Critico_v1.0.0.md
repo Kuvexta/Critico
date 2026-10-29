@@ -1140,7 +1140,7 @@ pytest tests/test_migration_r2.py -v   # → 10 tests
 
 ### 12.1 Suite completa — 153 tests
 
-> ⚠ **Nota de integridad (auto-auditoría 26/10):** los 153 tests están diseñados y preservados en `10_Anexo_codigo_historico.md`; su ejecución queda pendiente de materializar `tests/` en el repo. La batería ejecutable hoy es `probar_todo.py` (PASS 17/17). Ver `16_GATE_B_Autoauditoria.md`.
+> ✅ **Adenda 29/10/2026 (suite materializada, autorización «suite 153 + GATE B»):** `tests/` está materializado con los 15 archivos y los 153 tests de la tabla de abajo, reconstruidos desde esta especificación (§12.1, invariantes §7/§10 y harness §13–14). El código histórico del anexo `10_Anexo_codigo_historico.md` NO era recuperable de los paquetes de entrega (verificado en `cierre-v1/v2` y `bilingue-v1`); la reconstrucción es fiel a la especificación y no reemplaza el anexo si apareciera. Resultado: `make test` = 153 passed · batería `probar_todo.py` = 100/100 · `make verify-freeze` OK v3.4.0. La regla R4 vive en `evals/risk_rules.py` (módulo NO congelado; su cableado al pipeline es candidata de CAMBIO).
 
 | Fichero | Tests | Cobertura |
 | :---- | :---- | :---- |

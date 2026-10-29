@@ -1,4 +1,14 @@
-# CHANGELOG — Crítico (sistema + documentos + carpeta)
+# CHANGELOG
+
+## 00.02.04 — 2026-10-29 — Suite histórica de 153 tests MATERIALIZADA (+ GATE B espejo)
+
+- `tests/` materializado: 15 archivos, 153 tests (8+5+4+10+5+10+15+12+23+11+20+4+5+5+16), reconstruidos desde la especificación del manual §12.1 (invariantes M1/M2/M3, R1/R2/R4, G1/G1-bis/G2, I1/I2/I3, M-A…M-F y harness §13–14). El anexo histórico no era recuperable de los paquetes (verificado en cierre-v1/v2 y bilingue-v1) — reconstrucción fiel a la especificación, declarada en la adenda del manual.
+- Módulos materializados: `evals/comparator.py` (métricas globales + por-dimensión + detección de regresión), `evals/html_report.py` (panel self-contained, WCAG AA, sección de skips M-E), `evals/history.py` + `evals/html_history.py` (store, tendencias, sparklines, skip_incident_rate con flecha invertida M-F), `scripts/render_eval_history.py`, `baseline/v3.4.0.json`, `history/manifest.yaml`, `tests/requirements.txt`.
+- Regla R4 en `evals/risk_rules.py` (NO congelado — `evals/validators.py` congelado por CAMBIO-16 queda INTACTO, freeze OK). Su cableado al pipeline `validate_record` es candidata de CAMBIO (backlog).
+- Verificación: `make test` 153 passed · batería `probar_todo.py` 100/100 · `make verify-freeze` OK v3.4.0 · CI ampliado con la suite.
+- Kit de gobernanza leído (2026-10-29, P22). Autorización: literal de Dirección «suite 153 + GATE B» (2026-10-29).
+
+ — Crítico (sistema + documentos + carpeta)
 
 > Formato: por fecha. Sistema v3.4.0 congelado; documento manual v1.0.0; diseño universal v1.1.0.
 > Repositorio público desde REPO-CRITICO-02 (2026-10-28); las rutas `registros/…` citadas abajo apuntan al archivo privado de gobernanza.

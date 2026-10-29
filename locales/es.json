@@ -322,5 +322,7 @@
   "checks.missing_translation": "La clave ausente rechaza sin fallback silencioso",
   "checks.placeholder_negative": "Los parámetros incompatibles rechazan",
   "critico_cli.guia_sub": "  sub-perfil {v0}: guía no vinculante — dimensiones sugeridas: {v1} · keywords: {v2}",
-  "critico_cli.sub_desconocido": "aviso: sub-perfil desconocido para {v0}: {v1} (se continúa sin guía)"
+  "critico_cli.sub_desconocido": "aviso: sub-perfil desconocido para {v0}: {v1} (se continúa sin guía)",
+  "validators.r4_flag_faltante": "R4: metric_source unavailable exige el flag QUANTITATIVE_UNAVAILABLE (no se finge una evaluación cuantitativa)",
+  "validators.r4_sin_source": "R4: quantitative_threshold exige metric_source"
 }

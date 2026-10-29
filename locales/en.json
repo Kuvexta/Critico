@@ -322,5 +322,7 @@
   "checks.missing_translation": "Missing translation rejects without silent fallback",
   "checks.placeholder_negative": "Incompatible placeholders reject",
   "critico_cli.guia_sub": "  sub-profile {v0}: non-binding guide — suggested dimensions: {v1} · keywords: {v2}",
-  "critico_cli.sub_desconocido": "notice: unknown sub-profile for {v0}: {v1} (continuing without guide)"
+  "critico_cli.sub_desconocido": "notice: unknown sub-profile for {v0}: {v1} (continuing without guide)",
+  "validators.r4_flag_faltante": "R4: metric_source unavailable requires flag QUANTITATIVE_UNAVAILABLE (no quantitative evaluation may be faked)",
+  "validators.r4_sin_source": "R4: quantitative_threshold requires metric_source"
 }
