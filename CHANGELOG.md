@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 00.02.07 — 2026-10-29 — BUP-RATCHET-01 (cierre): la prueba de la bajada también EN CI
+
+- `workflow_dispatch` con `ratchet_baseline` para SIMULAR la bajada en el propio CI (doctrina ODD/gentle: el gate debe fallar el CI cuando el umbral baja); el valor vacío usa docs/SUITE_BASELINE. La corrida normal (push) sigue protegiendo el umbral real.
+- La simulación de bajada se dispara manualmente en CI (run registrado en el REPORTE_BUP_PRERELEASE) y se verifica que el paso ratchet FALLA como se espera.
+- Autorización: «OK 05294564…» (BUP-RATCHET-01, Dirección 2026-10-29). Kit leído (P22).
+
+
+
 ## 00.02.06 — 2026-10-29 — BUP-RATCHET-01: ratchet de la suite histórica (el umbral solo sube)
 
 - `docs/SUITE_BASELINE` = 153 (línea base de la suite histórica) y `scripts/ratchet_suite.py`: gate que FALLA si el conteo de tests recolectados baja de la línea base (bajar el umbral exige PR con justificación + revisión; alternativa #9 — engram deadcode-ratchet).

@@ -4,6 +4,12 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      ratchet_baseline:
+        description: 'Línea base del ratchet para SIMULACIÓN (vacío = docs/SUITE_BASELINE). Un valor alto debe hacer FALLAR el gate — prueba de la bajada en CI.'
+        required: false
+        default: ''
 
 jobs:
   bateria-freeze-guarda:
@@ -20,6 +26,8 @@ jobs:
           pip install pytest jsonschema PyYAML
           PYTHONDONTWRITEBYTECODE=1 python -B -m pytest tests/ -q
       - name: Suite ratchet (BUP-RATCHET-01 — el umbral solo sube)
+        env:
+          RATCHET_BASELINE: ${{ inputs.ratchet_baseline }}
         run: PYTHONDONTWRITEBYTECODE=1 python -B scripts/ratchet_suite.py
       - name: Batería completa
         run: PYTHONDONTWRITEBYTECODE=1 python -B probar_todo.py

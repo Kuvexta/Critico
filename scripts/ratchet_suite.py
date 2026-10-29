@@ -19,7 +19,7 @@ BASE = Path(__file__).resolve().parents[1]
 
 def baseline() -> int:
     env = os.environ.get("RATCHET_BASELINE")
-    if env is not None:
+    if env is not None and env.strip():
         return int(env)
     return int((BASE / "docs" / "SUITE_BASELINE").read_text(encoding="utf-8").strip())
 
