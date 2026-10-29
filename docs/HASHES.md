@@ -16,9 +16,9 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 | README_PRODUCTO.md | vigente | 06a4bec75bf11f2c821d1b7532478c617f99f7d4c49ab4b46bc3d0ef5225f1de |
 | LEEME.md | vigente | 949d2291fc87c8fd60c70c8bad71562f5fe1ff5144fe6d3366f6496293d03c2f |
 | AUTORIA.md | vigente | d928678fde010b042d55f20edee90903a60a4c6fdac246837331afca6c3f3026 |
-| critico_cli.py | vigente | b21e85e698b7357f4caf41c8fc69af982cc3c8d6157761d92bd42f5724ada8c2 |
+| critico_cli.py | vigente | 15e6187b7703d5adb1cdaaa1cc15fa774ac862cbb3612761741636718bd1fe12 |
 | critic_i18n.py | vigente | e6e39695a68399734196f18f85ab47a9ca718e80a3cc3e247ff0e0c6ce022323 |
-| probar_todo.py | vigente | 847614eb60322d6f78922e17c9da5b7f91e9c5a7f123717e21c33915f3d14bc8 |
+| probar_todo.py | vigente | 0dd5c30534e9bd568f5d679c41e53dce304cb6ee83d09a797e2f0df284e30248 |
 | run_tests.py | vigente | 0268e49fac93956c3cf6eaf95d8d0f2febc7bf40a27e33f20b8bd198c9abacf5 |
 | requirements.txt | vigente | dc961ede1b0c1f376a9fbdd02b429d0e744a9e2678289b3b931f2b74a2523e59 |
 | LICENSE | vigente | be3ceb0b98eeb7b5976a1ee0d51cd2fd13598a7f3b4ee4b5fdf926329b4fb309 |
