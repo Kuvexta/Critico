@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 00.02.11 — purga de scratch de _tmp_pruebas (condición C1 del GATE B espejo del release)
+- Autorización: condición C1 del GATE B espejo del release 01.00.00 (2026-10-29), dentro del corte autorizado por Dirección.
+- Archivos purgados (nunca debieron committearse; _tmp_pruebas es zona de corridas):
+- Regla: `_tmp_pruebas/` entra a .gitignore para que no vuelva a ocurrir.
+
+
 ## 00.02.10 — 2026-10-29 — etapa DEFINITIVO (pre-corte 01.00.00): README a etapa 01
 
 - README: etapa `00` (construcción) → `01` (definitivo): suite histórica 153/153 materializada y con ratchet, R-FIX-07/08 aplicados, GATE B espejo PASA_CON_CONDICIONES con condiciones atendidas. El corte del tag v01.00.00 queda pendiente del GATE B espejo del release y del GO de Dirección (GATE C).
