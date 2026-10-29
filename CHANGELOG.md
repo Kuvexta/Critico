@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 01.00.00 — 2026-10-29 — RELEASE DEFINITIVO del Crítico
+
+- Etapa `01` (definitivo): suite histórica 153/153 materializada con ratchet (umbral solo sube, probado en ambas direcciones EN CI) · R-FIX-07/08 aplicados (14 ángulos + UTF-8) · harness de evals materializado (comparator/panel/history/cli con baseline calculable) · GATE B espejo de la suite PASA_CON_CONDICIONES con condiciones atendidas · GATE B espejo del release PASA_CON_CONDICIONES (C1 purga de scratch, atendida en 00.02.11).
+- Congelado v3.4.0 intacto (verify_freeze OK) · batería 100/0/0 · make cover operativo.
+- Corte con la disciplina BUP-REL-01: bump → push verificado → tag ANOTADO v01.00.00 → push del tag.
+- Kit leído (P22). Autorización: GO de Dirección («sí», 2026-10-29).
+
+
+
 ## 00.02.11 — purga de scratch de _tmp_pruebas (condición C1 del GATE B espejo del release)
 - Autorización: condición C1 del GATE B espejo del release 01.00.00 (2026-10-29), dentro del corte autorizado por Dirección.
 - Archivos purgados (nunca debieron committearse; _tmp_pruebas es zona de corridas):
