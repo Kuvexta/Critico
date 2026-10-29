@@ -9,11 +9,11 @@ confianza), **veredicto** (PASA / PASA_CON_CONDICIONES / NO_PASA) y
 rector: **nada se simula y nada se declara demostrado sin evidencia
 verificable** (diseñado ≠ demostrado).
 
-- **Release del repositorio: `00.02.03`** (etapa construcción · regla 00/01)
+- **Release del repositorio: `00.02.04`** (etapa construcción · regla 00/01)
 - **Metodología congelada: `v3.4.0`** (rúbrica de 108 dimensiones, 8 esquemas y config — verificada por `verify_freeze`)
 
 > **Mapeo de versiones (C2):** `VERSION` contiene el release del repo
-> (`00.02.03`); `04_critic.config.yaml → critic_version` contiene la versión de
+> (`00.02.04`); `04_critic.config.yaml → critic_version` contiene la versión de
 > la metodología congelada (`3.4.0`). El release definitivo `01.00.00` se
 > emitirá cuando el **Banco Universal de Pruebas (BUP)**
 > (https://github.com/Kuvexta/BUP) esté listo y la suite completa pase sobre él.
@@ -106,7 +106,7 @@ archivo privado retirados del repo público (inventario en Kuvexta/Ecosistema).
 
 ## Comunidad (repositorio público)
 
-- **Etapa: construcción `00.02.03`** — beta honesto: lo no demostrado se
+- **Etapa: construcción `00.02.04`** — beta honesto: lo no demostrado se
   declara; el release definitivo `01.00.00` llegará cuando BUP esté listo y la
   suite completa pase.
 - **Licencia:** código MIT · documentación CC BY-SA 4.0 (ver `LICENSE`).

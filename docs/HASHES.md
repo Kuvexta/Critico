@@ -5,12 +5,12 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 
 | Documento | Estado | SHA-256 |
 |---|---|---|
-| 01_Manual_completo_del_Critico_v1.0.0.md | vigente | 57b5aad48175a900ddbfb53369ee106447f0fc474ef1ea92c67aad7f4af2006b |
+| 01_Manual_completo_del_Critico_v1.0.0.md | vigente | a47235eb185b25b6a46e759eb27dce45a16502bed29cf66fb21a04989687fff2 |
 | 02_FROZEN_v3.4.md | vigente | 8f4f6fbeab9b93dbb686b59c8ef899d915d1f77e58d054f3b339aa59a922be06 |
 | 13_Diseno_Completo_Universal_Critico.md | vigente | a2f28f57f59dd9278e64721f58c2fa5037e288e665df4effdc4fd885534dbe8c |
 | 03_rubric.yaml | vigente | 8973bab0bcebc35a1e1496bd2f034a235ede8d004b389e04da84a61eb0bf5168 |
 | 04_critic.config.yaml | vigente | 0cbf98e349a5c3a628d6b2c09a30d3fb64965dadfe6f40b1b06c1d7737a60427 |
-| CHANGELOG.md | vigente | 0ab48a234395d72741a05090d1de9ad66d88ce8bc24cd5552f826280fb71bcc3 |
+| CHANGELOG.md | vigente | 7c544f4712f63c594754e8f1ec80e8fc8ed3c5858c00a9b78edfcb138da3ad55 |
 | LECCIONES_APRENDIDAS.md | vigente | dbd795d0b48d599dd211f329d7263f4afdb33f8ad4696500855ce4fef9e4cb32 |
 | INCIDENTES.md | vigente | 131db8c09483f1082a4d172a299e651d9b00f808a1cc591aafb2b48c9ea7aff3 |
 | README_PRODUCTO.md | vigente | 06a4bec75bf11f2c821d1b7532478c617f99f7d4c49ab4b46bc3d0ef5225f1de |
