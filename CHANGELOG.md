@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 01.00.01 — 2026-10-29 — README revisado: 5 derivas corregidas (auto-revisión pedida por Dirección)
+
+- (1) Mapeo de versiones decía «se emitirá cuando BUP esté listo» → release CORTADO junto a BUP (gates cerrados, suite 153/153).
+- (2) Macro-perfiles listaba 4 → son 6 congelados (tech, ops, legal, business, personal, health).
+- (3) Borrados: «los hace Andrés» → responsable designado por Dirección (paridad con BUP 01.00.03).
+- (4) Suite 153 decía «pendiente» → materializada con ratchet en CI (SUITE_BASELINE).
+- (5) Línea de etapa contradictoria («CORTADO … llegará cuando BUP esté listo») + typo «se sigue declara» → corregidos.
+- Kit leído (P22).
+
+
+
 ## 01.00.00 — 2026-10-29 — RELEASE DEFINITIVO del Crítico
 
 - Etapa `01` (definitivo): suite histórica 153/153 materializada con ratchet (umbral solo sube, probado en ambas direcciones EN CI) · R-FIX-07/08 aplicados (14 ángulos + UTF-8) · harness de evals materializado (comparator/panel/history/cli con baseline calculable) · GATE B espejo de la suite PASA_CON_CONDICIONES con condiciones atendidas · GATE B espejo del release PASA_CON_CONDICIONES (C1 purga de scratch, atendida en 00.02.11).

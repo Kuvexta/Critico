@@ -14,9 +14,9 @@ verificable** (diseñado ≠ demostrado).
 
 > **Mapeo de versiones (C2):** `VERSION` contiene el release del repo
 > (`01.00.00`); `04_critic.config.yaml → critic_version` contiene la versión de
-> la metodología congelada (`3.4.0`). El release definitivo `01.00.00` se
-> emitirá cuando el **Banco Universal de Pruebas (BUP)**
-> (https://github.com/Kuvexta/BUP) esté listo y la suite completa pase sobre él.
+> la metodología congelada (`3.4.0`). El release definitivo `01.00.00` quedó
+> CORTADO el 2026-10-29, junto al **Banco Universal de Pruebas (BUP)**
+> (https://github.com/Kuvexta/BUP) — gates cerrados y suite 153/153 en verde.
 
 ## Requisitos
 
@@ -73,7 +73,7 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
 
 - **108 dimensiones** en la rúbrica congelada (`03_rubric.yaml`); el triage
   activa un subconjunto (máx. 40) elegido por el revisor.
-- **Macro-perfiles** (`tech`, `ops`, `legal`, `business`) con **sub-perfiles**
+- **Macro-perfiles** (6 congelados: `tech`, `ops`, `legal`, `business`, `personal`, `health`) con **sub-perfiles**
   (`tech.design`, `tech.migration`, …): `triage --sub <sub>` imprime su guía
   **no vinculante** de dimensiones; `perfiles` lista todos.
 
@@ -84,9 +84,9 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
   **«OK <8hex>»**, más la actualización del freeze.
 - Los registros no se editan: una corrección es una **adenda** que referencia
   el original por hash.
-- Los borrados los hace **Andrés**, por ítem, con hash y acta.
+- Los borrados los ejecuta el **responsable designado por Dirección** (encargado de la dirección o responsable del proceso; perfil inicial: Andrés), por ítem, con hash y acta.
 - Batería actual del repo: **100/100** · suite histórica de **153 tests**:
-  pendiente hasta que el banco BUP esté listo.
+  materializada (153/153) con ratchet en CI (`docs/SUITE_BASELINE`).
 
 ## Límites honestos
 
@@ -107,8 +107,7 @@ archivo privado retirados del repo público (inventario en Kuvexta/Ecosistema).
 ## Comunidad (repositorio público)
 
 - **Etapa: definitivo (`01`)** — release 01.00.00 CORTADO (2026-10-29); lo no demostrado se sigue
-  declara; el release definitivo `01.00.00` llegará cuando BUP esté listo y la
-  suite completa pase.
+  declarando como pendiente.
 - **Licencia:** código MIT · documentación CC BY-SA 4.0 (ver `LICENSE`).
 - **Skill para OpenCode (distribución principal):** copiar `skills/critico/` a
   `~/.config/opencode/skills/critico/` (Linux/macOS) o
