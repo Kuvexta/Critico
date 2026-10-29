@@ -1,2 +1,4 @@
 algoritmo: history-manifest-v1
-snapshots: []
+snapshots:
+- snapshot: snapshot-20261029T061101156Z.json
+  sha256: 0fea448907c31622c4052222a2c5472387584591f2ebe3a036421bfc4966699e

@@ -1,6 +1,6 @@
-manifest_version: 3.3.0
+manifest_version: 3.4.0
 total_cases: 4
-last_updated: '2026-10-26'
+last_updated: '2026-10-29'
 cases:
 - id: GC-001
   tag: pasa_clean

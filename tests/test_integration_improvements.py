@@ -134,7 +134,7 @@ def test_mf_03_dashboard_incluye_sparklines():
     assert "<polyline" in html
 
 
-def test_mf_04_snapshot_persiste_skip_rate():
+def test_mf_04_snapshot_persiste_skip_rate(tmp_path):
     from evals import history
-    rec = history.snapshot({"skip_incident_rate": 0.25, "verdict_match_rate": 1.0}, Path("/tmp") / "hist-mf-test")
+    rec = history.snapshot({"skip_incident_rate": 0.25, "verdict_match_rate": 1.0}, tmp_path)
     assert rec["metrics"]["skip_incident_rate"] == 0.25

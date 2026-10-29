@@ -15,6 +15,10 @@ jobs:
           python-version: '3.12'
       - name: Dependencias
         run: pip install -r requirements.txt
+      - name: Historical 153-test suite (tests/)
+        run: |
+          pip install pytest jsonschema PyYAML
+          PYTHONDONTWRITEBYTECODE=1 python -B -m pytest tests/ -q
       - name: Batería completa
         run: PYTHONDONTWRITEBYTECODE=1 python -B probar_todo.py
       - name: Freeze

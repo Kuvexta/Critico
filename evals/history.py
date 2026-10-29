@@ -24,7 +24,7 @@ def snapshot(metrics: dict, history_dir: str | Path) -> dict:
     """Guarda un snapshot JSON con timestamp, sha256 y actualiza el manifest."""
     hd = Path(history_dir)
     hd.mkdir(parents=True, exist_ok=True)
-    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    stamp = time.strftime("%Y%m%dT%H%M%S", time.gmtime()) + f"{int(time.time() * 1000) % 1000:03d}Z"
     rec = {
         "timestamp": stamp,
         "metrics": {m: metrics.get(m, 0.0) for m in TREND_METRICS},

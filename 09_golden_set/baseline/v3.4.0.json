@@ -19,28 +19,7 @@
       "fp": 0,
       "precision": 1.0,
       "recall": 1.0,
-      "f1": 1.0,
-      "cases_with_activity": 1
-    },
-    {
-      "dimension": "20",
-      "tp": 1,
-      "fn": 0,
-      "fp": 0,
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0,
-      "cases_with_activity": 1
-    },
-    {
-      "dimension": "55",
-      "tp": 1,
-      "fn": 0,
-      "fp": 0,
-      "precision": 1.0,
-      "recall": 1.0,
-      "f1": 1.0,
-      "cases_with_activity": 1
+      "f1": 1.0
     }
   ],
   "thresholds": {
@@ -52,6 +31,5 @@
   "thresholds_per_dimension": {
     "recall": 0.1,
     "precision": 0.1
-  },
-  "skip_incident_rate": 0.0
+  }
 }

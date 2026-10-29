@@ -20,5 +20,5 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 | critic_i18n.py | vigente | e6e39695a68399734196f18f85ab47a9ca718e80a3cc3e247ff0e0c6ce022323 |
 | probar_todo.py | vigente | 847614eb60322d6f78922e17c9da5b7f91e9c5a7f123717e21c33915f3d14bc8 |
 | run_tests.py | vigente | 0268e49fac93956c3cf6eaf95d8d0f2febc7bf40a27e33f20b8bd198c9abacf5 |
-| requirements.txt | vigente | c9f9e0cdd2e86eb5b8890892cbb93ace7905506574cc8448173bbc54f73dde5b |
+| requirements.txt | vigente | dc961ede1b0c1f376a9fbdd02b429d0e744a9e2678289b3b931f2b74a2523e59 |
 | LICENSE | vigente | be3ceb0b98eeb7b5976a1ee0d51cd2fd13598a7f3b4ee4b5fdf926329b4fb309 |
