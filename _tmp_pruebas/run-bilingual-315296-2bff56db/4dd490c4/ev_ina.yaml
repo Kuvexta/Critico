@@ -1,0 +1,37 @@
+artifact_id: PROP-PRUEBA-001
+assumptions:
+- status: plausible
+  text: z
+blast_radius:
+  impact_types:
+  - operativo
+  reversible: trivial
+  scope: puntual
+claim: x
+confidence: 0.8
+counterfactual: b
+dimension:
+- '30'
+domain_profile: tech
+evidence_detail:
+- accessed_at: '2026-10-26T00:00:00Z'
+  hash: 8777d38e6ba301f8e6c9c3f85bb9b4b1cef18a099990a8c88fea11a0af2989fa
+  kind: hecho
+  source: /home/holding/kuvexta/critico/_tmp_pruebas/run-bilingual-315296-2bff56db/4dd490c4/no_existe.txt
+evidence_locator:
+- a
+falsification: c
+gate: GATE_B
+mitigation_type: fix
+mitigation_vector: d
+objection_id: OBJ-777777777777
+provenance:
+  artifact_hash: abc
+  model_version: demo
+  prompt_version: 3.3.0
+  rubric_version: 3.3.0
+severity: major
+steelman: y
+time_horizon: corto_plazo
+timestamp: '2026-10-26T00:00:00Z'
+verification_mechanism: e

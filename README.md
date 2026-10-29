@@ -9,11 +9,11 @@ confianza), **veredicto** (PASA / PASA_CON_CONDICIONES / NO_PASA) y
 rector: **nada se simula y nada se declara demostrado sin evidencia
 verificable** (diseñado ≠ demostrado).
 
-- **Release del repositorio: `00.02.09`** (etapa construcción · regla 00/01)
+- **Release del repositorio: `00.02.10`** (etapa DEFINITIVO · regla 00/01 — corte del release 01.00.00 en curso)
 - **Metodología congelada: `v3.4.0`** (rúbrica de 108 dimensiones, 8 esquemas y config — verificada por `verify_freeze`)
 
 > **Mapeo de versiones (C2):** `VERSION` contiene el release del repo
-> (`00.02.09`); `04_critic.config.yaml → critic_version` contiene la versión de
+> (`00.02.10`); `04_critic.config.yaml → critic_version` contiene la versión de
 > la metodología congelada (`3.4.0`). El release definitivo `01.00.00` se
 > emitirá cuando el **Banco Universal de Pruebas (BUP)**
 > (https://github.com/Kuvexta/BUP) esté listo y la suite completa pase sobre él.
@@ -88,7 +88,7 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
 - Batería actual del repo: **100/100** · suite histórica de **153 tests**:
   pendiente hasta que el banco BUP esté listo.
 
-## Límites honestos (beta)
+## Límites honestos
 
 - Herramienta de análisis **defensivo**; no sustituye la decisión humana: las
   autorizaciones y decisiones son siempre del usuario.
@@ -106,7 +106,7 @@ archivo privado retirados del repo público (inventario en Kuvexta/Ecosistema).
 
 ## Comunidad (repositorio público)
 
-- **Etapa: construcción `00.02.09`** — beta honesto: lo no demostrado se
+- **Etapa: definitivo (`01`)** — release 01.00.00 en corte; lo no demostrado se sigue
   declara; el release definitivo `01.00.00` llegará cuando BUP esté listo y la
   suite completa pase.
 - **Licencia:** código MIT · documentación CC BY-SA 4.0 (ver `LICENSE`).

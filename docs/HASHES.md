@@ -10,7 +10,7 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 | 13_Diseno_Completo_Universal_Critico.md | vigente | a2f28f57f59dd9278e64721f58c2fa5037e288e665df4effdc4fd885534dbe8c |
 | 03_rubric.yaml | vigente | 8973bab0bcebc35a1e1496bd2f034a235ede8d004b389e04da84a61eb0bf5168 |
 | 04_critic.config.yaml | vigente | 0cbf98e349a5c3a628d6b2c09a30d3fb64965dadfe6f40b1b06c1d7737a60427 |
-| CHANGELOG.md | vigente | 0f4b24869f089867ed1db4e9e15978cc4b9068e577d371af5388ee86c870af04 |
+| CHANGELOG.md | vigente | 2ec71df501958e2c7a2aa752ba71c51688dfdf2ad4b444f14348103e133baf21 |
 | LECCIONES_APRENDIDAS.md | vigente | dbd795d0b48d599dd211f329d7263f4afdb33f8ad4696500855ce4fef9e4cb32 |
 | INCIDENTES.md | vigente | 131db8c09483f1082a4d172a299e651d9b00f808a1cc591aafb2b48c9ea7aff3 |
 | README_PRODUCTO.md | vigente | 06a4bec75bf11f2c821d1b7532478c617f99f7d4c49ab4b46bc3d0ef5225f1de |

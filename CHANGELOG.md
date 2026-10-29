@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 00.02.10 — 2026-10-29 — etapa DEFINITIVO (pre-corte 01.00.00): README a etapa 01
+
+- README: etapa `00` (construcción) → `01` (definitivo): suite histórica 153/153 materializada y con ratchet, R-FIX-07/08 aplicados, GATE B espejo PASA_CON_CONDICIONES con condiciones atendidas. El corte del tag v01.00.00 queda pendiente del GATE B espejo del release y del GO de Dirección (GATE C).
+- Orden directa de Dirección (pasos 1–2 del corte, 2026-10-29). Kit leído (P22).
+
+
+
 ## 00.02.09 — 2026-10-29 — make cover reparado (comando documentado que fallaba)
 
 - `make cover` fallaba con Error 4 (pytest-cov ausente y objetivo de cobertura mal apuntado). Reparado: `--cov=evals --cov=critico_cli --cov=critic_i18n` + `pytest-cov` en tests/requirements.txt. Verificado: 153 passed + informe de cobertura (TOTAL 36%).
