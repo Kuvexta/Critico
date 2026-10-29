@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 01.00.01 (corrección del corte) — mapeo de versiones a 01.00.01
+
+- La guarda cazó que el README aún citaba `01.00.00` tras el bump: corregido en la línea de release y en el mapeo. El tag `v01.00.01` se RE-APUNTÓ al commit corregido (BUP-REL-01 §7.4: solo a commits ya en main, registrado aquí).
+
+
+
 ## 01.00.01 — 2026-10-29 — README revisado: 5 derivas corregidas (auto-revisión pedida por Dirección)
 
 - (1) Mapeo de versiones decía «se emitirá cuando BUP esté listo» → release CORTADO junto a BUP (gates cerrados, suite 153/153).
