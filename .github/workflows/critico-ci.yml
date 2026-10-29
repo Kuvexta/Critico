@@ -19,6 +19,8 @@ jobs:
         run: |
           pip install pytest jsonschema PyYAML
           PYTHONDONTWRITEBYTECODE=1 python -B -m pytest tests/ -q
+      - name: Suite ratchet (BUP-RATCHET-01 — el umbral solo sube)
+        run: PYTHONDONTWRITEBYTECODE=1 python -B scripts/ratchet_suite.py
       - name: Batería completa
         run: PYTHONDONTWRITEBYTECODE=1 python -B probar_todo.py
       - name: Freeze

@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 00.02.06 — 2026-10-29 — BUP-RATCHET-01: ratchet de la suite histórica (el umbral solo sube)
+
+- `docs/SUITE_BASELINE` = 153 (línea base de la suite histórica) y `scripts/ratchet_suite.py`: gate que FALLA si el conteo de tests recolectados baja de la línea base (bajar el umbral exige PR con justificación + revisión; alternativa #9 — engram deadcode-ratchet).
+- CI: paso «Suite ratchet» tras la suite — el conteo se verifica en cada corrida (falla del CI si baja).
+- Prueba del gate en ambas direcciones: subida (línea base 153 → RATCHET OK rc 0) y bajada simulada (RATCHET_BASELINE=999 → RATCHET FAIL rc 1) — evidencia registrada.
+- Nota de ubicación honesta: la propuesta BUP-RATCHET-01 lo ubicaba en el CI del BUP; la suite de 153 vive en el Crítico (su dueño), y el ratchet protege la suite DONDE CORRE (CI del Crítico) — registrado.
+- Invariante de release adoptado en esta misma entrega (BUP-REL-01): «el tag va después del push» — este incremento se publicó con push verificado + tag ANOTADO.
+- Autorización: «OK 05294564582de710200691a98978daaf98de68bd35f56c606bf3870280b76846» (BUP-RATCHET-01 + BUP-REL-01, BZ-20261028-029, Dirección 2026-10-29). Kit leído (P22).
+
+
+
 ## 00.02.05 — 2026-10-29 — R-FIX-07 y R-FIX-08 (autorización «C-1: sí», BZ-20261027-041, PENDIENTE desde el 27/10)
 
 - R-FIX-07: el CLI (`critico_cli.py angulos`) y los prompts muestran ahora los **14 ángulos (11 canónicos + 3 opcionales marcados)** conforme al diseño universal v1.1.0 §5 — añadidos 12 Sostenibilidad, 13 Tiempo y oportunidad, 14 Reputación y confianza (opcionales) con sus claves es/en; cabecera corregida (antes decía «11»). Cierra la inconsistencia de presentación.
