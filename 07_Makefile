@@ -64,7 +64,7 @@ eval-history-open:
 eval-prune:
 	$(PYTHON) scripts/render_eval_history.py --prune
 cover:
-	$(PYTEST) tests/ --cov=tests --cov-report=term-missing
+	$(PYTEST) tests/ --cov=evals --cov=critico_cli --cov=critic_i18n --cov-report=term-missing
 lint:
 	@command -v ruff >/dev/null 2>&1 && ruff check tests/ migration/ scripts/ evals/ || echo "[!] ruff no instalado"
 	@command -v yamllint >/dev/null 2>&1 && yamllint -d "{extends: relaxed, rules: {line-length: {max: 200}}}" schema/ rubric.yaml critic.config.yaml || echo "[!] yamllint no instalado"

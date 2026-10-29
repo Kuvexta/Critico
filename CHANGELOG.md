@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 00.02.09 — 2026-10-29 — make cover reparado (comando documentado que fallaba)
+
+- `make cover` fallaba con Error 4 (pytest-cov ausente y objetivo de cobertura mal apuntado). Reparado: `--cov=evals --cov=critico_cli --cov=critic_i18n` + `pytest-cov` en tests/requirements.txt. Verificado: 153 passed + informe de cobertura (TOTAL 36%).
+- Detectado en la auto-revisión (el manual §12.2 documenta `make cover`; un comando documentado no debe fallar). Kit leído (P22).
+
+
+
 ## 00.02.08 — 2026-10-29 — AGENTS.md con kit obligatorio y disciplina de release
 
 - `AGENTS.md`: sección «KIT OBLIGATORIO DE GOBERNANZA» (P22: declarar «kit leído, fecha»), disciplina de release BUP-REL-01 (push verificado → tag ANOTADO) y ratchet de la suite (docs/SUITE_BASELINE, BUP-RATCHET-01) — para que un agente nuevo no se equivoque.
