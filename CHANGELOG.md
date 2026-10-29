@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 00.02.08 — 2026-10-29 — AGENTS.md con kit obligatorio y disciplina de release
+
+- `AGENTS.md`: sección «KIT OBLIGATORIO DE GOBERNANZA» (P22: declarar «kit leído, fecha»), disciplina de release BUP-REL-01 (push verificado → tag ANOTADO) y ratchet de la suite (docs/SUITE_BASELINE, BUP-RATCHET-01) — para que un agente nuevo no se equivoque.
+- Orden directa de Dirección («tiene archivo de inicio para los agentes…», 2026-10-29). Kit leído (P22).
+
+
+
 ## 00.02.07 — 2026-10-29 — BUP-RATCHET-01 (cierre): la prueba de la bajada también EN CI
 
 - `workflow_dispatch` con `ratchet_baseline` para SIMULAR la bajada en el propio CI (doctrina ODD/gentle: el gate debe fallar el CI cuando el umbral baja); el valor vacío usa docs/SUITE_BASELINE. La corrida normal (push) sigue protegiendo el umbral real.

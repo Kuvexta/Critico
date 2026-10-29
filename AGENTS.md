@@ -13,6 +13,16 @@ humanos es [`README.md`](README.md).
   aquí**: viven en un archivo privado fuera del repositorio. No los busques en
   este árbol ni los inventes.
 
+## KIT OBLIGATORIO DE GOBERNANZA (léelo antes de ejecutar — P22)
+
+`~/kuvexta/gobernanza_oficial/` (12 archivos): directriz de estructura v8 ·
+reglamento P01–P27 · lecciones LA-01…07 · hub v3.10 · capas · BZ-047 · R-FIX.
+**Sin declarar «kit leído, fecha» en el cierre, el trabajo NO se acredita.**
+Release (BUP-REL-01): bump → push verificado → tag ANOTADO → push del tag;
+nunca taggear un commit que no aterrizó. La suite histórica (153) tiene
+ratchet: `docs/SUITE_BASELINE` + paso en CI (BUP-RATCHET-01 — el umbral solo
+sube).
+
 ## Entrada rápida (no te pierdas)
 
 | Si buscas… | Ve a… |
