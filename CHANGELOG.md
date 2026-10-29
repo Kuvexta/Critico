@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 00.02.05 — 2026-10-29 — R-FIX-07 y R-FIX-08 (autorización «C-1: sí», BZ-20261027-041, PENDIENTE desde el 27/10)
+
+- R-FIX-07: el CLI (`critico_cli.py angulos`) y los prompts muestran ahora los **14 ángulos (11 canónicos + 3 opcionales marcados)** conforme al diseño universal v1.1.0 §5 — añadidos 12 Sostenibilidad, 13 Tiempo y oportunidad, 14 Reputación y confianza (opcionales) con sus claves es/en; cabecera corregida (antes decía «11»). Cierra la inconsistencia de presentación.
+- R-FIX-08 (LA-06): `sys.stdout/stderr.reconfigure(encoding="utf-8", errors="replace")` al inicio de `main()` en `critico_cli.py` y `probar_todo.py` (cp1252 rompía ⭐/═/acentos en consola Windows).
+- Verificación: CLI 14 ángulos · suite 153 passed · batería 100/0/0 · verify_freeze OK v3.4.0 · catálogos es/en con paridad.
+- Registro honesto: la autorización existía desde el 27/10 y la ejecución quedó pendiente por omisión de esta sesión — detectada en la auto-revisión del 29/10 y ejecutada con el literal original.
+
+
+
 ## 00.02.04 — 2026-10-29 — Suite histórica de 153 tests MATERIALIZADA (+ GATE B espejo)
 
 - `tests/` materializado: 15 archivos, 153 tests (8+5+4+10+5+10+15+12+23+11+20+4+5+5+16), reconstruidos desde la especificación del manual §12.1 (invariantes M1/M2/M3, R1/R2/R4, G1/G1-bis/G2, I1/I2/I3, M-A…M-F y harness §13–14). El anexo histórico no era recuperable de los paquetes (verificado en cierre-v1/v2 y bilingue-v1) — reconstrucción fiel a la especificación, declarada en la adenda del manual.

@@ -97,7 +97,7 @@
   "critico_cli.a109309d3e11": "tipo desconocido: {v0}",
   "critico_cli.aa30fcb2148b": "{v0}: hash declarado != calculado — RECHAZO",
   "critico_cli.ad6ec12c8c20": "imprime los 11 ángulos",
-  "critico_cli.ae8e111ac81e": "Los 11 ángulos de negocio (capa de Dirección):\n",
+  "critico_cli.ae8e111ac81e": "Los 14 ángulos de negocio (11 canónicos + 3 opcionales — capa de Dirección):",
   "critico_cli.b408c2fda259": "✗ {v0} ya existe — no se sobrescribe (usa --force para sobrescribir)",
   "critico_cli.b8aded0d8e92": "genera un triage pre-rellenado",
   "critico_cli.b9239e693e87": "escribir el fichero",
@@ -324,5 +324,11 @@
   "critico_cli.guia_sub": "  sub-perfil {v0}: guía no vinculante — dimensiones sugeridas: {v1} · keywords: {v2}",
   "critico_cli.sub_desconocido": "aviso: sub-perfil desconocido para {v0}: {v1} (se continúa sin guía)",
   "validators.r4_flag_faltante": "R4: metric_source unavailable exige el flag QUANTITATIVE_UNAVAILABLE (no se finge una evaluación cuantitativa)",
-  "validators.r4_sin_source": "R4: quantitative_threshold exige metric_source"
+  "validators.r4_sin_source": "R4: quantitative_threshold exige metric_source",
+  "angle.12.title": "Sostenibilidad (opcional)",
+  "angle.12.question": "Impacto ambiental y social de la decisión",
+  "angle.13.title": "Tiempo y oportunidad (opcional)",
+  "angle.13.question": "Ventana de la decisión, plazos, secuencia",
+  "angle.14.title": "Reputación y confianza (opcional)",
+  "angle.14.question": "Marca y credibilidad ante terceros"
 }

@@ -97,7 +97,7 @@
   "critico_cli.a109309d3e11": "unknown type: {v0}",
   "critico_cli.aa30fcb2148b": "{v0}: declared hash != computed hash — RECHAZO",
   "critico_cli.ad6ec12c8c20": "print the 11 angles",
-  "critico_cli.ae8e111ac81e": "The 11 business angles (management layer):\n",
+  "critico_cli.ae8e111ac81e": "The 14 business angles (11 canonical + 3 optional — management layer):",
   "critico_cli.b408c2fda259": "✗ {v0} already exists — refusing to overwrite (use --force to overwrite)",
   "critico_cli.b8aded0d8e92": "generate a prefilled triage",
   "critico_cli.b9239e693e87": "write the file",
@@ -324,5 +324,11 @@
   "critico_cli.guia_sub": "  sub-profile {v0}: non-binding guide — suggested dimensions: {v1} · keywords: {v2}",
   "critico_cli.sub_desconocido": "notice: unknown sub-profile for {v0}: {v1} (continuing without guide)",
   "validators.r4_flag_faltante": "R4: metric_source unavailable requires flag QUANTITATIVE_UNAVAILABLE (no quantitative evaluation may be faked)",
-  "validators.r4_sin_source": "R4: quantitative_threshold requires metric_source"
+  "validators.r4_sin_source": "R4: quantitative_threshold requires metric_source",
+  "angle.12.title": "Sustainability (optional)",
+  "angle.12.question": "Environmental and social impact of the decision",
+  "angle.13.title": "Time and opportunity (optional)",
+  "angle.13.question": "Decision window, deadlines, sequencing",
+  "angle.14.title": "Reputation and trust (optional)",
+  "angle.14.question": "Brand and credibility with third parties"
 }

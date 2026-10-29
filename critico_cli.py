@@ -18,7 +18,10 @@ TPL_DIR = BASE / 'templates'
 RUBRIC = BASE / '03_rubric.yaml'
 SCHEMAS = {'objecion': 'objection.yaml', 'triage': 'triage.yaml', 'verdict': 'verdict.yaml', 'outcome': 'outcome.yaml', 'riesgo': 'risk_accepted.yaml', 'skip': 'skip_incident.yaml', 'patron': 'pattern.yaml', 'golden': 'golden_case.yaml'}
 EXTENSION_PROFILES = {'content': 'E, F, M, P, L', 'education': 'E, L, F, G, P', 'research': 'E, J, F, M, G', 'security': 'C, D, Q, G, M', 'realestate': 'G, H, S, D, Q', 'agro': 'D, K, Q, J, S', 'construccion': 'D, G, H, S, Q', 'public': 'G, M, S, H, P', 'hospitality': 'D, H, P, S, Q', 'creative': 'M, H, G, P, S', 'finance': 'G, H, S, J, D', 'pharma': 'G, D, K, M, J', 'arquitectura': 'G, H, S, P, Q', 'insurance': 'G, H, J, S, D'}
-ANGLES = [(1, 'Costos', '¿Cuánto cuesta y quién lo paga? ¿Qué se deja de hacer?'), (2, 'Seguridad', '¿Qué puede salir mal si se abusa? ¿Pide más permisos de los necesarios?'), (3, 'Datos/honestidad', '¿De dónde salen los datos? ¿Qué pasa si son falsos o viejos?'), (4, 'Personas/autonomía', '¿Quién carga con el costo? ¿Se respeta a la persona afectada?'), (5, 'Dependencias', '¿Qué pasa si el proveedor falla, sube precios o desaparece?'), (6, 'UX/accesibilidad', '¿Funciona para todos los usuarios, incluidos los degradados?'), (7, 'Legal/licencias', '¿Está permitido y bajo qué licencia? ¿Qué dice la ley?'), (8, 'Coordinación', '¿Quién hace qué, en qué orden, y qué pasa si alguien falla?'), (9, 'Sesgo del autor (⭐)', '¿Se busca evidencia en contra, o solo a favor?'), (10, 'Blast-radius (⭐)', '¿Qué rompe si falla? ¿Cómo se detecta? ¿Se puede revertir?'), (11, 'Contratos e invariantes (⭐)', '¿Qué contrato se firmó y se cumple en todos los caminos?')]
+ANGLES = [(1, 'Costos', '¿Cuánto cuesta y quién lo paga? ¿Qué se deja de hacer?'), (2, 'Seguridad', '¿Qué puede salir mal si se abusa? ¿Pide más permisos de los necesarios?'), (3, 'Datos/honestidad', '¿De dónde salen los datos? ¿Qué pasa si son falsos o viejos?'), (4, 'Personas/autonomía', '¿Quién carga con el costo? ¿Se respeta a la persona afectada?'), (5, 'Dependencias', '¿Qué pasa si el proveedor falla, sube precios o desaparece?'), (6, 'UX/accesibilidad', '¿Funciona para todos los usuarios, incluidos los degradados?'), (7, 'Legal/licencias', '¿Está permitido y bajo qué licencia? ¿Qué dice la ley?'), (8, 'Coordinación', '¿Quién hace qué, en qué orden, y qué pasa si alguien falla?'), (9, 'Sesgo del autor (⭐)', '¿Se busca evidencia en contra, o solo a favor?'), (10, 'Blast-radius (⭐)', '¿Qué rompe si falla? ¿Cómo se detecta? ¿Se puede revertir?'), (11, 'Contratos e invariantes (⭐)', '¿Qué contrato se firmó y se cumple en todos los caminos?'),
+(12, 'Sostenibilidad (opcional)', 'Impacto ambiental y social de la decisión'),
+(13, 'Tiempo y oportunidad (opcional)', 'Ventana de la decisión, plazos, secuencia'),
+(14, 'Reputación y confianza (opcional)', 'Marca y credibilidad ante terceros')]
 
 def load_schema(name: str) -> dict:
     filename = SCHEMAS.get(name)
@@ -211,6 +214,9 @@ def verify_evidence(rec: dict, artifact_path: str | None, document_directory: Pa
         print(f'    {e}')
 
 def main() -> None:
+    # R-FIX-08 (LA-06): UTF-8 explícito en consola (cp1252 rompe ⭐/═/acentos)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     arguments = configure_arguments()
     ap = LocalizedArgumentParser(description=translate('critico_cli.0af3e6c3ced0'))
     sub = ap.add_subparsers(dest='cmd', required=True)

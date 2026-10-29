@@ -561,6 +561,9 @@ def run_closure_cases() -> None:
         step(translate('probar_todo.1526c32ca6b0'), r.returncode == 1 and translate('probar_todo.2b31b93cd4a9') in r.stderr and ('NO_DEBE_CONTINUAR' not in r.stdout))
 
 def main() -> None:
+    # R-FIX-08 (LA-06): UTF-8 explícito en consola (cp1252 rompe ⭐/═/acentos)
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     configure_arguments()
     global RAIZ_CORRIDA
     RESULTADOS.clear()
