@@ -2,7 +2,7 @@
 # critic.config.yaml — Crítico v3.3 (congelado)
 # ============================================================
 critic_version: 3.4.0
-config_hash: "8cb8a84f5f0ce97f55456739ddaa99f5219db743f23f028b9fd41dccc7c7ce06"
+config_hash: "262e9289d02c0cb09fd7d47a767c73922d1c5fe1957c8d1b5798a440b03f730d"
 frozen: true
 # --- Guardrails de ejecución ---
 execution:
@@ -60,36 +60,180 @@ schema_enforcement:
 # --- v3.3 · Integración con el ecosistema ---
 integration:
   # I1 — Mapeo stack BZ-109 → macro-perfil
+  # v3.4.1 (2026-10-30): reemplazado por el Registro Canónico F/T/S/E v1
+  # (MD-4, GATE C concedido — BZ-20261030-094). stack_3 eliminado/resuelto (E-3 y T3).
+  # Estados: el esquema solo admite frozen/pending_confirmation; las filas
+  # «en construcción» (E-6…E-10) se registran frozen con la condición en description.
   bz109_stack_mapping:
-    stack_1:
+    E-1:
       macro_profile: tech
       sub_profile: tech.code
-      description: "Automatización / scripting"
+      description: "E-1 — Análisis/Determinista (checks, contratos JSON, fixtures, CI)"
       status: frozen
-    stack_2:
+    E-2:
       macro_profile: tech
-      sub_profile: tech.infra
-      description: "Infraestructura / despliegue"
+      sub_profile: tech.code
+      description: "E-2 — Render (Remotion+TS+Zod; alternativas FFmpeg/MoviePy/Shotstack)"
       status: frozen
-    stack_3:
+    E-3:
       macro_profile: tech
       sub_profile: tech.data
-      description: "PLACEHOLDER — pendiente de confirmación por el autor del blueprint"
-      status: pending_confirmation
-    stack_4:
-      macro_profile: business
-      sub_profile: null
-      description: "Producto / operación de negocio"
+      description: "E-3 — ERP S07 (Odoo registro + operador con adaptadores)"
       status: frozen
-    stack_5:
-      macro_profile: legal
-      sub_profile: null
-      description: "Contratos / cumplimiento"
-      status: frozen
-    stack_seguridad:
+    E-4:
       macro_profile: tech
       sub_profile: tech.code
-      description: "Sub-stack de seguridad transversal"
+      description: "E-4 — UI (React/Next.js + kit ui/ + i18n + CSP + a11y)"
+      status: frozen
+    E-5:
+      macro_profile: tech
+      sub_profile: null
+      description: "E-5 — Protocolo universal (Markdown personas + JSON contratos + shell hooks) — transversal"
+      status: frozen
+    E-6:
+      macro_profile: tech
+      sub_profile: null
+      description: "E-6 — Voz/Audio — aprobado 30/10; stack en construcción (en_construccion no existe en v3.4 → frozen + nota)"
+      status: frozen
+    E-7:
+      macro_profile: tech
+      sub_profile: null
+      description: "E-7 — Orquestación multi-agente — aprobado 30/10; en construcción (registrado frozen, nota v3.4.1)"
+      status: frozen
+    E-8:
+      macro_profile: tech
+      sub_profile: null
+      description: "E-8 — Evaluación/Telemetría — aprobado 30/10; en construcción (registrado frozen, nota v3.4.1)"
+      status: frozen
+    E-9:
+      macro_profile: tech
+      sub_profile: tech.data
+      description: "E-9 — Memoria/Contexto — aprobado 30/10; en construcción (registrado frozen, nota v3.4.1)"
+      status: frozen
+    E-10:
+      macro_profile: tech
+      sub_profile: tech.infra
+      description: "E-10 — Infraestructura, IaC y Observabilidad — creado 30/10; en construcción (registrado frozen, nota v3.4.1)"
+      status: frozen
+    E-S1:
+      macro_profile: tech
+      sub_profile: tech.code
+      description: "E-S1 — Sub-stack Adquisición web (crawling con ética)"
+      status: frozen
+    E-S2:
+      macro_profile: tech
+      sub_profile: tech.code
+      description: "E-S2 — Sub-stack Seguridad (SAST/SCA/secretos + SSRF guards)"
+      status: frozen
+    E-S3:
+      macro_profile: business
+      sub_profile: null
+      description: "E-S3 — Sub-stack Pagos (reglas numeradas, webhooks anti-forjado, e-invoicing)"
+      status: frozen
+    E-S4:
+      macro_profile: tech
+      sub_profile: tech.data
+      description: "E-S4 — Sub-stack Datos (checklist M1–M9, idempotencia, E.164/DANE)"
+      status: frozen
+    E-S5:
+      macro_profile: tech
+      sub_profile: tech.code
+      description: "E-S5 — Sub-stack Eventos (colas, audit.jsonl, SSE, heartbeat)"
+      status: frozen
+    F1:
+      macro_profile: tech
+      sub_profile: tech.code
+      description: "F1 — Fábrica Desarrollo, Forja y Reingeniería"
+      status: frozen
+    F4:
+      macro_profile: business
+      sub_profile: null
+      description: "F4 — Fábrica Contenido y Marca"
+      status: frozen
+    F5:
+      macro_profile: business
+      sub_profile: null
+      description: "F5 — Fábrica Stack Académico (Academia y Educación)"
+      status: frozen
+    F6:
+      macro_profile: tech
+      sub_profile: null
+      description: "F6 — Fábrica Voz (voces, clonación, doblaje)"
+      status: frozen
+    F7:
+      macro_profile: legal
+      sub_profile: null
+      description: "F7 — Fábrica Avatares y Personas"
+      status: frozen
+    F8:
+      macro_profile: tech
+      sub_profile: tech.infra
+      description: "F8 — Fábrica Infraestructura Soberana e IaC"
+      status: frozen
+    T1:
+      macro_profile: legal
+      sub_profile: null
+      description: "T1 — Transversal Gobernanza y Action Broker"
+      status: frozen
+    T2:
+      macro_profile: tech
+      sub_profile: null
+      description: "T2 — Transversal Agent Factory y Capability Registry"
+      status: frozen
+    T3:
+      macro_profile: tech
+      sub_profile: tech.data
+      description: "T3 — Transversal Conocimiento y Memoria"
+      status: frozen
+    T4:
+      macro_profile: ops
+      sub_profile: null
+      description: "T4 — Transversal Plataforma de Operación (Batuta + Bodega + Mando)"
+      status: frozen
+    T5:
+      macro_profile: business
+      sub_profile: null
+      description: "T5 — Transversal Marketing, Comercial y Ventas"
+      status: frozen
+    S01:
+      macro_profile: business
+      sub_profile: null
+      description: "S01 — Servicio Academia y Educación"
+      status: frozen
+    S02:
+      macro_profile: business
+      sub_profile: null
+      description: "S02 — Servicio Agencia de Contenido y Publicidad"
+      status: frozen
+    S03:
+      macro_profile: business
+      sub_profile: null
+      description: "S03 — Servicio Desarrollo / Producto Digital y MVPs"
+      status: frozen
+    S04:
+      macro_profile: business
+      sub_profile: null
+      description: "S04 — Servicio Servicios de IA (video, clonación, imágenes)"
+      status: frozen
+    S05:
+      macro_profile: business
+      sub_profile: null
+      description: "S05 — Servicio Consultoría e Investigación"
+      status: frozen
+    S06:
+      macro_profile: business
+      sub_profile: null
+      description: "S06 — Servicio Publicación en Redes y Tendencias"
+      status: frozen
+    S07:
+      macro_profile: business
+      sub_profile: null
+      description: "S07 — Servicio ERP KUVEXTA Agentic ERP"
+      status: frozen
+    S08:
+      macro_profile: business
+      sub_profile: null
+      description: "S08 — Servicio Contenido propio (marca KUVEXTA)"
       status: frozen
   unmapped_stack_behavior:
     action: NECESITA_INFO
@@ -375,5 +519,5 @@ known_gaps:
     description: "suspension_control.cycle_count no se resetea sin doble condición (M3) — runtime, no esquema"
     status: "por diseño — validado en runtime via critic.config.validation.invariants"
   - id: stack_3_pending
-    description: "Mapeo de stack_3 en BZ-109 pendiente de confirmación"
-    status: "no bloquea — regla STACK_NOT_MAPPED cubre el caso"
+    description: "Mapeo de stack_3 en BZ-109 — RESUELTO v3.4.1 (MD-4, BZ-20261030-094): el Registro Canónico F/T/S/E v1 elimina la ambigüedad (E-3 y T3)"
+    status: "cerrado — v3.4.1 (2026-10-30)"

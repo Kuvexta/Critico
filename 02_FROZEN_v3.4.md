@@ -185,21 +185,67 @@ Estos **no pueden romperse** en un parche aditivo. Si un test asociado falla, el
 
 ## 5. Tabla de stacks BZ-109 → macro-perfil
 
-**Estado:** congelada excepto `stack_3` (pendiente de confirmación).
+**Estado:** actualizada el 2026-10-30 al **Registro Canónico F/T/S/E v1**
+(MD-4, aprobada por Dirección — GATE C concedido, BZ-20261030-094). Parche
+aditivo **v3.4.1**. `stack_3` queda **resuelto y eliminado**: era la incógnita
+de BZ-109; el registro nuevo la disuelve en `E-3` y `T3` (no existe «stack_3»).
 
 ```yaml
-# critic.config.yaml → integration.bz109_stack_mapping
-stack_1:          { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
-stack_2:          { macro_profile: tech,     sub_profile: tech.infra, status: frozen }
-stack_3:          { macro_profile: tech,     sub_profile: tech.data,  status: pending_confirmation }
-stack_4:          { macro_profile: business, sub_profile: null,       status: frozen }
-stack_5:          { macro_profile: legal,    sub_profile: null,       status: frozen }
-stack_seguridad:  { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
+# critic.config.yaml → integration.bz109_stack_mapping (34 entradas)
+# Stacks técnicos E- (10 + 5 sub-stacks; techo 20)
+E-1:     { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
+E-2:     { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
+E-3:     { macro_profile: tech,     sub_profile: tech.data,  status: frozen }
+E-4:     { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
+E-5:     { macro_profile: tech,     sub_profile: null,       status: frozen }
+E-6:     { macro_profile: tech,     sub_profile: null,       status: frozen }  # en_construccion → frozen (nota)
+E-7:     { macro_profile: tech,     sub_profile: null,       status: frozen }  # en_construccion → frozen (nota)
+E-8:     { macro_profile: tech,     sub_profile: null,       status: frozen }  # en_construccion → frozen (nota)
+E-9:     { macro_profile: tech,     sub_profile: tech.data,  status: frozen }  # en_construccion → frozen (nota)
+E-10:    { macro_profile: tech,     sub_profile: tech.infra, status: frozen }  # en_construccion → frozen (nota)
+E-S1:    { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
+E-S2:    { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
+E-S3:    { macro_profile: business, sub_profile: null,       status: frozen }
+E-S4:    { macro_profile: tech,     sub_profile: tech.data,  status: frozen }
+E-S5:    { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
+# Planos organizacionales: fábricas (F), transversales (T), servicios (S)
+F1:      { macro_profile: tech,     sub_profile: tech.code,  status: frozen }
+F4:      { macro_profile: business, sub_profile: null,       status: frozen }
+F5:      { macro_profile: business, sub_profile: null,       status: frozen }
+F6:      { macro_profile: tech,     sub_profile: null,       status: frozen }
+F7:      { macro_profile: legal,    sub_profile: null,       status: frozen }
+F8:      { macro_profile: tech,     sub_profile: tech.infra, status: frozen }
+T1:      { macro_profile: legal,    sub_profile: null,       status: frozen }
+T2:      { macro_profile: tech,     sub_profile: null,       status: frozen }
+T3:      { macro_profile: tech,     sub_profile: tech.data,  status: frozen }
+T4:      { macro_profile: ops,      sub_profile: null,       status: frozen }
+T5:      { macro_profile: business, sub_profile: null,       status: frozen }
+S01…S08: { macro_profile: business, sub_profile: null,       status: frozen }
 ```
 
-Regla de comportamiento: si llega una propuesta etiquetada con un stack no mapeado → `NECESITA_INFO` con `suspension_reason: STACK_NOT_MAPPED`. El sistema no rompe; pide clarificación.
+Regla de comportamiento sin cambios: si llega una propuesta etiquetada con un
+stack no mapeado → `NECESITA_INFO` con `suspension_reason: STACK_NOT_MAPPED`.
+El sistema no rompe; pide clarificación.
 
-Acción pendiente: confirmar si `stack_3` existe en BZ-109. Si no existe, se elimina en v3.4.1 (parche cosmético, no requiere descongelar).
+**Nota del cambio (v3.4.1):**
+
+- El esquema del config solo admite los estados `frozen` y `pending_confirmation`;
+  `en_construccion` **no existe** y añadirlo exigiría descongelar. Por la propuesta
+  MD-4 (nota 3) y la instrucción del encargo, las filas E-6…E-10 (stacks aprobados
+  30/10 y **en construcción**) se registran `status: frozen` con la condición anotada
+  en `description` del YAML. Registrado en CHANGELOG v3.4.1.
+- `S01…S08` se expande a 8 entradas individuales (`S01` … `S08`) en el YAML.
+- Las descripciones de las filas F/T/S/E provienen del Registro Canónico F/T/S/E v1
+  (hash `d7d2d870…`, BZ-20261030-094) y de DOC-01 (fábricas/transversales/servicios).
+- Acción pendiente de §5 resuelta: `stack_3` no existe en BZ-109; eliminado.
+- **Contrato ejecutable actualizado (condiciones de Dirección, 30/10):**
+  `tests/test_integration_i1.py::test_04` deja de aseverar el estado viejo de
+  `stack_3` (**CAMBIO INTENCIONAL DE CONTRATO**, no ajuste para que pase): el
+  registro F/T/S/E resuelve la incógnita `stack_3` y el estado viejo queda
+  eliminado. El test ahora verifica el estado nuevo (34 entradas exactas,
+  `stack_3` ausente) y la regla real del contrato I1: stack no mapeado (p. ej.
+  «X-1») → `NECESITA_INFO` con `STACK_NOT_MAPPED`. Motivo y diff exacto
+  documentados dentro del test y en CHANGELOG v3.4.1.
 
 ---
 
@@ -248,7 +294,7 @@ Estos huecos están aceptados por diseño y no bloquean el freeze.
 |---|---|---|
 | G3 | M1 (cap justificado) no enforced en JSON Schema | No expresable en JSON Schema estándar; validado en `helpers/validators.py` + `critic.config.validation.invariants` |
 | G4 | M3 (reset doble condición) no enforced en JSON Schema | Igual que G3; validado en runtime |
-| — | `stack_3` pendiente de confirmación | Ver §5 |
+| — | `stack_3` resuelto en v3.4.1 | Eliminado: la ambigüedad la disuelve el Registro Canónico F/T/S/E v1 (E-3 y T3) — ver §5 |
 | — | Modo `--mode live` de evals requiere API de modelos | Fuera de alcance del freeze; el comparador no cambia cuando llegue |
 | — | Golden set con 4 casos sintéticos | Ampliable con `scripts/bootstrap_golden_set.py` cuando exista `gate-c-decisions.jsonl` real |
 | — | Reporte de tendencia temporal empieza vacío | Se llena con cada ejecución de `make eval-history` en CI |
@@ -289,7 +335,7 @@ Nada de esto bloquea el freeze actual.
 
 | Fase | Qué | Condición |
 |---|---|---|
-| v3.4.1 | Confirmar/eliminar `stack_3` | Confirmación del usuario sobre BZ-109 |
+| v3.4.1 | ✔ Hecho (2026-10-30): tabla BZ-109 reemplazada por el Registro Canónico F/T/S/E v1; `stack_3` eliminado | MD-4 aprobada por Dirección (GATE C, BZ-20261030-094) |
 | v3.4.1 | Activar `model_rotation.enabled` | Disponibilidad de >1 modelo |
 | v3.4 | Ampliar golden set con casos históricos reales | `gate-c-decisions.jsonl` formalizado |
 | v3.4 | Activar `--mode live` en evals | API de modelos disponible |

@@ -1,6 +1,17 @@
 # CHANGELOG
 
-## 01.00.01 (corrección del corte) — mapeo de versiones a 01.00.01
+## v3.4.1 — 2026-10-30 — Mutación BZ-109: tabla de stacks al Registro Canónico F/T/S/E (MD-4, GATE C)
+
+- `04_critic.config.yaml → integration.bz109_stack_mapping`: tabla vieja (stack_1…stack_5, stack_seguridad) reemplazada por el Registro Canónico F/T/S/E v1: E-1…E-10, E-S1…E-S5, F1/F4–F8, T1–T5, S01–S08 (**34 entradas**). `stack_3` eliminado: la incógnita de BZ-109 queda resuelta por el registro (E-3 y T3).
+- Estados `en_construccion` (E-6…E-10, aprobados 30/10): **no existen** en el esquema del config (solo `frozen`/`pending_confirmation`) y añadirlos exigiría descongelar → registrados `status: frozen` con la condición anotada en `description` (permitido explícitamente por la propuesta MD-4, nota 3).
+- `known_gaps.stack_3_pending` marcado `cerrado — v3.4.1`. `config_hash` recalculado y verificado (SHA-256 del fichero excluyendo la línea del propio campo, convención de CONTRIBUTING) → `262e9289…`.
+- `tests/test_integration_i1.py::test_04`: **CAMBIO INTENCIONAL DE CONTRATO** — no es un ajuste para que el test pase. Aprobado por Dirección (MD-4, BZ-20261030-094 + condiciones de Andrés del 30/10). Motivo documentado DENTRO del test: «el registro F/T/S/E resuelve la incógnita stack_3; el estado viejo queda eliminado». La aserción vieja (`stack_3.status == pending_confirmation`) queda derogada; el test verifica ahora: `stack_3` ausente del mapping, las 34 entradas F/T/S/E exactas, y un stack NO mapeado con id nuevo («X-1») → `NECESITA_INFO` con `STACK_NOT_MAPPED`. Diff exacto del test preservado en el respaldo de la mutación.
+- `02_FROZEN_v3.4.md`: §5 con la tabla nueva + nota del cambio; filas stale de §7 (deuda) y §9 (roadmap) ajustadas. Esquemas y máquina de estados INTACTOS.
+- `docs/HASHES.md` actualizado con los hashes de los tres ficheros cambiados.
+- Autorización: MD-4 aprobada por Andrés («sí», GATE C concedido — **BZ-20261030-094**) · Registro Canónico v1 `d7d2d870…`.
+- Verificación (salida REAL de la terminal, 30/10): suite `pytest tests/ -v` → **153 passed in 0.37s** · batería `probar_todo.py` → **100 aprobadas / 0 fallidas / 0 no comprobables** · ratchet 153 ≥ 153 · `verify_freeze` OK · `verificar_release` OK · evals offline sin regresión.
+- Condiciones de Andrés (30/10): (1) test_04 documentado como cambio intencional con motivo y diff exacto ✔; (2) 153/153 CALCULADO, salida real de pytest ✔; (3) commit SOLO local — push, merge y tag **PROHIBIDOS** hasta el OK literal de Andrés; (4) verificación de segundo nivel por un verificador aparte (pendiente).
+- Kit leído (P22).
 
 - La guarda cazó que el README aún citaba `01.00.00` tras el bump: corregido en la línea de release y en el mapeo. El tag `v01.00.01` se RE-APUNTÓ al commit corregido (BUP-REL-01 §7.4: solo a commits ya en main, registrado aquí).
 
