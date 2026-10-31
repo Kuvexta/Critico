@@ -1,4 +1,4 @@
-"""Check frozen rubric/config versions, all eight schema identifiers, Draft 2020-12 schema validity and the presence of BZ-109 configuration. Presence does not certify an active integration."""
+"""Check frozen rubric/config versions, all eight schema identifiers, Draft 2020-12 schema validity, the presence of BZ-109 configuration and the v3.5.0 sub-profile ops.cosecha (PROP-COSECHA-001). Presence does not certify an active integration."""
 from __future__ import annotations
 import sys
 from pathlib import Path
@@ -29,9 +29,18 @@ def main() -> int:
     chk(r.get('frozen') is True, translate('verify_freeze.c05d61575cd8'))
     chk(c.get('frozen') is True, translate('verify_freeze.9b4922804531'))
     chk(r.get('rubric_version') == c.get('critic_version'), 'rubric_version ≠ critic_version')
-    chk(c.get('critic_version') == '3.4.0', translate('verify_freeze.0deb5b294d56'))
+    chk(c.get('critic_version') == '3.5.0', translate('verify_freeze.0deb5b294d56'))
     chk(c.get('schema_enforcement', {}).get('version') == '3.4.0', translate('verify_freeze.ac25af333c3c'))
     chk('integration' in c and 'bz109_stack_mapping' in c.get('integration', {}), translate('verify_freeze.c4bac4f3a2a6'))
+    # v3.5.0 — sub-perfil ops.cosecha (PROP-COSECHA-001)
+    ops_subs = c.get('profiles', {}).get('universals', {}).get('ops', {}).get('sub_profiles', {})
+    chk('ops.cosecha' in ops_subs, 'sub-perfil ops.cosecha ausente del config (PROP-COSECHA-001)')
+    cosecha_dims = ops_subs.get('ops.cosecha', {}).get('suggested_dimensions', [])
+    chk(set(cosecha_dims) <= set(range(1, 109)), 'ops.cosecha con suggested_dimensions fuera de 1..108')
+    prc = c.get('cosecha_prc', {})
+    chk(prc.get('domain') == 'prc' and prc.get('sub_profile_id') == 'ops.cosecha', 'cosecha_prc sin domain prc / sub_profile_id')
+    chk(prc.get('pointer_enforcement_strict') is True and prc.get('snapshot_hash_validation') is True, 'cosecha_prc sin enforcement estricto')
+    chk(len(prc.get('slots', {})) == 13, 'cosecha_prc.slots ≠ 13 (C01–C13)')
     total_dims = len(r.get('dimensions', []))
     chk(total_dims == 108, translate('verify_freeze.6bbc7931b26a', v0=total_dims))
     f_val = BASE / 'evals' / 'validators.py'

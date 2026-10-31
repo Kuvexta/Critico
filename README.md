@@ -10,13 +10,13 @@ rector: **nada se simula y nada se declara demostrado sin evidencia
 verificable** (diseñado ≠ demostrado).
 
 - **Release del repositorio: `01.00.01`** (etapa DEFINITIVO · regla 00/01)
-- **Metodología congelada: `v3.4.0`** (rúbrica de 108 dimensiones, 8 esquemas y config — verificada por `verify_freeze`)
+- **Metodología congelada: `v3.5.0`** (rúbrica de 108 dimensiones, 8 esquemas y config — verificada por `verify_freeze`)
 
 > **Mapeo de versiones (C2):** `VERSION` contiene el release del repo
 > (`01.00.01`); `04_critic.config.yaml → critic_version` contiene la versión de
-> la metodología congelada (`3.4.0`). El release definitivo `01.00.00` quedó
+> la metodología congelada (`3.5.0`). El release definitivo `01.00.00` quedó
 > CORTADO el 2026-10-29, junto al **Banco Universal de Pruebas (BUP)**
-> (https://github.com/Kuvexta/BUP) — gates cerrados y suite 153/153 en verde.
+> (https://github.com/Kuvexta/BUP) — gates cerrados y suite 166/166 en verde.
 
 ## Requisitos
 
@@ -79,14 +79,15 @@ python3 scripts/outcome_runner.py metricas --bitacora bitacora.jsonl
 
 ## Reglas (gobernanza)
 
-- Rúbrica, esquemas y config **congelados en v3.4.0**: cualquier cambio exige
+- Rúbrica, esquemas y config **congelados en v3.5.0**: cualquier cambio exige
   propuesta numerada con protocolo y la frase canónica de autorización
-  **«OK <8hex>»**, más la actualización del freeze.
+  **«OK <8hex>»** (o mandato global de Dirección registrado), más la
+  actualización del freeze.
 - Los registros no se editan: una corrección es una **adenda** que referencia
   el original por hash.
 - Los borrados los ejecuta el **responsable designado por Dirección** (encargado de la dirección o responsable del proceso; perfil inicial: Andrés), por ítem, con hash y acta.
-- Batería actual del repo: **100/100** · suite histórica de **153 tests**:
-  materializada (153/153) con ratchet en CI (`docs/SUITE_BASELINE`).
+- Batería actual del repo: **100/100** · suite de **166 tests**:
+  materializada (166/166) con ratchet en CI (`docs/SUITE_BASELINE`).
 
 ## Límites honestos
 

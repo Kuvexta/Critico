@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v3.5.0 — 2026-10-30 — Sub-perfil ops.cosecha (CAMBIO PROP-COSECHA-001, aditivo)
+
+- `04_critic.config.yaml`: `critic_version` 3.4.0→3.5.0 · sub-perfil `ops.cosecha` en `profiles.universals.ops.sub_profiles` con `suggested_dimensions` = 15 IDs reales (C01–C13) · sección nueva `cosecha_prc` (domain prc, `pointer_enforcement_strict`, `snapshot_hash_validation`, matriz P29 binaria con BYPASS, slots C01–C13 con composición/severidades) · flag `critic.cosecha_prc` · `config_hash` recalculado → `797898e6…` (convención CONTRIBUTING verificada por test).
+- Bundle de diseño (v3 §5/§6 + v4 §5 + v5 §2.2): **C02 compuesto** (consistencia ∧ no-inferioridad con δ; replay comparativo como evidencia separada — NO alias de la dimensión 3) · **C07 AND** (88+57, ambas bloqueantes, reporte separado) · **C11 severidad condicional** (bloqueante si `tipo ∈ {SKILL_*}`; advisory si `tipo ∈ {PROMPT_CANONICO, DEGRADAR}`) · **C12/C13 advisory** con escalado Advisory→Bloqueante vía Beta/Wilson (`n_min_baseline=50`, baseline rodante 4 semanas, `baseline_version`).
+- `03_rubric.yaml`: `rubric_version` 3.4.0→3.5.0 (dimensiones, esquemas y máquina de estados INTACTOS). `scripts/verify_freeze.py`: versión esperada 3.5.0 + checks del sub-perfil. Locales es/en con «Freeze OK: v3.5.0 …».
+- **NUEVO** `docs/guia_subperfil_ops_cosecha.md` (guía normativa del bundle) · **NUEVO** `docs/propuestas/PROP-COSECHA-001.md` (propuesta numerada) · **NUEVO** `tests/test_subprofile_cosecha.py` (13 tests, FROZEN §8.4).
+- `02_FROZEN_v3.4.md`: §2/§3/§5.1/§6/§9/§10 actualizados + nota del cambio v3.5.0. `docs/SUITE_BASELINE` 153→166 (ratchet solo sube). `docs/HASHES.md` regenerado. README: mapeo de versiones y conteo de suite.
+- Autorización: mandato global de Andrés «te doy autorización para que ejecutes todo hasta el final» (**BZ-20261030-136**, 2026-10-30) — cubre propuesta, implementación, verificación, commit **y push**. No existe «OK <8hex>` para esta propuesta y no se inventa; el hash del diff queda como referencia (documentado en la propuesta).
+- Verificación (salida REAL de la terminal, 30/10): batería `probar_todo.py` → **100 aprobadas / 0 fallidas / 0 no comprobables** · suite `pytest tests/ -v` → **166 passed** (153 históricos + 13 nuevos) · `verify_freeze` → Freeze OK: v3.5.0 · `verificar_release` OK · ratchet 166 ≥ 166.
+
+
+
 ## v3.4.1 — 2026-10-30 — Mutación BZ-109: tabla de stacks al Registro Canónico F/T/S/E (MD-4, GATE C)
 
 - `04_critic.config.yaml → integration.bz109_stack_mapping`: tabla vieja (stack_1…stack_5, stack_seguridad) reemplazada por el Registro Canónico F/T/S/E v1: E-1…E-10, E-S1…E-S5, F1/F4–F8, T1–T5, S01–S08 (**34 entradas**). `stack_3` eliminado: la incógnita de BZ-109 queda resuelta por el registro (E-3 y T3).

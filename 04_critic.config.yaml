@@ -1,8 +1,8 @@
 # ============================================================
-# critic.config.yaml — Crítico v3.3 (congelado)
+# critic.config.yaml — Crítico v3.5.0 (congelado; parche aditivo PROP-COSECHA-001)
 # ============================================================
-critic_version: 3.4.0
-config_hash: "262e9289d02c0cb09fd7d47a767c73922d1c5fe1957c8d1b5798a440b03f730d"
+critic_version: 3.5.0
+config_hash: "797898e6d4da12cc31d201f1748eb5aa07ef97b308e8640ac22f0605b6a4c810"
 frozen: true
 # --- Guardrails de ejecución ---
 execution:
@@ -294,6 +294,7 @@ flags:
   critic.inspector_diferencial: { enabled: false, condition: "versiones comparables" }
   critic.simulador_escenarios:  { enabled: false, condition: "modelo de escenarios" }
   critic.audit_trail_strict:    { enabled: true,  condition: "exigir audit trail también en PASA_CON_CONDICIONES" }
+  critic.cosecha_prc:           { enabled: true,  condition: "sub-perfil ops.cosecha vigente (PROP-COSECHA-001, v3.5.0): activa la rúbrica especializada del dominio prc" }
 profiles:
   sub_profiles_guia: "C1 CAMBIO-10: las suggested_dimensions de cada sub-perfil son GUIA NO VINCULANTE; el triage generado nunca las auto-activa y la seleccion de active_dimensions sigue siendo del autor."
   universals:
@@ -348,6 +349,7 @@ profiles:
       sub_profiles:
         ops.automotive: { suggested_dimensions: [16, 25, 37, 51, 60], keywords: [] }
         ops.aviation: { suggested_dimensions: [16, 25, 37, 51, 60, 96], keywords: [] }
+        ops.cosecha: { suggested_dimensions: [30, 3, 32, 100, 50, 9, 88, 57, 44, 55, 41, 23, 79, 17, 106], keywords: [cosecha, proceso, ficha, P-PRC, dedup, prompts, skills] }
         ops.energy: { suggested_dimensions: [22, 25, 28, 60, 95], keywords: [] }
         ops.facilities: { suggested_dimensions: [16, 25, 26, 28, 96], keywords: [] }
         ops.imprentas: { suggested_dimensions: [22, 25, 27, 51, 61], keywords: [] }
@@ -491,6 +493,35 @@ profiles:
       security.red_team: { suggested_dimensions: [16, 21, 77, 93, 97], keywords: [] }
   extension_sub_profiles_nota: "Inactivos: activar un macro-perfil de extension requiere U2; los sub-perfiles quedan listos (CAMBIO-13)."
   max_secondary: 2
+
+# --- Sub-perfil ops.cosecha — normativa del bundle (CAMBIO PROP-COSECHA-001 · v3.5.0) ---
+# Mapeo C01–C13 a IDs reales de la rúbrica (diseño v3 §5) + composición (v4 §5, v5 §2.2):
+# C02 compuesto (NO alias de consistency), C07 AND con reporte separado,
+# C11 condicional por tipo, C12/C13 advisory con escalado Beta/Wilson.
+cosecha_prc:
+  domain: prc
+  sub_profile_id: ops.cosecha
+  pointer_enforcement_strict: true
+  snapshot_hash_validation: true
+  p29_matrix:
+    binary: true
+    obliga_ficha_si: [recurrente, multi_agente, toca_canonicos]
+    bypass_si: "ninguno de los tres → BYPASS automático registrado (muestreo 10% auditado)"
+  conditions_schema: "v2.1: {cond_id, tipo, verificable_por, iteracion_limite, estado, efecto_bloqueante}"
+  slots:
+    C01: { dimensions: [30], severity: bloqueante, act: core, composicion: "evidencia rastreable para cada afirmación (bundle: n, w, hashes)" }
+    C02: { dimensions: [3], severity: bloqueante, act: core, composicion: "compuesto: consistencia ∧ no-inferioridad con δ; replay comparativo como evidencia separada (NO alias de consistency)" }
+    C03: { dimensions: [32], severity: bloqueante, act: opt, composicion: "replay reproducible con hashes" }
+    C04: { dimensions: [100], severity: bloqueante, act: opt, composicion: "dedup P20 por bandas (identidad=FAIL, similitud alta=REVIEW_QUEUE)" }
+    C05: { dimensions: [50], severity: bloqueante, act: core, composicion: "linaje y hashes de entradas/salidas" }
+    C06: { dimensions: [9], severity: bloqueante, act: core, composicion: "contrato de salida declarado y cumplido" }
+    C07: { dimensions: [88, 57], severity: bloqueante, act: core, composicion: "AND — 88 secrets_management y 57 pii_handling independientes, ambas bloqueantes; se reportan por separado" }
+    C08: { dimensions: [44], severity: bloqueante, act: dom, composicion: "idioma P27: IDs EN, prosa ES" }
+    C09: { dimensions: [55], severity: bloqueante, act: dom, composicion: "transición de estado con versión y traza" }
+    C10: { dimensions: [41], severity: bloqueante, act: core, composicion: "precondición de skill (solo skills)" }
+    C11: { dimensions: [23], severity: condicional, act: opt, composicion: "diversidad de contextos", regla: "bloqueante si tipo ∈ {SKILL_*}; advisory si tipo ∈ {PROMPT_CANONICO, DEGRADAR}" }
+    C12: { dimensions: [79], severity: advisory, act: opt, composicion: "calibración del perfil", escalado: "Advisory→Bloqueante si surprise_rate fuera de banda: Beta/Wilson, n_min_baseline=50, baseline rodante 4 semanas, baseline_version registrada" }
+    C13: { dimensions: [17, 106], severity: advisory, act: core, composicion: "impacto en ramas vivas (blast_radius + second_order_effects)", escalado: "Advisory→Bloqueante (Beta/Wilson, baseline_version propia); C12 y C13 escalan por separado" }
 
 # --- Estados y transiciones ---
 states:

@@ -29,6 +29,8 @@ El Crítico es el rol del ecosistema que ejecuta el GATE B: hace pre-mortem de t
 | v3.1 | Blindajes (B1–B4) + Refinamientos (R1–R5) + Micro-ajustes (M1–M3) |
 | v3.2 | Parches de enforcement (G1, G1-bis, G2) en `schema/verdict.yaml` |
 | v3.4 | Cableado al ecosistema: I1 (stack BZ-109), I2 (plan padre-hijo), I3 (SKIP_INCIDENT) + M-A a M-F |
+| v3.4.1 | Parche aditivo: tabla BZ-109 → Registro Canónico F/T/S/E v1; `stack_3` eliminado (MD-4, BZ-20261030-094) |
+| v3.5.0 | Parche aditivo: sub-perfil `ops.cosecha` (PROP-COSECHA-001, BZ-20261030-136) — C01–C13 a IDs reales, domain prc, matriz P29 |
 | Fase 4 | Golden set + evals + panel HTML + dashboard histórico con sparklines |
 
 ---
@@ -39,8 +41,8 @@ El Crítico es el rol del ecosistema que ejecuta el GATE B: hace pre-mortem de t
 
 | Fichero | Contenido | Estado |
 |---|---|---|
-| `rubric.yaml` | 108 dimensiones · 19 familias · rúbricas 0–4 · activación · mapeo v1→v3 | ✅ frozen v3.4.0 |
-| `critic.config.yaml` | Flags, perfiles, presupuestos, invariantes, `schema_enforcement`, `integration` (I1–I3, M-C, M-D), `known_gaps` | ✅ frozen v3.4.0 |
+| `rubric.yaml` | 108 dimensiones · 19 familias · rúbricas 0–4 · activación · mapeo v1→v3 | ✅ frozen v3.5.0 |
+| `critic.config.yaml` | Flags, perfiles, presupuestos, invariantes, `schema_enforcement`, `integration` (I1–I3, M-C, M-D), `cosecha_prc` (v3.5.0), `known_gaps` | ✅ frozen v3.5.0 |
 | `schema/objection.yaml` | Esquema agnóstico + `parent_id`, `step_index`, `v1_angle` (I2, M-A) | ✅ frozen v3.4.0 |
 | `schema/triage.yaml` | Capa 0 + multi-perfil + M1/M2 + `source_stack`, `parent_id`, `plan_status` (I1, I2, M-B) | ✅ frozen v3.4.0 |
 | `schema/verdict.yaml` | Máquina de estados + G1/G1-bis/G2/I3 enforced + `active_skip_incidents`, `skip_incident_ids`, `reason_code: GATE_SKIPPED` | ✅ frozen v3.4.0 |
@@ -48,6 +50,8 @@ El Crítico es el rol del ecosistema que ejecuta el GATE B: hace pre-mortem de t
 | `schema/skip_incident.yaml` | **NUEVO** — registro explícito de gate saltado (I3) | ✅ frozen v3.4.0 |
 | `golden_set/schema/golden_case.yaml` | Esquema de caso golden | ✅ frozen v3.4.0 |
 | `migration/v2_to_v3.py` | Renombrado + backfill + idempotencia + cuarentena (R2). Strings de versión actualizados a v3.4 | ✅ frozen v3.2.0 |
+| `docs/guia_subperfil_ops_cosecha.md` | **NUEVO v3.5.0** — guía normativa del sub-perfil `ops.cosecha` (bundle C01–C13) | ✅ frozen v3.5.0 |
+| `docs/propuestas/PROP-COSECHA-001.md` | **NUEVO v3.5.0** — propuesta numerada del CAMBIO (registro de gobernanza) | — |
 
 ### 3.2 Tests
 
@@ -68,7 +72,8 @@ El Crítico es el rol del ecosistema que ejecuta el GATE B: hace pre-mortem de t
 | `test_integration_i2.py` | 5 | ✅ v3.4 |
 | `test_integration_i3.py` | 5 | ✅ v3.4 |
 | `test_integration_improvements.py` | 16 | ✅ v3.4 |
-| **Total** | **153** | — |
+| `test_subprofile_cosecha.py` | 13 | ✅ v3.5.0 |
+| **Total** | **166** | — |
 
 ### 3.3 Golden set + evals
 
@@ -247,22 +252,66 @@ El sistema no rompe; pide clarificación.
   «X-1») → `NECESITA_INFO` con `STACK_NOT_MAPPED`. Motivo y diff exacto
   documentados dentro del test y en CHANGELOG v3.4.1.
 
+### 5.1 Sub-perfil `ops.cosecha` (v3.5.0 — PROP-COSECHA-001)
+
+Parche aditivo v3.5.0 (2026-10-30): sub-perfil `ops.cosecha` (padre `ops`,
+macro-perfiles U2 intactos) con 13 slots → 15 IDs REALES de la rúbrica:
+
+| Slot | ID(s) real(es) | Act | Severidad |
+|---|---|---|---|
+| C01 | 30 `evidence_quality` | core | Bloqueante |
+| C02 | 3 `consistency` — **compuesto**: consistencia ∧ no-inferioridad con δ (replay comparativo como evidencia separada; NO alias) | core | Bloqueante |
+| C03 | 32 `reproducibility` | opt | Bloqueante |
+| C04 | 100 `duplication` | opt | Bloqueante |
+| C05 | 50 `provenance` | core | Bloqueante |
+| C06 | 9 `contract_compliance` | core | Bloqueante |
+| C07 | 88 `secrets_management` **+** 57 `pii_handling` (**AND**, reporte separado) | core | Bloqueante |
+| C08 | 44 `i18n_l10n` | dom | Bloqueante |
+| C09 | 55 `schema_evolution` | dom | Bloqueante |
+| C10 | 41 `requirement_fit` (solo skills) | core | Bloqueante |
+| C11 | 23 `scalability` — bloqueante si `tipo ∈ {SKILL_*}`; advisory si `tipo ∈ {PROMPT_CANONICO, DEGRADAR}` | opt | Condicional |
+| C12 | 79 `eval_coverage` — advisory; escalado Wilson (Beta/Wilson, `n_min_baseline=50`, baseline rodante 4 semanas, `baseline_version`) | opt | Advisory |
+| C13 | 17 `blast_radius` **+** 106 `second_order_effects` — advisory; C12/C13 escalan por separado | core | Advisory |
+
+Parámetros (sección `cosecha_prc` del config): `domain: prc` ·
+`pointer_enforcement_strict: true` · `snapshot_hash_validation: true` · matriz
+**P29 binaria** (ficha obligatoria si recurrente ∨ multi-agente ∨ toca
+canónicos; si no → **BYPASS** automático registrado).
+
+Guía normativa: `docs/guia_subperfil_ops_cosecha.md` · tests:
+`tests/test_subprofile_cosecha.py` (13) · propuesta:
+`docs/propuestas/PROP-COSECHA-001.md`.
+
+**Nota del cambio (v3.5.0):**
+
+- Autorización: mandato global de Andrés «te doy autorización para que
+  ejecutes todo hasta el final» (**BZ-20261030-136**, 2026-10-30) — cubre
+  propuesta, implementación, verificación, commit y push. No se emitió
+  «OK <8hex>` para esta propuesta y **no se inventa**: el literal del cambio
+  es el mandato global; el hash del diff queda documentado como referencia.
+- `critic_version`/`rubric_version` → 3.5.0 (FROZEN §8 paso 3); esquemas,
+  máquina de estados, 6 macro-perfiles y los 34 invariantes INTACTOS.
+- `config_hash` recalculado (convención CONTRIBUTING: SHA-256 excluyendo la
+  línea del propio campo) → `797898e6…`.
+- El sub-perfil aplica **solo al dominio `prc`** (frontera motor≠perfil, v6 §2):
+  `prompts` y `agentes` exigen su propio mapeo vía CAMBIO.
+
 ---
 
 ## 6. Verificación del freeze
 
-> ⚠ **Nota de integridad (auto-auditoría 26/10):** los 153 tests están diseñados y preservados en `10_Anexo_codigo_historico.md`; su ejecución queda pendiente de materializar `tests/` en el repo. La batería ejecutable hoy es `probar_todo.py` (PASS 17/17). Ver `16_GATE_B_Autoauditoria.md`.
+> ⚠ **Nota de integridad (auto-auditoría 26/10):** los 153 tests históricos están diseñados y preservados en `10_Anexo_codigo_historico.md`; su ejecución quedó materializada en `tests/` (release 01.00.00). La batería ejecutable es `probar_todo.py` (PASS 100/100). Ver `16_GATE_B_Autoauditoria.md`. v3.5.0 añade 13 tests del sub-perfil `ops.cosecha` (total 166).
 
 Cualquier persona puede verificar el estado completo con:
 
 ```bash
 # 1. Integridad
 make verify-freeze
-# → Freeze OK: v3.4.0 · esquemas v3.4 · integración BZ-109
+# → Freeze OK: v3.5.0 · esquemas v3.4 · integración BZ-109 · sub-perfil ops.cosecha
 
-# 2. Suite completa (153 tests)
+# 2. Suite completa (166 tests)
 make test
-# → 153 passed
+# → 166 passed
 
 # 3. Evals vs baseline (detecta regresiones)
 make eval
@@ -280,6 +329,10 @@ make eval-history
 pytest tests/test_integration_i1.py tests/test_integration_i2.py \
        tests/test_integration_i3.py tests/test_integration_improvements.py -v
 # → 30 passed
+
+# 7. Solo sub-perfil v3.5.0
+pytest tests/test_subprofile_cosecha.py -v
+# → 13 passed
 ```
 
 Si algo falla, el freeze está roto. Los tests son el contrato ejecutable.
@@ -335,6 +388,7 @@ Nada de esto bloquea el freeze actual.
 
 | Fase | Qué | Condición |
 |---|---|---|
+| v3.5.0 | ✔ Hecho (2026-10-30): sub-perfil `ops.cosecha` (C01–C13 a IDs reales, C02 compuesto, C07 AND, domain prc, P29 con BYPASS) | PROP-COSECHA-001 · mandato global BZ-20261030-136 |
 | v3.4.1 | ✔ Hecho (2026-10-30): tabla BZ-109 reemplazada por el Registro Canónico F/T/S/E v1; `stack_3` eliminado | MD-4 aprobada por Dirección (GATE C, BZ-20261030-094) |
 | v3.4.1 | Activar `model_rotation.enabled` | Disponibilidad de >1 modelo |
 | v3.4 | Ampliar golden set con casos históricos reales | `gate-c-decisions.jsonl` formalizado |
@@ -361,7 +415,8 @@ El Crítico v3.4 queda congelado el 2026-10-26 con:
   - 3 enforcement de esquema (G1, G1-bis, G2)
   - 3 integración (I1–I3)
   - 6 mejoras (M-A a M-F)
-- 153 tests **diseñados y preservados** (ejecución pendiente de materializar `tests/` — ver nota de integridad §12.1/§6 y `16_GATE_B_Autoauditoria.md` O1).
+- 166 tests materializados y en verde: 153 históricos + 13 del sub-perfil `ops.cosecha` (v3.5.0).
+- Sub-perfil `ops.cosecha` v3.5.0 (PROP-COSECHA-001): 13 slots → 15 dimensiones reales, `domain: prc`, matriz P29 binaria con BYPASS; parche aditivo con invariantes intactos.
 - Cableado al ecosistema: stacks BZ-109 mapeados, pasos de plan vinculados, gates saltados registrados explícitamente.
 - Golden set con baseline + detección de regresión global, por dimensión y de skip rate.
 - Panel HTML para revisión sin CLI (self-contained, WCAG AA, muestra skip incidents).

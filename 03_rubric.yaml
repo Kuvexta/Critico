@@ -1,8 +1,8 @@
 # ============================================================
-# rubric.yaml — Crítico v3.3.0 (congelado)
-# 106 dimensiones · 19 familias (A–S) · rúbricas 0–4
+# rubric.yaml — Crítico v3.5.0 (congelado; parche aditivo PROP-COSECHA-001)
+# 108 dimensiones · 19 familias (A–S) · rúbricas 0–4
 # ============================================================
-rubric_version: 3.4.0
+rubric_version: 3.5.0
 frozen: true
 freeze_date: "2026-10-26"
 total_dimensions: 108
