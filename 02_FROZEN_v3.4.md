@@ -463,3 +463,7 @@ Makefile
 ---
 
 *Crítico v3.4 — cerrado. Lo que venga, se versiona.*
+
+## Apéndice v3.6.0 (31-oct-2026)
+
+M1 ángulo 15 + M2 Pre-Report Gate + M3 scorecard (mandato «si realizamos los 5 puntos»; commit SOLO LOCAL). Detalles en CHANGELOG v3.6.0 y docs/propuestas/PROP-M*.md. Schemas y máquina de estados intactos; rúbrica 108 dims intacta (rubric_version 3.6.0 por sincronización con critic_version).

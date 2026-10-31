@@ -83,6 +83,32 @@ properties:
         type: array
         items: { type: string, pattern: "^SKP-[a-f0-9]{12}$" }
         description: "IDs de incidencias de skip activas"
+  # v3.6 · scorecard 5 ejes (opcional; patrón multiagente interno BZ-20261031-030)
+  scorecard:
+    type: object
+    required: [accuracy, completeness, clarity, actionability, conciseness]
+    properties:
+      accuracy:      { type: number, minimum: 0, maximum: 5 }
+      completeness:  { type: number, minimum: 0, maximum: 5 }
+      clarity:       { type: number, minimum: 0, maximum: 5 }
+      actionability: { type: number, minimum: 0, maximum: 5 }
+      conciseness:   { type: number, minimum: 0, maximum: 5 }
+      evidence:
+        type: array
+        items: { type: string }
+        description: "Cita por cada eje con score < 5 (obligatorio: sin evidencia no hay score < 5)"
+    allOf:
+      # score < 5 en CUALQUIER eje ⇒ evidence obligatorio (sin evidencia no hay score < 5)
+      - if:
+          not:
+            properties:
+              accuracy:      { const: 5 }
+              completeness:  { const: 5 }
+              clarity:       { const: 5 }
+              actionability: { const: 5 }
+              conciseness:   { const: 5 }
+        then:
+          required: [evidence]
 allOf:
   # G1 · OPERATIONAL_SUSPENSION ⇒ suspension_control objeto no-null
   - if:

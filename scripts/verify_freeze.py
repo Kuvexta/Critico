@@ -1,4 +1,4 @@
-"""Check frozen rubric/config versions, all eight schema identifiers, Draft 2020-12 schema validity, the presence of BZ-109 configuration and the v3.5.0 sub-profile ops.cosecha (PROP-COSECHA-001). Presence does not certify an active integration."""
+"""Check frozen rubric/config versions, all eight schema identifiers, Draft 2020-12 schema validity, the presence of BZ-109 configuration and the v3.6.0 mutations (M1/M2/M3) and the v3.5.0 sub-profile ops.cosecha (PROP-COSECHA-001). Presence does not certify an active integration."""
 from __future__ import annotations
 import sys
 from pathlib import Path
@@ -29,7 +29,7 @@ def main() -> int:
     chk(r.get('frozen') is True, translate('verify_freeze.c05d61575cd8'))
     chk(c.get('frozen') is True, translate('verify_freeze.9b4922804531'))
     chk(r.get('rubric_version') == c.get('critic_version'), 'rubric_version ≠ critic_version')
-    chk(c.get('critic_version') == '3.5.0', translate('verify_freeze.0deb5b294d56'))
+    chk(c.get('critic_version') == '3.6.0', translate('verify_freeze.0deb5b294d56'))
     chk(c.get('schema_enforcement', {}).get('version') == '3.4.0', translate('verify_freeze.ac25af333c3c'))
     chk('integration' in c and 'bz109_stack_mapping' in c.get('integration', {}), translate('verify_freeze.c4bac4f3a2a6'))
     # v3.5.0 — sub-perfil ops.cosecha (PROP-COSECHA-001)

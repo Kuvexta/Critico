@@ -18,6 +18,14 @@ audit_trail_passed_checks:             # G2: ≥1 si PASA/PASA_CON_CONDICIONES
     attack_vector: "<cómo se intentó refutar>"
     resistance_evidence: "<por qué resistió>"
     confidence: 0.0
+# scorecard (OPCIONAL · v3.6 · 5 ejes; si algún eje < 5, evidence es obligatorio):
+# scorecard:
+#   accuracy: 5
+#   completeness: 5
+#   clarity: 5
+#   actionability: 5
+#   conciseness: 5
+#   evidence: []      # una cita por eje con score < 5
 summary_metrics:
   implicit_assumptions_discovered: 0
   blockers_count: 0

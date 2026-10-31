@@ -1,8 +1,8 @@
 # ============================================================
-# critic.config.yaml — Crítico v3.5.0 (congelado; parche aditivo PROP-COSECHA-001)
+# critic.config.yaml — Crítico v3.6.0 (M1 ángulo 15 · M2 Pre-Report Gate · M3 scorecard)
 # ============================================================
-critic_version: 3.5.0
-config_hash: "797898e6d4da12cc31d201f1748eb5aa07ef97b308e8640ac22f0605b6a4c810"
+critic_version: 3.6.0
+config_hash: "b9532948575b71f5d981ec170142abb86951992ecc34c979b1ecc7dfe6e15a77"
 frozen: true
 # --- Guardrails de ejecución ---
 execution:

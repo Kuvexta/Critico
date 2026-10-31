@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v3.6.0 — 2026-10-31 — M1 ángulo 15 · M2 Pre-Report Gate · M3 scorecard 5 ejes
+
+- **M1 · Ángulo 15 «Fallos silenciosos»** (patrón interno BZ-20261031-030): `critico_cli.py` `ANGLES` +1 tupla · `locales/es.json` y `en.json` `angle.15.*` · `prompts/critico_system.md`/`critic_system.en.md` lista 14→15 (11 canónicos + 3 opcionales + fallos-silenciosos). Rúbrica 108 dims y esquemas INTACTOS (patrón R-FIX-07).
+- **M2 · Pre-Report Gate (anti-ruido)** (patrón interno BZ-20261031-030): paso 4-bis en los prompts ES/EN — 4 preguntas antes de emitir objeción (línea exacta citable · modo de fallo concreto · contexto leído · severidad defendible), «cero objeciones es válido», blocker|major exigen prueba triple.
+- **M3 · Scorecard 5 ejes** (patrón interno BZ-20261031-030): `05_schema/verdict.yaml` propiedad OPCIONAL `scorecard` (accuracy/completeness/clarity/actionability/conciseness 0–5; si CUALQUIER eje < 5 ⇒ `evidence` obligatorio — validado con jsonschema) · `templates/verdict.yaml` ejemplo. Retrocompatible: veredictos sin scorecard siguen válidos; `$id` sin bump.
+- `04_critic.config.yaml`: `critic_version` 3.5.0→3.6.0 · `config_hash` recalculado (`b9532948…`) · `03_rubric.yaml`: `rubric_version`→3.6.0 · `scripts/verify_freeze.py` espera 3.6.0 · locales con «Freeze OK: v3.6.0».
+- **NUEVO** `docs/propuestas/PROP-M1-ANGULO15-001.md` · `PROP-M2-ANTIRRUIDO-001.md` · `PROP-M3-SCORECARD-001.md`.
+- Autorización: mandato de Andrés «si realizamos los 5 puntos» (31/10/2026, plan BZ-20261031-028/030) — commit SOLO LOCAL; push/merge/tag pendientes de OK literal (doctrina e8311ea).
+- Verificación (salida REAL, 31/10): batería `probar_todo.py` → **100 aprobadas / 0 fallidas** · scorecard validado en 4 escenarios (sin scorecard OK · 5/5 OK · 4/5 sin evidence RECHAZADO · 4/5 con evidence OK) · `verify_freeze` → Freeze OK: v3.6.0 · `verificar_release` OK · `docs/HASHES.md` regenerado.
+
+
 ## v3.5.0 — 2026-10-30 — Sub-perfil ops.cosecha (CAMBIO PROP-COSECHA-001, aditivo)
 
 - `04_critic.config.yaml`: `critic_version` 3.4.0→3.5.0 · sub-perfil `ops.cosecha` en `profiles.universals.ops.sub_profiles` con `suggested_dimensions` = 15 IDs reales (C01–C13) · sección nueva `cosecha_prc` (domain prc, `pointer_enforcement_strict`, `snapshot_hash_validation`, matriz P29 binaria con BYPASS, slots C01–C13 con composición/severidades) · flag `critic.cosecha_prc` · `config_hash` recalculado → `797898e6…` (convención CONTRIBUTING verificada por test).

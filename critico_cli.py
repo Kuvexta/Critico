@@ -21,7 +21,8 @@ EXTENSION_PROFILES = {'content': 'E, F, M, P, L', 'education': 'E, L, F, G, P', 
 ANGLES = [(1, 'Costos', '¿Cuánto cuesta y quién lo paga? ¿Qué se deja de hacer?'), (2, 'Seguridad', '¿Qué puede salir mal si se abusa? ¿Pide más permisos de los necesarios?'), (3, 'Datos/honestidad', '¿De dónde salen los datos? ¿Qué pasa si son falsos o viejos?'), (4, 'Personas/autonomía', '¿Quién carga con el costo? ¿Se respeta a la persona afectada?'), (5, 'Dependencias', '¿Qué pasa si el proveedor falla, sube precios o desaparece?'), (6, 'UX/accesibilidad', '¿Funciona para todos los usuarios, incluidos los degradados?'), (7, 'Legal/licencias', '¿Está permitido y bajo qué licencia? ¿Qué dice la ley?'), (8, 'Coordinación', '¿Quién hace qué, en qué orden, y qué pasa si alguien falla?'), (9, 'Sesgo del autor (⭐)', '¿Se busca evidencia en contra, o solo a favor?'), (10, 'Blast-radius (⭐)', '¿Qué rompe si falla? ¿Cómo se detecta? ¿Se puede revertir?'), (11, 'Contratos e invariantes (⭐)', '¿Qué contrato se firmó y se cumple en todos los caminos?'),
 (12, 'Sostenibilidad (opcional)', 'Impacto ambiental y social de la decisión'),
 (13, 'Tiempo y oportunidad (opcional)', 'Ventana de la decisión, plazos, secuencia'),
-(14, 'Reputación y confianza (opcional)', 'Marca y credibilidad ante terceros')]
+(14, 'Reputación y confianza (opcional)', 'Marca y credibilidad ante terceros'),
+(15, 'Fallos silenciosos (v3.6)', '¿Qué errores se tragan en silencio? ¿Hay catch vacíos, fallbacks peligrosos, excepciones silenciadas o logs manipulados? ¿Cómo se detectaría el fallo que nadie ve?')]
 
 def load_schema(name: str) -> dict:
     filename = SCHEMAS.get(name)

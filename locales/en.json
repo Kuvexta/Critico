@@ -306,7 +306,7 @@
   "validators.d3d3041ab880": "I3: active_skip_incidents={v0} but reason_code={v1} (must be GATE_SKIPPED)",
   "validators.e993b8aaee57": "JSONL: line {v0}: invalid JSON",
   "validators.fdc9d75e1f1b": "M3: reset declared but triage.previous_suspension_questions_resolved ≠ true",
-  "verify_freeze.0deb5b294d56": "critic_version is not 3.5.0",
+  "verify_freeze.0deb5b294d56": "critic_version is not 3.6.0",
   "verify_freeze.1c7f5c3461de": "[FAIL] {v0}",
   "verify_freeze.2d7cb8060732": "missing 05_schema/{v0}",
   "verify_freeze.55e308b1fbf4": "Missing jsonschema: pip install jsonschema",
@@ -314,7 +314,7 @@
   "verify_freeze.75d660135d6e": "{v0}: $id={v1} does not contain {v2}",
   "verify_freeze.9b4922804531": "critic.config.yaml is not frozen",
   "verify_freeze.ac25af333c3c": "schema_enforcement.version is not 3.4.0",
-  "verify_freeze.be965086f6ce": "Freeze OK: v3.5.0 · 8 schemas with consistent $id · 108 dimensions · frozen local rules · BZ-109 integration configuration · sub-profile ops.cosecha",
+  "verify_freeze.be965086f6ce": "Freeze OK: v3.6.0 · 8 schemas with consistent $id · 108 dimensions · frozen local rules · BZ-109 integration configuration · sub-profile ops.cosecha",
   "verify_freeze.9e1d4c2b7a8f": "evals/validators.py: SHA-256 {v0} does not match the frozen one",
   "verify_freeze.c05d61575cd8": "rubric.yaml is not frozen",
   "verify_freeze.c4bac4f3a2a6": "missing integration.bz109_stack_mapping",
@@ -330,5 +330,7 @@
   "angle.13.title": "Time and opportunity (optional)",
   "angle.13.question": "Decision window, deadlines, sequencing",
   "angle.14.title": "Reputation and trust (optional)",
-  "angle.14.question": "Brand and credibility with third parties"
+  "angle.14.question": "Brand and credibility with third parties",
+  "angle.15.title": "Silent failures (v3.6)",
+  "angle.15.question": "What failures are swallowed silently? Empty catches, dangerous fallbacks, suppressed exceptions, tampered logs? How would an invisible failure be detected?"
 }
