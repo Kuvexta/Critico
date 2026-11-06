@@ -1,0 +1,492 @@
+{
+  "id": "critico-artifact-manifest",
+  "algorithm": "sha256",
+  "include": [
+    "skills/critico/**/*",
+    "plataformas/*/critico/**/*",
+    "04_critic.config.yaml",
+    "prompts/critico_system.md",
+    "prompts/critic_system.en.md"
+  ],
+  "exclude": [
+    ".git",
+    ".pytest_cache",
+    "__pycache__",
+    "_tmp_pruebas",
+    "*.pyc",
+    "*.pyo"
+  ],
+  "aggregate_rule": "sha256 de las líneas '<sha256>  <ruta>\\n' ordenadas por ruta (formato sha256sum)",
+  "count": 117,
+  "files": [
+    {
+      "path": "04_critic.config.yaml",
+      "sha256": "0d9871215bf057c96876d10952edb9250e552bc4b9151fd6dee2f861262710a5"
+    },
+    {
+      "path": "plataformas/antigravity/critico/SKILL.es.md",
+      "sha256": "2cdfe53eb218fc1049cdef7c8a3fdf30192c4262abc70537deb4498a2a2d4da9"
+    },
+    {
+      "path": "plataformas/antigravity/critico/SKILL.md",
+      "sha256": "ea0c5aa3afa53de0df6c1d6ba2d02886a288dd9114f7f7cea54e7b14f0a61b4c"
+    },
+    {
+      "path": "plataformas/antigravity/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/antigravity/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/antigravity/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/antigravity/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/antigravity/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/antigravity/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/claude-code/critico/SKILL.es.md",
+      "sha256": "96283bfbccf7ab23d2adaac147ddb6fddb72aeb83259dc84b258970e1c255c70"
+    },
+    {
+      "path": "plataformas/claude-code/critico/SKILL.md",
+      "sha256": "3b50c682616dad6e4109bbd11a6f232ce0d5059d4099608133e4623bc88aa472"
+    },
+    {
+      "path": "plataformas/claude-code/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/claude-code/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/claude-code/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/claude-code/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/claude-code/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/claude-code/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/cline/critico/SKILL.es.md",
+      "sha256": "2cdfe53eb218fc1049cdef7c8a3fdf30192c4262abc70537deb4498a2a2d4da9"
+    },
+    {
+      "path": "plataformas/cline/critico/SKILL.md",
+      "sha256": "ea0c5aa3afa53de0df6c1d6ba2d02886a288dd9114f7f7cea54e7b14f0a61b4c"
+    },
+    {
+      "path": "plataformas/cline/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/cline/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/cline/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/cline/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/cline/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/cline/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/codex/critico/SKILL.es.md",
+      "sha256": "2cdfe53eb218fc1049cdef7c8a3fdf30192c4262abc70537deb4498a2a2d4da9"
+    },
+    {
+      "path": "plataformas/codex/critico/SKILL.md",
+      "sha256": "ea0c5aa3afa53de0df6c1d6ba2d02886a288dd9114f7f7cea54e7b14f0a61b4c"
+    },
+    {
+      "path": "plataformas/codex/critico/agents/openai.yaml",
+      "sha256": "9168bcd644aa3092b99824693d70caeb3f4702ba35f674cce13a8b10e62ad109"
+    },
+    {
+      "path": "plataformas/codex/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/codex/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/codex/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/codex/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/codex/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/codex/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/cursor/critico/SKILL.es.md",
+      "sha256": "96283bfbccf7ab23d2adaac147ddb6fddb72aeb83259dc84b258970e1c255c70"
+    },
+    {
+      "path": "plataformas/cursor/critico/SKILL.md",
+      "sha256": "3b50c682616dad6e4109bbd11a6f232ce0d5059d4099608133e4623bc88aa472"
+    },
+    {
+      "path": "plataformas/cursor/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/cursor/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/cursor/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/cursor/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/cursor/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/cursor/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/deepseek-harness/critico/SKILL.es.md",
+      "sha256": "96283bfbccf7ab23d2adaac147ddb6fddb72aeb83259dc84b258970e1c255c70"
+    },
+    {
+      "path": "plataformas/deepseek-harness/critico/SKILL.md",
+      "sha256": "3b50c682616dad6e4109bbd11a6f232ce0d5059d4099608133e4623bc88aa472"
+    },
+    {
+      "path": "plataformas/deepseek-harness/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/deepseek-harness/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/deepseek-harness/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/deepseek-harness/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/deepseek-harness/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/deepseek-harness/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/gemini-cli/critico/SKILL.es.md",
+      "sha256": "2cdfe53eb218fc1049cdef7c8a3fdf30192c4262abc70537deb4498a2a2d4da9"
+    },
+    {
+      "path": "plataformas/gemini-cli/critico/SKILL.md",
+      "sha256": "ea0c5aa3afa53de0df6c1d6ba2d02886a288dd9114f7f7cea54e7b14f0a61b4c"
+    },
+    {
+      "path": "plataformas/gemini-cli/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/gemini-cli/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/gemini-cli/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/gemini-cli/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/gemini-cli/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/gemini-cli/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/github-copilot/critico/SKILL.es.md",
+      "sha256": "96283bfbccf7ab23d2adaac147ddb6fddb72aeb83259dc84b258970e1c255c70"
+    },
+    {
+      "path": "plataformas/github-copilot/critico/SKILL.md",
+      "sha256": "3b50c682616dad6e4109bbd11a6f232ce0d5059d4099608133e4623bc88aa472"
+    },
+    {
+      "path": "plataformas/github-copilot/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/github-copilot/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/github-copilot/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/github-copilot/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/github-copilot/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/github-copilot/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/kiro/critico/SKILL.es.md",
+      "sha256": "2cdfe53eb218fc1049cdef7c8a3fdf30192c4262abc70537deb4498a2a2d4da9"
+    },
+    {
+      "path": "plataformas/kiro/critico/SKILL.md",
+      "sha256": "ea0c5aa3afa53de0df6c1d6ba2d02886a288dd9114f7f7cea54e7b14f0a61b4c"
+    },
+    {
+      "path": "plataformas/kiro/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/kiro/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/kiro/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/kiro/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/kiro/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/kiro/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/openclaw/critico/SKILL.es.md",
+      "sha256": "96283bfbccf7ab23d2adaac147ddb6fddb72aeb83259dc84b258970e1c255c70"
+    },
+    {
+      "path": "plataformas/openclaw/critico/SKILL.md",
+      "sha256": "3b50c682616dad6e4109bbd11a6f232ce0d5059d4099608133e4623bc88aa472"
+    },
+    {
+      "path": "plataformas/openclaw/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/openclaw/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/openclaw/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/openclaw/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/openclaw/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/openclaw/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/opencode/critico/SKILL.es.md",
+      "sha256": "2cdfe53eb218fc1049cdef7c8a3fdf30192c4262abc70537deb4498a2a2d4da9"
+    },
+    {
+      "path": "plataformas/opencode/critico/SKILL.md",
+      "sha256": "ea0c5aa3afa53de0df6c1d6ba2d02886a288dd9114f7f7cea54e7b14f0a61b4c"
+    },
+    {
+      "path": "plataformas/opencode/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/opencode/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/opencode/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/opencode/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/opencode/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/opencode/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/qwen-code/critico/SKILL.es.md",
+      "sha256": "96283bfbccf7ab23d2adaac147ddb6fddb72aeb83259dc84b258970e1c255c70"
+    },
+    {
+      "path": "plataformas/qwen-code/critico/SKILL.md",
+      "sha256": "3b50c682616dad6e4109bbd11a6f232ce0d5059d4099608133e4623bc88aa472"
+    },
+    {
+      "path": "plataformas/qwen-code/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/qwen-code/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/qwen-code/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/qwen-code/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/qwen-code/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/qwen-code/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "plataformas/universal/critico/SKILL.es.md",
+      "sha256": "2cdfe53eb218fc1049cdef7c8a3fdf30192c4262abc70537deb4498a2a2d4da9"
+    },
+    {
+      "path": "plataformas/universal/critico/SKILL.md",
+      "sha256": "ea0c5aa3afa53de0df6c1d6ba2d02886a288dd9114f7f7cea54e7b14f0a61b4c"
+    },
+    {
+      "path": "plataformas/universal/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "plataformas/universal/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "plataformas/universal/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "plataformas/universal/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "plataformas/universal/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "plataformas/universal/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    },
+    {
+      "path": "prompts/critic_system.en.md",
+      "sha256": "03bb13ad123edd6ffb6b592d6dd0f4a24520ed26b9a5192d5f491b4c7bf8899e"
+    },
+    {
+      "path": "prompts/critico_system.md",
+      "sha256": "bc6ebb676a89eef93a47facba68300feb978bf130c771e28202ea89660c2ebc3"
+    },
+    {
+      "path": "skills/critico/SKILL.es.md",
+      "sha256": "2cdfe53eb218fc1049cdef7c8a3fdf30192c4262abc70537deb4498a2a2d4da9"
+    },
+    {
+      "path": "skills/critico/SKILL.md",
+      "sha256": "ea0c5aa3afa53de0df6c1d6ba2d02886a288dd9114f7f7cea54e7b14f0a61b4c"
+    },
+    {
+      "path": "skills/critico/agents/openai.yaml",
+      "sha256": "9168bcd644aa3092b99824693d70caeb3f4702ba35f674cce13a8b10e62ad109"
+    },
+    {
+      "path": "skills/critico/references/en/kuvexta.md",
+      "sha256": "4a36dbba4adb76894024bdf304721782a3d78a4494ce957a04c2429237cc44ad"
+    },
+    {
+      "path": "skills/critico/references/en/method.md",
+      "sha256": "355ae1f77ae85e3bd8091df6b861806ef41e8bfaeb6d0ac4592dc4199d786e0f"
+    },
+    {
+      "path": "skills/critico/references/en/output-format.md",
+      "sha256": "efe53ec9951c12450d4459b092582e6ebb0c9fff550b2cbfe5242c48c8a5b328"
+    },
+    {
+      "path": "skills/critico/references/formato-salida.md",
+      "sha256": "813c58209be067e3903a4e7ced481c4c89c0d0119177018c319a0f4944a14ca5"
+    },
+    {
+      "path": "skills/critico/references/kuvexta.md",
+      "sha256": "0072c1937ff5de5289d5a590df95debb61bbd22174128574c50ca7704915edb0"
+    },
+    {
+      "path": "skills/critico/references/metodo.md",
+      "sha256": "858010657d0bb02de62ce36302f20696ad32e6b8244b861faa66aa2097f4b797"
+    }
+  ],
+  "aggregate_sha256": "1de41d5e94a2a90765f48d37fc40fc7aad9e3c44ed6952bf319ebdc2cd2f15dd"
+}

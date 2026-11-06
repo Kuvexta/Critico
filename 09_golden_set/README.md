@@ -1,13 +1,19 @@
 # Golden Set — Crítico v3.4
-## Estado honesto (2026-10-28)
+## Estado honesto (2026-11-06, corregido en CRITICO-SKILL-02 PR-A)
 
-- **Baseline disponible**: solo `baseline/v3.3.0.json` (el `v3.4.0.json`
-  citado abajo NO existe aún).
-- **Maquinaria pendiente**: `scripts/bootstrap_golden_set.py` y
-  `evals/{cli,loader,comparator,runner}.py` NO existen en este árbol; los
-  modos offline/live citados abajo no son ejecutables hoy.
-- Nada de lo anterior se simula: el golden set queda **pendiente de
-  materialización** (roadmap Fase 4) y hasta entonces no aporta métricas.
+- **Harness offline ejecutable**: `evals/cli.py` y `evals/comparator.py`
+  existen y `python -m evals.cli --mode offline` corre hoy (rc 0) sobre los
+  4 casos de `cases/` (`gc-001`…`gc-004`, con sus `.actual.yaml`
+  pre-grabados) y compara contra `baseline/v3.4.0.json`
+  (`--fail-on-regression` disponible).
+- **Baselines**: `baseline/v3.3.0.json` y `baseline/v3.4.0.json`.
+- **Sigue pendiente**: `scripts/bootstrap_golden_set.py` (generar
+  `.actual.yaml` desde la bitácora) y el modo `live` (requiere API); no se
+  simulan. Las métricas offline miden la salida pre-grabada, no una
+  ejecución real del Crítico.
+
+(La versión anterior de esta sección decía que la maquinaria no existía;
+era incorrecta para `cli.py`/`comparator.py`.)
 
 
 Casos con **veredicto esperado conocido** para medir si el Crítico reproduce

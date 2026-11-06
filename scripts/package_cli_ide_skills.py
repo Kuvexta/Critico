@@ -1,7 +1,12 @@
 """Package the approved Critic CLI/IDE skills; no installation or host execution.
 
-Use --build in the authorized development folder. --verify checks the finished
-delivery without writes. New files only; all original files are protected.
+Repository modes (CRITICO-SKILL-02, in-repo manifest):
+  --check  regenerate the 13 variants in memory and compare them byte for byte
+           with plataformas/ and with the in-repo manifest; never writes.
+  --write  regenerate plataformas/ and the in-repo manifest from skills/critico/.
+Legacy workspace modes (original delivery, need the local entrega/ tree):
+  --build in the authorized development folder; --verify checks the finished
+  delivery without writes. New files only; all original files are protected.
 """
 from __future__ import annotations
 
@@ -28,6 +33,10 @@ BASE = Path(__file__).resolve().parents[1]
 OUT = BASE / "entrega/skills-cli-ide-v1"
 SOURCE = BASE / "skills/critico"
 PROPOSAL_HASH = "01a38240c71a825318a2fff0761e0def132528976f973677f1896cfd4b23a6e2"
+# In-repo manifest (CRITICO-SKILL-02): replaces the external proposal file as the
+# repository-mode guard. PROPOSAL_HASH above stays as the historical reference.
+REPO_OUT = BASE / "plataformas"
+REPO_MANIFEST = BASE / "docs/propuestas/SKILLS-CLI-IDE-01.manifest.json"
 BASE_HASH = "b99ab8f0d6a662d1f8143024473de9a18d2835157bea5089c4da40c175575712"
 BASELINE_HASH = "b328552c02c38b8ad5825061a1f00a6f0a683ea0ed4cce7a7ecacbef7696a0da"
 DATE = "2026-10-27"
@@ -303,6 +312,11 @@ def make_skill(language: str, control: str) -> bytes:
     header = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False, width=120).strip()
     author = "Author: KUVEXTA GROUP." if language == "en" else "Autor: KUVEXTA GROUP."
     request = EXPLICIT_EN if language == "en" else EXPLICIT_ES
+    # The source skill already carries the author and explicit-request lines; do
+    # not duplicate them (keeps the output byte-identical to the approved variants).
+    prefix = "\n" + author + "\n\n" + request + "\n"
+    if body.startswith(prefix):
+        body = body[len(prefix):]
     return ("---\n" + header + "\n---\n\n" + author + "\n\n" + request + "\n" + body).encode("utf-8")
 
 
@@ -833,12 +847,133 @@ def verify():
     return 0
 
 
+# Single source for the Pre-Report Gate: step 4-bis of the system prompts. The
+# skill references carry a generated copy between markers (never hand-edited).
+GATE_SYNC = (("references/metodo.md", "prompts/critico_system.md"),
+             ("references/en/method.md", "prompts/critic_system.en.md"))
+GATE_BEGIN = "<!-- PRE-REPORT-GATE:BEGIN"
+GATE_END = "<!-- PRE-REPORT-GATE:END -->"
+
+
+def gate_step(prompt: str) -> str:
+    lines = [l for l in (BASE / prompt).read_text(encoding="utf-8").splitlines() if l.startswith("4-bis.")]
+    if len(lines) != 1:
+        raise GuardError("Expected exactly one 4-bis step in " + prompt)
+    return lines[0]
+
+
+def synced_reference(reference: str, prompt: str) -> bytes:
+    text = (SOURCE / reference).read_text(encoding="utf-8")
+    start = text.find(GATE_BEGIN)
+    end = text.find(GATE_END)
+    if start < 0 or end < start or text.count(GATE_BEGIN) != 1 or text.count(GATE_END) != 1:
+        raise GuardError("Pre-Report Gate markers missing or duplicated in " + reference)
+    head_end = text.index("\n", start) + 1
+    return (text[:head_end] + gate_step(prompt) + "\n" + text[end:]).encode("utf-8")
+
+
+def repo_sources():
+    names = ["skills/critico/" + n for n in ("SKILL.md", "SKILL.es.md", *REFERENCES, "agents/openai.yaml")] + list(LEGAL)
+    names += ["scripts/package_cli_ide_skills.py"] + [prompt for _, prompt in GATE_SYNC]
+    return {name: digest(BASE / name) for name in sorted(names)}
+
+
+def repo_manifest(files) -> bytes:
+    outputs = {"plataformas/" + name: sha(data) for name, data in sorted(files.items())}
+    aggregate = sha("".join(f"{h}  {n}\n" for n, h in outputs.items()).encode("utf-8"))
+    return json_bytes({
+        "id": "SKILLS-CLI-IDE-01",
+        "generator": "scripts/package_cli_ide_skills.py --write",
+        "legacy_proposal_sha256": PROPOSAL_HASH,
+        "legacy_proposal_note": "Historical reference to propuestas/SKILLS-CLI-IDE-01.json (outside the repo); not verified in repository mode.",
+        "variants": len(variants()),
+        "sources": repo_sources(),
+        "outputs": outputs,
+        "aggregate_sha256": aggregate,
+        "aggregate_rule": "sha256 of the sorted lines '<sha256>  <path>\\n' of outputs",
+    })
+
+
+def repo_disk():
+    return {p.relative_to(REPO_OUT).as_posix(): p.read_bytes() for p in sorted(REPO_OUT.rglob("*")) if p.is_file()
+            and "__pycache__" not in p.parts}
+
+
+def repo_problems(files, manifest_data):
+    problems = []
+    for reference, prompt in GATE_SYNC:
+        if (SOURCE / reference).read_bytes() != synced_reference(reference, prompt):
+            problems.append("stale Pre-Report Gate block: skills/critico/%s (source %s)" % (reference, prompt))
+    if len(variants()) != 13:
+        problems.append(f"expected 13 variants, got {len(variants())}")
+    disk = repo_disk()
+    for name in sorted(set(files) - set(disk)):
+        problems.append("missing: plataformas/" + name)
+    for name in sorted(set(disk) - set(files)):
+        problems.append("unexpected: plataformas/" + name)
+    for name in sorted(set(files) & set(disk)):
+        if files[name] != disk[name]:
+            problems.append("differs: plataformas/" + name)
+    if not REPO_MANIFEST.exists():
+        problems.append("missing manifest: " + REPO_MANIFEST.relative_to(BASE).as_posix())
+    elif REPO_MANIFEST.read_bytes() != manifest_data:
+        problems.append("stale manifest: " + REPO_MANIFEST.relative_to(BASE).as_posix())
+    return problems
+
+
+def repo_check() -> int:
+    files = candidate_files()
+    problems = repo_problems(files, repo_manifest(files))
+    if problems:
+        for problem in problems:
+            print("CHECK_FAIL", problem)
+        return 1
+    print("CHECK_OK: 13 variants, %d files byte-identical; manifest %s" % (len(files), digest(REPO_MANIFEST)))
+    return 0
+
+
+def repo_write() -> int:
+    for reference, prompt in GATE_SYNC:
+        data = synced_reference(reference, prompt)
+        if (SOURCE / reference).read_bytes() != data:
+            (SOURCE / reference).write_bytes(data)
+            print("SYNCED", "skills/critico/" + reference, "<-", prompt)
+    files = candidate_files()
+    extra = sorted(set(repo_disk()) - set(files))
+    if extra:
+        # Conservative: never delete; a human decides about unexpected files.
+        for name in extra:
+            print("WRITE_REFUSED unexpected file: plataformas/" + name)
+        return 1
+    written = 0
+    for name, data in sorted(files.items()):
+        if not safe_member(name):
+            raise GuardError("Unsafe output name")
+        path = REPO_OUT / name
+        if not path.exists() or path.read_bytes() != data:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            written += 1
+    manifest_data = repo_manifest(files)
+    if not REPO_MANIFEST.exists() or REPO_MANIFEST.read_bytes() != manifest_data:
+        REPO_MANIFEST.write_bytes(manifest_data)
+        written += 1
+    print("WRITE_OK: %d files written" % written)
+    return repo_check()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--build",action="store_true")
     group.add_argument("--verify",action="store_true")
+    group.add_argument("--check",action="store_true")
+    group.add_argument("--write",action="store_true")
     args = parser.parse_args()
+    if args.check:
+        return repo_check()
+    if args.write:
+        return repo_write()
     if args.build:
         build()
     else:
