@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Sin publicar — PR-0 CRITICO-SKILL-02 — corrección de `config_hash` (CAMBIO PROP-CONFIGHASH-001)
+
+- `04_critic.config.yaml`: **solo** `config_hash` `b9532948…` → `9aabf3a9b34f3b75…` (convención CONTRIBUTING: SHA-256 excluyendo la línea del propio campo). El valor de v3.6.0 no correspondía al fichero; `critic_version` sigue en 3.6.0 y ningún otro campo cambia.
+- `scripts/verify_freeze.py`: comprueba ahora que `config_hash` coincide con el recalculado (antes no lo hacía, por eso la deriva pasó el freeze). Prueba de mutación: con el valor viejo → rc 1.
+- **NUEVO** `docs/propuestas/PROP-CONFIGHASH-001.md`. `docs/HASHES.md`: filas de `04_critic.config.yaml`, `scripts/verify_freeze.py` y `CHANGELOG.md` regeneradas.
+- Autorización: literal de Dirección (06/11/2026, encargo CRITICO-SKILL-02, opción A). Sin tag ni cambio de `VERSION`.
+- Rollback: revertir el commit (vuelve a `d23241c` / `v3.6.0`).
+
 ## v3.6.0 — 2026-10-31 — M1 ángulo 15 · M2 Pre-Report Gate · M3 scorecard 5 ejes
 
 - **M1 · Ángulo 15 «Fallos silenciosos»** (patrón interno BZ-20261031-030): `critico_cli.py` `ANGLES` +1 tupla · `locales/es.json` y `en.json` `angle.15.*` · `prompts/critico_system.md`/`critic_system.en.md` lista 14→15 (11 canónicos + 3 opcionales + fallos-silenciosos). Rúbrica 108 dims y esquemas INTACTOS (patrón R-FIX-07).
