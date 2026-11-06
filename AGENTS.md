@@ -6,22 +6,32 @@ humanos es [`README.md`](README.md).
 
 ## Qué es este repositorio
 
-- **El Crítico**: metodología congelada **v3.4.0** (rúbrica de 108 dimensiones,
+- **El Crítico**: metodología congelada **v3.6.0** (`critic_version` en `04_critic.config.yaml`) (rúbrica de 108 dimensiones,
   8 esquemas, config) de revisión crítica (**GATE B**) y gobernanza de
   propuestas. Herramienta de análisis **defensivo**, de solo lectura.
 - Los **registros de gobernanza** (propuestas, actas, entregas) **NO están
   aquí**: viven en un archivo privado fuera del repositorio. No los busques en
   este árbol ni los inventes.
 
-## KIT OBLIGATORIO DE GOBERNANZA (léelo antes de ejecutar — P22)
+## Gobernanza: puntero al canon (no se copian políticas aquí)
 
-`~/kuvexta/gobernanza_oficial/` (12 archivos): directriz de estructura v8 ·
-reglamento P01–P27 · lecciones LA-01…07 · hub v3.10 · capas · BZ-047 · R-FIX.
-**Sin declarar «kit leído, fecha» en el cierre, el trabajo NO se acredita.**
-Release (BUP-REL-01): bump → push verificado → tag ANOTADO → push del tag;
-nunca taggear un commit que no aterrizó. La suite histórica (153) tiene
-ratchet: `docs/SUITE_BASELINE` + paso en CI (BUP-RATCHET-01 — el umbral solo
-sube).
+Este repositorio **no** contiene las políticas de gobernanza; solo apunta a su
+fuente canónica. Antes de ejecutar un encargo, léela allí.
+
+```yaml
+canon_path: 30_Transversales/T1_Gobernanza/Gobernanza_Oficial   # relativo al workspace; espejo privado declarado en su VERSION (MIRROR)
+canon_version: 2026.11.05.1                                     # VERSION=… del canon
+canon_sha256:
+  VERSION: 6ddcb0a8072478b572fdf9db7992c39ed2bb007f88c0660fb732a70ff528b412
+  SHA256SUMS: 8efb01a4727de8010e2e7e99ceed6c36a392d1a68ea76bd54ac884f9448afb65
+precedence: canon > encargo > AGENTS.md > resto del repositorio   # ante conflicto, manda el de la izquierda; si choca, detente y avisa
+stale_if_mismatch: true   # si VERSION o SHA256SUMS del canon no coinciden con estos hashes, este puntero está DESACTUALIZADO:
+                          # no apliques de memoria lo que creas que dice el canon; léelo y avisa para actualizar el puntero
+```
+
+La copia generada del kit en `~/kuvexta/gobernanza_oficial/` no es el canon y
+puede estar desactualizada. Cierra cada encargo con «kit leído, fecha»
+indicando la `canon_version` leída.
 
 ## Entrada rápida (no te pierdas)
 
@@ -32,6 +42,8 @@ sube).
 | La variante para otro cliente | `plataformas/<cliente>/` (instala **una sola**; cada carpeta trae su README con la ruta exacta) |
 | Comandos slash para OpenCode | `commands/` (`/ojocritico` y 13 alias) |
 | Documentación profunda | `01_Manual_…`, `02_FROZEN_v3.4.md`, `13_Diseno_…`, `docs/HASHES.md` |
+| Manifest del artefacto (`bundle_sha256` del `artifact_binding`) | `MANIFEST.json` · `python3 -B scripts/build_manifest.py --check` |
+| Regenerar/verificar las 13 variantes (no editar a mano) | `python3 -B scripts/package_cli_ide_skills.py --write` / `--check` |
 | Histórico de la entrega local | `README_PRODUCTO.md` y `LEEME.md` (no son el canónico) |
 
 ## Reglas que cualquier agente debe respetar
