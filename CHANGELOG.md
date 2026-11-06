@@ -7,7 +7,7 @@
 - **Herramienta:** `scripts/package_cli_ide_skills.py` gana `--check` (idempotente, byte a byte) y `--write` con manifest en el repo (`docs/propuestas/SKILLS-CLI-IDE-01.manifest.json`; el hash de la propuesta anterior queda como referencia); `make_skill` deja de duplicar la cabecera; `licencias/DECISION_PENDIENTE.json` restaurado en la raíz como entrada declarada del generador. Las 13 variantes se regeneran con él (sin edición manual).
 - **NUEVO** `MANIFEST.json` + `scripts/build_manifest.py` (bundle_sha256 reproducible del artefacto). **NUEVO** `scripts/escaneo_publico.py` + `docs/escaneo_publico_baseline.json`; CI con gitleaks, generador `--check` y manifest `--check`.
 - `AGENTS.md`: bloque puntero al canon (2026.11.05.1) en lugar del kit copiado.
-- Tests nuevos: `test_skill_sync`, `test_skill_variants`, `test_manifest`, `test_agents_pointer`, `test_escaneo_publico` (166 → 191). `docs/SUITE_BASELINE` 166 → 191 (el ratchet solo sube).
+- Tests nuevos: `test_skill_sync`, `test_skill_variants`, `test_manifest`, `test_agents_pointer`, `test_escaneo_publico` (166 → 192). `docs/SUITE_BASELINE` 166 → 192 (el ratchet solo sube).
 - **No toca** `03_rubric.yaml`, `04_critic.config.yaml`, `05_schema/`, `evals/validators.py`, `critic_version` ni `VERSION`. Rollback: revertir los commits del PR (vuelve a PR-0 / `d23241c`).
 
 ## Sin publicar — PR-0 CRITICO-SKILL-02 — corrección de `config_hash` (CAMBIO PROP-CONFIGHASH-001)

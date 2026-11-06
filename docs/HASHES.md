@@ -10,7 +10,7 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 | 13_Diseno_Completo_Universal_Critico.md | vigente | a2f28f57f59dd9278e64721f58c2fa5037e288e665df4effdc4fd885534dbe8c |
 | 03_rubric.yaml | vigente | 54c7e629bfe03511cea9b7ffd8661709c51cbd2d093b1544b61f27f32cc6eb2f |
 | 04_critic.config.yaml | vigente | 0d9871215bf057c96876d10952edb9250e552bc4b9151fd6dee2f861262710a5 |
-| CHANGELOG.md | vigente | b057f43eb679b7132815aba87137b8a37275614c8f470a1283bca2d897038389 |
+| CHANGELOG.md | vigente | 6c19153bc230a975d2849b1f2c5c7646c8aa3a63db605a299e5aca158b135abc |
 | LECCIONES_APRENDIDAS.md | vigente | dbd795d0b48d599dd211f329d7263f4afdb33f8ad4696500855ce4fef9e4cb32 |
 | INCIDENTES.md | vigente | 131db8c09483f1082a4d172a299e651d9b00f808a1cc591aafb2b48c9ea7aff3 |
 | README_PRODUCTO.md | vigente | 06a4bec75bf11f2c821d1b7532478c617f99f7d4c49ab4b46bc3d0ef5225f1de |
@@ -22,7 +22,7 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 | run_tests.py | vigente | 0268e49fac93956c3cf6eaf95d8d0f2febc7bf40a27e33f20b8bd198c9abacf5 |
 | requirements.txt | vigente | dc961ede1b0c1f376a9fbdd02b429d0e744a9e2678289b3b931f2b74a2523e59 |
 | LICENSE | vigente | be3ceb0b98eeb7b5976a1ee0d51cd2fd13598a7f3b4ee4b5fdf926329b4fb309 |
-| docs/SUITE_BASELINE | vigente | 70260742c2952154c84e2ea9f68b1a7397f49b6d343da1ed284093c0bd72c742 |
+| docs/SUITE_BASELINE | vigente | eb3be230bbd2844b1f5d8f2e4fab9ffba8ab22cfeeb69c4c1361993ba4f377b9 |
 | AGENTS.md | vigente | 363772c5bd6548bbeebb47f3f7f8f1b6d4090c9268e4eea84e890b5a752523aa |
 | tests/requirements.txt | vigente | 5bdf37e2e28251b8064532a50142344235098315ed7804d76f89e39f69d166cb |
 | docs/guia_subperfil_ops_cosecha.md | vigente | f2b6b30a2928764d1760a6c1a8b02156eee11c8964701e641ed634bd02574f69 |
