@@ -1,0 +1,385 @@
+{
+  "id": "escaneo-publico-baseline",
+  "note": "Huellas sha256(ruta|regla|coincidencia) de hallazgos preexistentes aceptados; no contiene el texto.",
+  "rules": [
+    "email",
+    "id_interno_bz",
+    "id_interno_enc",
+    "nit_cedula_co",
+    "nombre_real"
+  ],
+  "entries": [
+    {
+      "path": ".github/ISSUE_TEMPLATE/propuesta-cambio.yml",
+      "rule": "nombre_real",
+      "fingerprint": "0e543709bf52f73ff98f62ce48ccc96e649db65dc443e5cd3c841482616eafb2",
+      "count": 1
+    },
+    {
+      "path": "02_FROZEN_v3.4.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "87508bd1bfb86ae02b9cb591dada98140eb156131f4435dd3c900df0b6821776",
+      "count": 3
+    },
+    {
+      "path": "02_FROZEN_v3.4.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "b697817cbf089c9134026da268da45e636a6f34341af6b4adf22bc48e16024a1",
+      "count": 4
+    },
+    {
+      "path": "02_FROZEN_v3.4.md",
+      "rule": "nombre_real",
+      "fingerprint": "9298eaf424689281b1c8784ab17cd6fc10341cf23c729860edd17833fedd96c5",
+      "count": 1
+    },
+    {
+      "path": "04_critic.config.yaml",
+      "rule": "id_interno_bz",
+      "fingerprint": "7989405f3d21ee04069819bab2dba7950b97902381f604c809dd8337324a6aaa",
+      "count": 2
+    },
+    {
+      "path": "05_schema/verdict.yaml",
+      "rule": "id_interno_bz",
+      "fingerprint": "b10987f7e120984ef73f1f37354a8be09cb2476343fb27d6fa625fb27f992b2f",
+      "count": 1
+    },
+    {
+      "path": "AGENTS.md",
+      "rule": "nombre_real",
+      "fingerprint": "aafb0bdf8f5eaf5a3bba46bad0650e2bbe38c11b63a100bce725b547787314e2",
+      "count": 2
+    },
+    {
+      "path": "AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "94462f50feb0a0b083c272c17c620b9c781cce1bd003bf430df1fffb089a192f",
+      "count": 1
+    },
+    {
+      "path": "CHANGELOG.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "24a88ac0d58fb0fdf491c5796cfe4f8e661702524c6af72753a6b2d102be8396",
+      "count": 1
+    },
+    {
+      "path": "CHANGELOG.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "4322b3e5ae1ac39fd544441b945d45c953c1bfb10bab44161996b8f476a9a8bf",
+      "count": 1
+    },
+    {
+      "path": "CHANGELOG.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "666a58195d1e7360d4286f19078e6b38fc70ac14aaf9816da51a9cbc1c8ead20",
+      "count": 2
+    },
+    {
+      "path": "CHANGELOG.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "ab090b87f3a454f3dd68a90aa4d8ce86bf18fc85d81613efe81652db6b241f06",
+      "count": 3
+    },
+    {
+      "path": "CHANGELOG.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "ac457fea3f566e1ae064c3daf6e16facff82e155bbfef02e08f7baed5a5af742",
+      "count": 1
+    },
+    {
+      "path": "CHANGELOG.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "cbb94acb5dc2878c9d639358ffb3eae2ae9ddeccf008f4129ba0ac926e5209ba",
+      "count": 1
+    },
+    {
+      "path": "CHANGELOG.md",
+      "rule": "nombre_real",
+      "fingerprint": "716201704cab591812cd7a4d362833ef72956f9cf4c942c61ae759f5ca82a228",
+      "count": 8
+    },
+    {
+      "path": "CHANGELOG.md",
+      "rule": "nombre_real",
+      "fingerprint": "e9e3b98abe02d5128e5e8d285a7ae3d3d26f2bd4740cfc42bbc71d4059cbce0e",
+      "count": 12
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "rule": "nombre_real",
+      "fingerprint": "96c4ad3a0b03dbb777f0eaed8b7f74e9ac63f9a8f66e9786ab2c6d440693f605",
+      "count": 3
+    },
+    {
+      "path": "INCIDENTES.md",
+      "rule": "nombre_real",
+      "fingerprint": "bc01a85691c35c4272e5e82c591b384818e6c176583529af53b1fff020c76ba8",
+      "count": 2
+    },
+    {
+      "path": "LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "4e0cb7a8a36a049662816655bf42144d5f298bf3c25430713b5b112be934894c",
+      "count": 1
+    },
+    {
+      "path": "README.md",
+      "rule": "nombre_real",
+      "fingerprint": "349db0d9fd677f7a5a0a64a9c662a67a03d60d0d756814ab062cb499a730d7ee",
+      "count": 1
+    },
+    {
+      "path": "SECURITY.md",
+      "rule": "nombre_real",
+      "fingerprint": "6631012516b3a28a4f116526d1a10c018b7202012af912db5fa0db8f42a01905",
+      "count": 1
+    },
+    {
+      "path": "docs/en/AUTHORSHIP.md",
+      "rule": "nombre_real",
+      "fingerprint": "a4bfc92103e251fa7754e83a1080866a2ca9ed80daa5e7da824c0a1e75d3f52d",
+      "count": 1
+    },
+    {
+      "path": "docs/guia_subperfil_ops_cosecha.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "96a29f5808717866cb6a46ad12be0b565def41d8c8d121b498aa7b32ded98121",
+      "count": 1
+    },
+    {
+      "path": "docs/guia_subperfil_ops_cosecha.md",
+      "rule": "nombre_real",
+      "fingerprint": "08d539e04730a9617f2ba84abfa3e0d0af6a2424d8a639cd6046ca3b0608eb85",
+      "count": 1
+    },
+    {
+      "path": "docs/propuestas/PROP-COSECHA-001.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "72490911889e5d15415e56558fbee39d9bb943c03bc34f6104e4f1a1a3f130b6",
+      "count": 1
+    },
+    {
+      "path": "docs/propuestas/PROP-COSECHA-001.md",
+      "rule": "nombre_real",
+      "fingerprint": "0a8048b7e74ebed5395fdd34930d4886a85264d42b29969508bd0647b72ce174",
+      "count": 2
+    },
+    {
+      "path": "docs/propuestas/PROP-M1-ANGULO15-001.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "03773ab637555b7d222e2068a0cdcb463206409cb6b44bd1266d6b7f2abcdf88",
+      "count": 1
+    },
+    {
+      "path": "docs/propuestas/PROP-M1-ANGULO15-001.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "4069fc5164332cc6bb9399d687952676129c51356858c8f33097999c3739c206",
+      "count": 1
+    },
+    {
+      "path": "docs/propuestas/PROP-M1-ANGULO15-001.md",
+      "rule": "nombre_real",
+      "fingerprint": "17ecd2df2c021368fea9ca8a20561a89bf38fb117ca1bc1980c9b0cc06747a55",
+      "count": 1
+    },
+    {
+      "path": "docs/propuestas/PROP-M2-ANTIRRUIDO-001.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "9f5d92455a2e1a94b97e26817dc0f22e791febd9aa936deedd9ca4e311217178",
+      "count": 1
+    },
+    {
+      "path": "docs/propuestas/PROP-M2-ANTIRRUIDO-001.md",
+      "rule": "nombre_real",
+      "fingerprint": "ab8287b1eddb96153bd51a248cea7bc844f4439ea6c2fa98d311dafa2bfd4455",
+      "count": 1
+    },
+    {
+      "path": "docs/propuestas/PROP-M3-SCORECARD-001.md",
+      "rule": "id_interno_bz",
+      "fingerprint": "adf8e44f75faf86ef8de176198b31873d23bac906acf20a7a02090cfa87e87ff",
+      "count": 1
+    },
+    {
+      "path": "docs/propuestas/PROP-M3-SCORECARD-001.md",
+      "rule": "nombre_real",
+      "fingerprint": "00a4c7b245c8daf1c90779cb9fceca61bedb951660f3770e422532e579be340c",
+      "count": 1
+    },
+    {
+      "path": "plataformas/antigravity/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "1a1505223bc0ae68739e2e237b84cfec1a489a926acf243059fd4ae80850ed66",
+      "count": 1
+    },
+    {
+      "path": "plataformas/antigravity/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "0dbd045bb211d57a858b5de7cb87212ce20ead64eb368ba40741be825130043c",
+      "count": 1
+    },
+    {
+      "path": "plataformas/claude-code/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "de768a128c22c09fdbd245c731df58ed3d81526464a9834561d94614a1a87c6b",
+      "count": 1
+    },
+    {
+      "path": "plataformas/claude-code/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "6192f66fe7a91d0e738671a5e6ce55dc3ebb0be048f76649a657f9cd81647aae",
+      "count": 1
+    },
+    {
+      "path": "plataformas/cline/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "64563137097cff021e39c31ff75956735ea72c2741ae726f484caa0fe93151aa",
+      "count": 1
+    },
+    {
+      "path": "plataformas/cline/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "03d022f1429f73e0a7c061298e56971fcd9fcabced55260ce9ecd56b01c6239f",
+      "count": 1
+    },
+    {
+      "path": "plataformas/codex/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "f691f679bf8b4d7d10129253c86601684c0fe5b937bf636817dfbc773c8c5c8f",
+      "count": 1
+    },
+    {
+      "path": "plataformas/codex/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "57e98322058434a0c7d4990df67abf7fba98cc1823523b44d610d248da6341e7",
+      "count": 1
+    },
+    {
+      "path": "plataformas/cursor/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "aac22a0fcb1586c40cf932d87870babbeeb3a0addc444b0aa21138f6c779959f",
+      "count": 1
+    },
+    {
+      "path": "plataformas/cursor/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "feef7cc5753d133c044387c585800fc65ae314c9dd69c73acf66a328604dcda2",
+      "count": 1
+    },
+    {
+      "path": "plataformas/deepseek-harness/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "a284d07ff281017ec652dfcd9a176a19d373153d9c4567e3a00a742b055ed6e5",
+      "count": 1
+    },
+    {
+      "path": "plataformas/deepseek-harness/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "155e0aaef752053be3ad686c90c79d3617ba18aa94bf4aaf65c73bc07076c768",
+      "count": 1
+    },
+    {
+      "path": "plataformas/gemini-cli/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "ba2fcdca31173b4d1873c33dc8bee06747f5873096197aedffa6739639ab8999",
+      "count": 1
+    },
+    {
+      "path": "plataformas/gemini-cli/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "8742029fade60e1f4359910bb539b557d0a3e32aa769838015bd6872c6d48b3d",
+      "count": 1
+    },
+    {
+      "path": "plataformas/github-copilot/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "bd8235ecd53f222f1e4d2739a54ce3ad6f75360a1470fd2548db7487682b12cf",
+      "count": 1
+    },
+    {
+      "path": "plataformas/github-copilot/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "9d070cc7abf8456dd5abeec15e6815c378880b4f123865b6d719270ce42c91bf",
+      "count": 1
+    },
+    {
+      "path": "plataformas/kiro/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "160305837dc22d84b4b24383af7ac78e5799e18843c875e62df81bab5d451091",
+      "count": 1
+    },
+    {
+      "path": "plataformas/kiro/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "a6d3b090ba5ff8936385ea003b097d486cf1334d0e0ee9dd2c2301a4cb749ba8",
+      "count": 1
+    },
+    {
+      "path": "plataformas/openclaw/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "64157b1d13f74a3c8d1914dd707e969debbcc0a0c671d4f7b2da283cfa28c4fe",
+      "count": 1
+    },
+    {
+      "path": "plataformas/openclaw/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "be62200155f17ea32c5e6529c1236fff5e49c1b84ab47903e3378dd3cac9f026",
+      "count": 1
+    },
+    {
+      "path": "plataformas/opencode/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "87cb50ceb317527900f42437cf9c9b50c928abc6a0b6dd1045c68c8435b17582",
+      "count": 1
+    },
+    {
+      "path": "plataformas/opencode/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "0a25c7580ae6dd0ea8d46ba9b48bead1dfe8c90d783e4c26fc95c88e7e32b659",
+      "count": 1
+    },
+    {
+      "path": "plataformas/qwen-code/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "38c1aa149205cb181536a51108eba3d820937f6f8b514f7c16d28472cfc49b0c",
+      "count": 1
+    },
+    {
+      "path": "plataformas/qwen-code/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "bab7b4f8485297fd609955d847ce45a0c882b4690e0c4c875ffe7c3c18fbd7ad",
+      "count": 1
+    },
+    {
+      "path": "plataformas/universal/AUTORIA.md",
+      "rule": "nombre_real",
+      "fingerprint": "3a4604ed7bb4ac99300c68b44877e318c58a8874990f54a65fd57c2b751e14e8",
+      "count": 1
+    },
+    {
+      "path": "plataformas/universal/LICENSE",
+      "rule": "nombre_real",
+      "fingerprint": "d76011518853efef7cac3ac62b3c6d370f0ffc55b52f6e0925ab2189f8030607",
+      "count": 1
+    },
+    {
+      "path": "scripts/sincronizar_copias.py",
+      "rule": "nombre_real",
+      "fingerprint": "8a570c0c56167d85783f034fd6ebd7d359fec253fe7c662e996783fb9c43fcd1",
+      "count": 1
+    },
+    {
+      "path": "tests/test_integration_i1.py",
+      "rule": "id_interno_bz",
+      "fingerprint": "64868ca3aa9b8ddb2d6c8099d525aaaa3f3f5e3c4599f4072e4783920403e643",
+      "count": 1
+    },
+    {
+      "path": "tests/test_integration_i1.py",
+      "rule": "nombre_real",
+      "fingerprint": "d017c9cf292b0ce0f50e3a6d57fffae2d39ebbafaf14e8ca562edf7f44c58e7c",
+      "count": 1
+    }
+  ]
+}
