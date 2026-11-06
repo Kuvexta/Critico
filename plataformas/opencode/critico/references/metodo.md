@@ -4,18 +4,18 @@
 
 ## 0. Modo e independencia (decláralo al inicio)
 
-Antes de revisar, rellena la ficha de independencia con hechos comprobables, no con declaraciones:
+Antes de revisar, rellena la ficha de independencia con hechos comprobables, no con declaraciones. **Cada campo lleva una línea de evidencia** que otra persona pueda contrastar:
 
-| Campo | Pregunta |
-|---|---|
-| `same_session` | ¿Revisas en la misma sesión en que se produjo el artefacto? |
-| `same_model_family` | ¿Eres de la misma familia de modelo que el autor? |
-| `same_context` | ¿Tienes en contexto el razonamiento, borradores o instrucciones del autor? |
-| `same_memory` | ¿Compartes memoria persistente con el autor? |
-| `same_author` | ¿Redactaste o diseñaste tú el artefacto, o el gate que lo evalúa? |
+| Campo | Pregunta | Evidencia esperada (ejemplo) |
+|---|---|---|
+| `same_session` | ¿Revisas en la misma sesión en que se produjo el artefacto? | Producto/cliente y sesión de la revisión frente a los del autor |
+| `same_model_family` | ¿Eres de la misma familia de modelo que el autor? | Tu familia de modelo y la del autor, según el encabezado del autor |
+| `same_context` | ¿Compartes el **contexto de elaboración** del artefacto (el razonamiento, los borradores o las instrucciones con que el autor lo produjo)? Recibir el encargo de revisión y el artefacto no cuenta. | Qué recibiste para revisar y de dónde (p. ej. solo el PR y el encargo de revisión) |
+| `same_memory` | ¿Compartes memoria persistente con el autor? | Memoria o almacén usado en la revisión, o «ninguna» |
+| `same_author` | ¿Redactaste o diseñaste tú el artefacto, o el gate que lo evalúa? | Autoría registrada del artefacto y del gate (encabezados, commits) |
 
-- Si **cualquiera** es verdadero o no puedes demostrar que es falso → `mode: AUTOCONTROL`. El autocontrol mejora la entrega, **nunca cuenta como gate** y no sustituye la revisión independiente.
-- Solo con los cinco en falso, y demostrables, → `mode: INDEPENDIENTE`. Solo este modo emite veredicto de GATE B.
+- Si **cualquiera** es verdadero o no puedes demostrar que es falso → `mode: AUTOCONTROL`. **Sin evidencia, el campo cuenta como verdadero**: un campo declarado `false` sin su línea de evidencia lleva a `mode: AUTOCONTROL`. El autocontrol mejora la entrega, **nunca cuenta como gate** y no sustituye la revisión independiente.
+- Solo con los cinco en falso, cada uno con su evidencia, → `mode: INDEPENDIENTE`. Solo este modo emite veredicto de GATE B.
 - No revises lo que diseñaste ni ejecutes el gate que diseñaste.
 
 ## 1. Encuadre

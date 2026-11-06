@@ -22,10 +22,11 @@ Casos **sintéticos** (`sc-NNN.yaml`), cada uno con bloque
 `expected {mode, status, blockers, codes, artifact_binding}`:
 SC-001 autocontrol que intenta pasar como GATE B · SC-002 OK ligado a un head
 anterior · SC-003 integración que solo declara el caso feliz · SC-004 control
-(no debe bloquearse).
+(no debe bloquearse) · SC-005 ficha con los cinco campos en `false` sin evidencia
+(O1 del GATE B de PR-A: sin evidencia, el campo cuenta como verdadero).
 
-    python -m evals.cli --skill-version old --expect-all-pass   # rc 1: la skill v3.6.0 falla SC-001..003
-    python -m evals.cli --skill-version new --expect-all-pass   # rc 0: la skill nueva pasa los 4
+    python -m evals.cli --skill-version old --expect-all-pass   # rc 1: la skill v3.6.0 falla SC-001..003 y SC-005
+    python -m evals.cli --skill-version new --expect-all-pass   # rc 0: la skill nueva pasa los 5
     python -m evals.cli --skill-version new --fail-on-regression
 
 Qué mide: aplica de forma determinista las reglas que **declara** cada versión

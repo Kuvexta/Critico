@@ -1,7 +1,7 @@
 {
   "new": {
-    "passed": 4,
-    "total": 4,
+    "passed": 5,
+    "total": 5,
     "rules": [
       "R_BINDING",
       "R_INTEG",
@@ -11,7 +11,7 @@
   "note": "Ratchet del golden set de contrato de la skill: 'passed' solo sube por versión.",
   "old": {
     "passed": 1,
-    "total": 4,
+    "total": 5,
     "rules": []
   }
 }

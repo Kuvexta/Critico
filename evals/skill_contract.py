@@ -30,7 +30,8 @@ OLD_SKILL_REF = "d23241c18fcbaab79981b7cf477f60f547f0d564"  # v3.6.0
 SKILL_FILES = ("references/metodo.md", "references/formato-salida.md", "references/integraciones.md")
 RULE_MARKERS = {
     # regla: (archivo de la skill, marcadores que deben estar TODOS presentes)
-    "R_MODE": ("references/metodo.md", ("same_session", "same_model_family", "AUTOCONTROL", "nunca cuenta como gate")),
+    "R_MODE": ("references/metodo.md", ("same_session", "same_model_family", "AUTOCONTROL", "nunca cuenta como gate",
+                                        "Sin evidencia, el campo cuenta como verdadero")),
     "R_BINDING": ("references/formato-salida.md", ("artifact_binding", "no se extiende", "adenda")),
     "R_INTEG": ("references/integraciones.md", ("**C7**", "solo** declara el caso feliz")),
 }
@@ -70,6 +71,11 @@ def _binding_key(b: dict | None) -> tuple:
     return (b.get("head"), b.get("bundle_sha256"))
 
 
+def _demonstrated_false(field) -> bool:
+    """Un campo solo cuenta como falso si trae `value: false` y una línea de evidencia no vacía (O1 del GATE B)."""
+    return isinstance(field, dict) and field.get("value") is False and bool(str(field.get("evidence") or "").strip())
+
+
 def evaluate(case_input: dict, rules: set[str]) -> dict:
     review = case_input["review"]
     current = case_input["artifact_current"]
@@ -77,7 +83,7 @@ def evaluate(case_input: dict, rules: set[str]) -> dict:
     codes = []
     mode = review.get("mode")
     if "R_MODE" in rules:
-        demostrada = all(independence.get(f) is False for f in INDEPENDENCE_FIELDS)
+        demostrada = all(_demonstrated_false(independence.get(f)) for f in INDEPENDENCE_FIELDS)
         mode = "INDEPENDIENTE" if (mode == "INDEPENDIENTE" and demostrada) else "AUTOCONTROL"
         if review.get("claims_gate_b") and mode != "INDEPENDIENTE":
             codes.append(CODES["R_MODE"])

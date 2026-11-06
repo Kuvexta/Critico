@@ -5,7 +5,12 @@ input:
   artifact_current: &actual {head: "4444444444444444444444444444444444444444", bundle_sha256: "dddd444444444444444444444444444444444444444444444444444444444444"}
   review:
     mode: INDEPENDIENTE
-    independence: {same_session: false, same_model_family: false, same_context: false, same_memory: false, same_author: false}
+    independence:
+      same_session: {value: false, evidence: "revisión en otra sesión y otro producto que el autor"}
+      same_model_family: {value: false, evidence: "familia de modelo distinta de la del autor (encabezado)"}
+      same_context: {value: false, evidence: "solo el PR y el encargo de revisión"}
+      same_memory: {value: false, evidence: "ninguna"}
+      same_author: {value: false, evidence: "autoría del artefacto y del gate registrada a otro agente"}
     claims_gate_b: true
     status: PASA_CON_CONDICIONES
     artifact_binding: *actual
