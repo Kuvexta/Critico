@@ -6,8 +6,9 @@ reales. Falla (rc 1) solo ante hallazgos NUEVOS frente a la línea base
 `docs/escaneo_publico_baseline.json`, que registra huellas (sha256 de
 ruta|regla|coincidencia) y conteos, nunca el texto encontrado.
 
-Nombres reales: SOLO por entorno, `ESCANEO_NOMBRES="Nombre1,Nombre2"`; nunca se
-escriben en el código. Sin la variable, la regla `nombre_real` no se aplica y el
+Nombres reales: SOLO por entorno, `ESCANEO_NOMBRES="Nombre1,Nombre2"` (en CI, el
+secreto del repositorio `ESCANEO_NOMBRES`); nunca se escriben en el código ni se
+imprimen: la salida da solo ruta, línea y regla. Sin la variable, la regla `nombre_real` no se aplica y el
 gate lo avisa (ESCANEO_AVISO). Las huellas de la línea base son las mismas
 (regla `nombre_real`), así que se reutilizan al definir la variable.
 
@@ -53,11 +54,13 @@ def rules() -> dict[str, re.Pattern]:
 
 
 SKIPPED: list[str] = []  # archivos no legibles como texto UTF-8: se informan, nunca se omiten en silencio
+LINES: dict[tuple[str, str, str], list[int]] = {}  # huella -> líneas; el texto encontrado NUNCA se guarda ni se imprime
 
 
 def scan(files: list[str] | None = None) -> Counter:
     found: Counter = Counter()
     SKIPPED.clear()
+    LINES.clear()
     for name in files if files is not None else tracked_files():
         path = BASE / name
         if not path.is_file():
@@ -68,9 +71,10 @@ def scan(files: list[str] | None = None) -> Counter:
             SKIPPED.append(name)
             continue
         for rule, pattern in rules().items():
-            for match in pattern.findall(text):
-                fp = hashlib.sha256(f"{name}|{rule}|{match}".encode("utf-8")).hexdigest()
+            for m in pattern.finditer(text):
+                fp = hashlib.sha256(f"{name}|{rule}|{m.group(0)}".encode("utf-8")).hexdigest()
                 found[(name, rule, fp)] += 1
+                LINES.setdefault((name, rule, fp), []).append(text.count("\n", 0, m.start()) + 1)
     return found
 
 
@@ -92,6 +96,15 @@ def new_findings(found: Counter, baseline: Counter) -> list[tuple[str, str, int]
     return [(p, r, c - baseline.get((p, r, f), 0)) for (p, r, f), c in sorted(found.items()) if c > baseline.get((p, r, f), 0)]
 
 
+def new_locations(found: Counter, baseline: Counter) -> list[tuple[str, int, str]]:
+    """(ruta, línea, regla) de cada huella con hallazgos nuevos. Sin texto: así se imprime en CI."""
+    out = []
+    for (p, r, f), c in sorted(found.items()):
+        if c > baseline.get((p, r, f), 0):
+            out += [(p, line, r) for line in LINES.get((p, r, f), [])]
+    return sorted(set(out))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--write-baseline", action="store_true")
@@ -103,11 +116,13 @@ def main() -> int:
         return 0
     nuevos = new_findings(found, load_baseline())
     if nuevos:
-        for path, rule, extra in nuevos:
-            print(f"ESCANEO_FALLO: {path}: regla {rule}: {extra} coincidencia(s) nueva(s) (texto no mostrado)")
+        # Solo ruta, línea y regla: la coincidencia (correo, NIT, nombre…) nunca se imprime en claro.
+        for path, line, rule in new_locations(found, load_baseline()):
+            print(f"ESCANEO_FALLO: {path}:{line}: regla {rule} (coincidencia no mostrada)")
+        print(f"ESCANEO_FALLO: {sum(e for _, _, e in nuevos)} coincidencia(s) nueva(s); redacta o excluye y deja constancia en el PR")
         return 1
     if not os.environ.get("ESCANEO_NOMBRES", "").strip():
-        print("ESCANEO_AVISO: ESCANEO_NOMBRES no definido; la regla nombre_real no se aplicó")
+        print("ESCANEO_AVISO: ESCANEO_NOMBRES no definido o vacío (p. ej. PR desde un fork sin secretos); la regla nombre_real no se aplicó")
     for name in SKIPPED:
         print(f"ESCANEO_AVISO: no escaneado (no es texto UTF-8): {name}")
     print(f"ESCANEO_OK: {len(tracked_files())} archivos ({len(SKIPPED)} no escaneables, listados arriba); 0 hallazgos nuevos (línea base: {sum(load_baseline().values())})")

@@ -48,6 +48,9 @@ jobs:
           tar xzf gitleaks.tgz gitleaks
           ./gitleaks git --no-banner --redact .
       - name: Escaneo público — correos, NIT, nombres e IDs internos (línea base)
+        env:
+          # Secreto del repositorio; vacío en PR desde forks -> ESCANEO_AVISO, no fallo.
+          ESCANEO_NOMBRES: ${{ secrets.ESCANEO_NOMBRES }}
         run: PYTHONDONTWRITEBYTECODE=1 python -B scripts/escaneo_publico.py
       - name: Golden set de contrato de la skill (vieja falla, nueva pasa)
         run: |

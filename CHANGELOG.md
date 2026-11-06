@@ -26,6 +26,10 @@ queda PENDIENTE del literal de Dirección y no se aplica en este release.
   - O3: `escaneo_publico.py` sin nombres propios en el código (solo `ESCANEO_NOMBRES`; aviso si falta).
   - `.coverage` fuera del índice y en `.gitignore` (contenía rutas locales).
   - Tests 203 → 209; `docs/SUITE_BASELINE` 203 → 209.
+- **Decisiones de Dirección en #3 (06/11):** D1 = A (`critic_version` sigue en 3.6.0) y `ESCANEO_NOMBRES` como secreto del repositorio.
+  - CI: el paso «Escaneo público — correos, NIT, nombres e IDs internos» recibe `ESCANEO_NOMBRES: ${{ secrets.ESCANEO_NOMBRES }}`. Sin el secreto (p. ej. un PR desde un fork) o con el secreto vacío, el escáner emite `ESCANEO_AVISO` y no falla.
+  - `escaneo_publico.py` imprime solo ruta, línea y regla de cada hallazgo nuevo; la coincidencia (nombre, correo, NIT…) nunca sale en claro.
+  - Tests `test_08` (con secreto: rc 1, `x.md:3: regla nombre_real`, sin el texto en la salida; mutación que imprime la coincidencia detectada), `test_09` (sin secreto o vacío: aviso, rc 0) y `test_10` (el workflow pasa el secreto al paso). Tests 209 → 212; `docs/SUITE_BASELINE` 209 → 212.
 
 ### PR-A — skill: modo, ligadura y método v3.6 (sin freeze)
 
