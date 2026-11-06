@@ -9,14 +9,27 @@ confianza), **veredicto** (PASA / PASA_CON_CONDICIONES / NO_PASA) y
 rector: **nada se simula y nada se declara demostrado sin evidencia
 verificable** (diseñado ≠ demostrado).
 
-- **Release del repositorio: `01.00.01`** (etapa DEFINITIVO · regla 00/01)
+- **Release del repositorio: `01.01.00`** (sin publicar: tag pendiente del literal de Dirección)
 - **Metodología congelada: `v3.6.0`** (rúbrica de 108 dimensiones, 8 esquemas y config — verificada por `verify_freeze`)
 
-> **Mapeo de versiones (C2):** `VERSION` contiene el release del repo
-> (`01.00.01`); `04_critic.config.yaml → critic_version` contiene la versión de
-> la metodología congelada (`3.6.0`). El release definitivo `01.00.00` quedó
-> CORTADO el 2026-10-29, junto al **Banco Universal de Pruebas (BUP)**
-> (https://github.com/Kuvexta/BUP) — gates cerrados y suite 166/166 en verde.
+> **Mapeo de versiones (C2).** Son dos ejes separados: `VERSION` es el
+> **release del producto** (repo, CLI, skill, variantes, herramientas) y
+> `04_critic.config.yaml → critic_version` es la **metodología congelada**
+> (rúbrica, esquemas, config). Un cambio de skill o de herramientas sube
+> `VERSION` sin tocar `critic_version`; cambiar `critic_version` exige un
+> CAMBIO con freeze y literal de Dirección (`CONTRIBUTING.md`).
+
+| `VERSION` | `critic_version` | tag | commit | `config_hash` declarado | ¿coincide con la convención de CONTRIBUTING? |
+|---|---|---|---|---|---|
+| `01.00.00` | `3.4.0` | `v01.00.00` | `7b19323` | `8cb8a84f…` | no (calculado `fe7f393f…`) — histórico, el tag no se modifica |
+| `01.00.01` | `3.4.0` | `v01.00.01` | `39ec03f` | `8cb8a84f…` | no (calculado `fe7f393f…`) — histórico, el tag no se modifica |
+| `01.00.01` (sin bump) | `3.6.0` | `v3.6.0` | `d23241c` | `b9532948…` | no (calculado `9aabf3a9…`) — corregido en PR-0 |
+| `01.01.00` | `3.6.0` | — (pendiente del literal) | este release | `9aabf3a9…` | sí — `verify_freeze` lo comprueba desde PR-0 |
+
+El release `01.00.00` quedó cortado el 2026-10-29 junto al **Banco Universal de
+Pruebas (BUP)** (https://github.com/Kuvexta/BUP). **Rollback de `01.01.00`:**
+volver a `d23241c` / tag `v3.6.0` (misma metodología `3.6.0`); el detalle está
+en `CHANGELOG.md`.
 
 ## Requisitos
 
