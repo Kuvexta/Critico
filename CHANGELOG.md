@@ -18,6 +18,14 @@ queda PENDIENTE del literal de Dirección y no se aplica en este release.
 - **Golden set de contrato de la skill:** `09_golden_set/skill_cases/sc-001..004` (sintéticos) + `evals/skill_contract.py` + `python -m evals.cli --skill-version old|new` con `baseline/skill_contract.json` y ratchet: la skill v3.6.0 pasa 1/4 y la nueva 4/4. Determinista: no ejecuta ni simula un modelo.
 - **Release:** `VERSION` 01.00.01 → 01.01.00 (producto) separado de `critic_version` (metodología, sin cambio). README con mapa VERSION · critic_version · tag · commit · config_hash; registra que los `config_hash` declarados en `v01.00.00`, `v01.00.01` y `v3.6.0` no coincidían con la convención (los tags no se modifican).
 - Tests nuevos: `test_skill_integraciones`, `test_skill_contract` (192 → 203; `docs/SUITE_BASELINE` 192 → 203).
+- **Cambios declarados por Dirección tras el GATE B de PR-A (06/11):**
+  - `.gitattributes`: `* text=auto eol=lf`; los 15 archivos versionados con CRLF a propósito (`licencias/DECISION_PENDIENTE.json` y sus 13 copias, `docs/en/licensing/THIRD_PARTY_NOTICES.md`) quedan `-text`. En `main` con `core.autocrlf=true`, `verificar_release` y `verify_freeze` fallaban; `tests/test_crlf_checkout.py` exige el mismo resultado con y sin CRLF.
+  - O1: una línea de evidencia por campo en la ficha de independencia; sin evidencia el campo cuenta como verdadero (AUTOCONTROL). Golden set de contrato: SC-005; la versión vieja pasa 1/5 y la nueva 5/5.
+  - O2: `same_context` = contexto de elaboración (recibir el encargo no cuenta).
+  - `AGENTS.md`, regla 1: el «solo lectura» aplica a la revisión con la skill; una revisión cruzada con encargo de verificación puede ejecutar pruebas y escribir en `_tmp_pruebas/` sin tocar el repo.
+  - O3: `escaneo_publico.py` sin nombres propios en el código (solo `ESCANEO_NOMBRES`; aviso si falta).
+  - `.coverage` fuera del índice y en `.gitignore` (contenía rutas locales).
+  - Tests 203 → 209; `docs/SUITE_BASELINE` 203 → 209.
 
 ### PR-A — skill: modo, ligadura y método v3.6 (sin freeze)
 
