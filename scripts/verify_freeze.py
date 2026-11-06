@@ -28,6 +28,12 @@ def main() -> int:
     c = yaml.safe_load((BASE / '04_critic.config.yaml').read_text(encoding='utf-8'))
     chk(r.get('frozen') is True, translate('verify_freeze.c05d61575cd8'))
     chk(c.get('frozen') is True, translate('verify_freeze.9b4922804531'))
+    # PROP-CONFIGHASH-001 — config_hash según la convención de CONTRIBUTING:
+    # SHA-256 del fichero excluyendo la línea del propio campo `config_hash:`.
+    raw_cfg = (BASE / '04_critic.config.yaml').read_text(encoding='utf-8')
+    cfg_sin_hash = ''.join(l for l in raw_cfg.splitlines(keepends=True) if not l.lstrip().startswith('config_hash:'))
+    cfg_hash = hashlib.sha256(cfg_sin_hash.encode('utf-8')).hexdigest()
+    chk(c.get('config_hash') == cfg_hash, f"config_hash declarado {c.get('config_hash')} ≠ calculado {cfg_hash} (convención CONTRIBUTING)")
     chk(r.get('rubric_version') == c.get('critic_version'), 'rubric_version ≠ critic_version')
     chk(c.get('critic_version') == '3.6.0', translate('verify_freeze.0deb5b294d56'))
     chk(c.get('schema_enforcement', {}).get('version') == '3.4.0', translate('verify_freeze.ac25af333c3c'))

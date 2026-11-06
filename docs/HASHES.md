@@ -9,8 +9,8 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 | 02_FROZEN_v3.4.md | vigente | 613070c6b6d3aa5b5286f913c9bb8f222defddb44e80ab3b97aa25729643b429 |
 | 13_Diseno_Completo_Universal_Critico.md | vigente | a2f28f57f59dd9278e64721f58c2fa5037e288e665df4effdc4fd885534dbe8c |
 | 03_rubric.yaml | vigente | 54c7e629bfe03511cea9b7ffd8661709c51cbd2d093b1544b61f27f32cc6eb2f |
-| 04_critic.config.yaml | vigente | 6f08786596b28b47a6087548863fffc69ced5fb941650bbea242dcde7a9595cf |
-| CHANGELOG.md | vigente | 07f09f9939438badaba1718c97e7d152a9a459bc7dabc5405c49ed1bcf089b3d |
+| 04_critic.config.yaml | vigente | 0d9871215bf057c96876d10952edb9250e552bc4b9151fd6dee2f861262710a5 |
+| CHANGELOG.md | vigente | 7cfd863ddba7b596f35124c1aaee629c54d041cfe70a3e375f007a4c95b7d21d |
 | LECCIONES_APRENDIDAS.md | vigente | dbd795d0b48d599dd211f329d7263f4afdb33f8ad4696500855ce4fef9e4cb32 |
 | INCIDENTES.md | vigente | 131db8c09483f1082a4d172a299e651d9b00f808a1cc591aafb2b48c9ea7aff3 |
 | README_PRODUCTO.md | vigente | 06a4bec75bf11f2c821d1b7532478c617f99f7d4c49ab4b46bc3d0ef5225f1de |
@@ -28,6 +28,6 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 | docs/guia_subperfil_ops_cosecha.md | vigente | f2b6b30a2928764d1760a6c1a8b02156eee11c8964701e641ed634bd02574f69 |
 | docs/propuestas/PROP-COSECHA-001.md | vigente | a395a4ff5882fc097ea59d4413c6e99a4dd08107faf930882280c796bbc2878d |
 | tests/test_subprofile_cosecha.py | vigente | a8396b634671e7b9aebd14c90c6a526f897e85c7e6e6e6491a097ff0edc34341 |
-| scripts/verify_freeze.py | vigente | fb29a8a0a93de07e53b80d9569e32f1fd9d4b9bd5c7bec2dffeacbcfb5cb518c |
+| scripts/verify_freeze.py | vigente | 6b296eee082f6e0455b44774303a2c6da3a44bdb1663b354f76915e003b3588b |
 | locales/es.json | vigente | ea8917ef8a24cb758b9df2addba68f86f5e5f13930f082853db88910910ca224 |
 | locales/en.json | vigente | ed418bdf3b73a75c346d35544f01cace6a7644712c1c17bfbdf938febf153f8e |

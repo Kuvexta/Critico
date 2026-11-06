@@ -2,7 +2,7 @@
 # critic.config.yaml — Crítico v3.6.0 (M1 ángulo 15 · M2 Pre-Report Gate · M3 scorecard)
 # ============================================================
 critic_version: 3.6.0
-config_hash: "b9532948575b71f5d981ec170142abb86951992ecc34c979b1ecc7dfe6e15a77"
+config_hash: "9aabf3a9b34f3b757478d1c73ba312229241dc02760ce77c5530c0a62d9a7406"
 frozen: true
 # --- Guardrails de ejecución ---
 execution:
