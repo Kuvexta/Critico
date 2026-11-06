@@ -1,0 +1,94 @@
+{
+  "autor_proyecto": "KUVEXTA GROUP",
+  "fecha": "2026-10-27",
+  "seleccion_futura": null,
+  "activada": false,
+  "declaracion_preexistente": {
+    "codigo": "MIT (declaracion abreviada)",
+    "documentacion": "CC-BY-SA-4.0 (declaracion abreviada)",
+    "pendiente": "revisar texto completo, clausulas propias, titularidad y aportes antes de distribuir",
+    "archivo": "LICENSE",
+    "sha256_texto_anterior": "00b9db66b930453f6c2f49b74dd08d457eff865b2bf04c8042fa5f42aef60a08"
+  },
+  "fuentes": [
+    {
+      "spdx": "MIT",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/MIT.txt",
+      "fecha_consulta": "2026-10-27",
+      "archivo": "licencias/referencia/MIT.txt",
+      "sha256": "b05785f9f18e6716bab63424b11454513b9943a222595b70411009202fc592b5",
+      "bytes": 1078,
+      "alcance": "texto de referencia; no activado por inclusion"
+    },
+    {
+      "spdx": "Apache-2.0",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/Apache-2.0.txt",
+      "fecha_consulta": "2026-10-27",
+      "archivo": "licencias/referencia/Apache-2.0.txt",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "bytes": 10280,
+      "alcance": "texto de referencia; no activado por inclusion"
+    },
+    {
+      "spdx": "MPL-2.0",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/MPL-2.0.txt",
+      "fecha_consulta": "2026-10-27",
+      "archivo": "licencias/referencia/MPL-2.0.txt",
+      "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
+      "bytes": 16727,
+      "alcance": "texto de referencia; no activado por inclusion"
+    },
+    {
+      "spdx": "GPL-3.0-only",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/GPL-3.0-only.txt",
+      "fecha_consulta": "2026-10-27",
+      "archivo": "licencias/referencia/GPL-3.0-only.txt",
+      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0",
+      "bytes": 34674,
+      "alcance": "texto de referencia; no activado por inclusion"
+    },
+    {
+      "spdx": "AGPL-3.0-only",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/AGPL-3.0-only.txt",
+      "fecha_consulta": "2026-10-27",
+      "archivo": "licencias/referencia/AGPL-3.0-only.txt",
+      "sha256": "d8a6cc31abc16b6748c7a21f21611f5a1ec33f67d22ca23d7da1c19b95496bee",
+      "bytes": 34020,
+      "alcance": "texto de referencia; no activado por inclusion"
+    },
+    {
+      "spdx": "CC-BY-4.0",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/CC-BY-4.0.txt",
+      "fecha_consulta": "2026-10-27",
+      "archivo": "licencias/referencia/CC-BY-4.0.txt",
+      "sha256": "d557539df68e771cc1eedcc91d13f70fca930e508d11eedcafa4b15db49e3744",
+      "bytes": 17023,
+      "alcance": "texto de referencia; no activado por inclusion"
+    },
+    {
+      "spdx": "CC-BY-SA-4.0",
+      "url": "https://raw.githubusercontent.com/spdx/license-list-data/main/text/CC-BY-SA-4.0.txt",
+      "fecha_consulta": "2026-10-27",
+      "archivo": "licencias/referencia/CC-BY-SA-4.0.txt",
+      "sha256": "cde7883b9050a1104f4ac19a1572aafd6e5d7323b68351aaf51fbf4beba54966",
+      "bytes": 18375,
+      "alcance": "texto de referencia; no activado por inclusion"
+    }
+  ],
+  "ambitos_para_decision": [
+    "codigo ejecutable",
+    "documentacion",
+    "prompts y referencias de skill",
+    "esquemas y rubrica",
+    "configuracion y metadata YAML",
+    "dependencias y materiales de terceros",
+    "marcas (separadas de derechos de codigo)"
+  ],
+  "requisitos_previos_eleccion": [
+    "verificar titularidad y aportes",
+    "revisar permisos previamente concedidos",
+    "evaluar compatibilidad de terceros",
+    "elegir version exacta y alcance por componente",
+    "aprobar texto aplicable y nuevo paquete"
+  ]
+}

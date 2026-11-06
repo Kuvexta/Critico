@@ -1,7 +1,12 @@
 """Package the approved Critic CLI/IDE skills; no installation or host execution.
 
-Use --build in the authorized development folder. --verify checks the finished
-delivery without writes. New files only; all original files are protected.
+Repository modes (CRITICO-SKILL-02, in-repo manifest):
+  --check  regenerate the 13 variants in memory and compare them byte for byte
+           with plataformas/ and with the in-repo manifest; never writes.
+  --write  regenerate plataformas/ and the in-repo manifest from skills/critico/.
+Legacy workspace modes (original delivery, need the local entrega/ tree):
+  --build in the authorized development folder; --verify checks the finished
+  delivery without writes. New files only; all original files are protected.
 """
 from __future__ import annotations
 
@@ -28,6 +33,10 @@ BASE = Path(__file__).resolve().parents[1]
 OUT = BASE / "entrega/skills-cli-ide-v1"
 SOURCE = BASE / "skills/critico"
 PROPOSAL_HASH = "01a38240c71a825318a2fff0761e0def132528976f973677f1896cfd4b23a6e2"
+# In-repo manifest (CRITICO-SKILL-02): replaces the external proposal file as the
+# repository-mode guard. PROPOSAL_HASH above stays as the historical reference.
+REPO_OUT = BASE / "plataformas"
+REPO_MANIFEST = BASE / "docs/propuestas/SKILLS-CLI-IDE-01.manifest.json"
 BASE_HASH = "b99ab8f0d6a662d1f8143024473de9a18d2835157bea5089c4da40c175575712"
 BASELINE_HASH = "b328552c02c38b8ad5825061a1f00a6f0a683ea0ed4cce7a7ecacbef7696a0da"
 DATE = "2026-10-27"
@@ -303,6 +312,11 @@ def make_skill(language: str, control: str) -> bytes:
     header = yaml.safe_dump(metadata, allow_unicode=True, sort_keys=False, width=120).strip()
     author = "Author: KUVEXTA GROUP." if language == "en" else "Autor: KUVEXTA GROUP."
     request = EXPLICIT_EN if language == "en" else EXPLICIT_ES
+    # The source skill already carries the author and explicit-request lines; do
+    # not duplicate them (keeps the output byte-identical to the approved variants).
+    prefix = "\n" + author + "\n\n" + request + "\n"
+    if body.startswith(prefix):
+        body = body[len(prefix):]
     return ("---\n" + header + "\n---\n\n" + author + "\n\n" + request + "\n" + body).encode("utf-8")
 
 
@@ -833,12 +847,100 @@ def verify():
     return 0
 
 
+def repo_sources():
+    names = ["skills/critico/" + n for n in ("SKILL.md", "SKILL.es.md", *REFERENCES, "agents/openai.yaml")] + list(LEGAL)
+    names.append("scripts/package_cli_ide_skills.py")
+    return {name: digest(BASE / name) for name in sorted(names)}
+
+
+def repo_manifest(files) -> bytes:
+    outputs = {"plataformas/" + name: sha(data) for name, data in sorted(files.items())}
+    aggregate = sha("".join(f"{h}  {n}\n" for n, h in outputs.items()).encode("utf-8"))
+    return json_bytes({
+        "id": "SKILLS-CLI-IDE-01",
+        "generator": "scripts/package_cli_ide_skills.py --write",
+        "legacy_proposal_sha256": PROPOSAL_HASH,
+        "legacy_proposal_note": "Historical reference to propuestas/SKILLS-CLI-IDE-01.json (outside the repo); not verified in repository mode.",
+        "variants": len(variants()),
+        "sources": repo_sources(),
+        "outputs": outputs,
+        "aggregate_sha256": aggregate,
+        "aggregate_rule": "sha256 of the sorted lines '<sha256>  <path>\\n' of outputs",
+    })
+
+
+def repo_disk():
+    return {p.relative_to(REPO_OUT).as_posix(): p.read_bytes() for p in sorted(REPO_OUT.rglob("*")) if p.is_file()
+            and "__pycache__" not in p.parts}
+
+
+def repo_problems(files, manifest_data):
+    problems = []
+    if len(variants()) != 13:
+        problems.append(f"expected 13 variants, got {len(variants())}")
+    disk = repo_disk()
+    for name in sorted(set(files) - set(disk)):
+        problems.append("missing: plataformas/" + name)
+    for name in sorted(set(disk) - set(files)):
+        problems.append("unexpected: plataformas/" + name)
+    for name in sorted(set(files) & set(disk)):
+        if files[name] != disk[name]:
+            problems.append("differs: plataformas/" + name)
+    if not REPO_MANIFEST.exists():
+        problems.append("missing manifest: " + REPO_MANIFEST.relative_to(BASE).as_posix())
+    elif REPO_MANIFEST.read_bytes() != manifest_data:
+        problems.append("stale manifest: " + REPO_MANIFEST.relative_to(BASE).as_posix())
+    return problems
+
+
+def repo_check() -> int:
+    files = candidate_files()
+    problems = repo_problems(files, repo_manifest(files))
+    if problems:
+        for problem in problems:
+            print("CHECK_FAIL", problem)
+        return 1
+    print("CHECK_OK: 13 variants, %d files byte-identical; manifest %s" % (len(files), digest(REPO_MANIFEST)))
+    return 0
+
+
+def repo_write() -> int:
+    files = candidate_files()
+    extra = sorted(set(repo_disk()) - set(files))
+    if extra:
+        # Conservative: never delete; a human decides about unexpected files.
+        for name in extra:
+            print("WRITE_REFUSED unexpected file: plataformas/" + name)
+        return 1
+    written = 0
+    for name, data in sorted(files.items()):
+        if not safe_member(name):
+            raise GuardError("Unsafe output name")
+        path = REPO_OUT / name
+        if not path.exists() or path.read_bytes() != data:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(data)
+            written += 1
+    manifest_data = repo_manifest(files)
+    if not REPO_MANIFEST.exists() or REPO_MANIFEST.read_bytes() != manifest_data:
+        REPO_MANIFEST.write_bytes(manifest_data)
+        written += 1
+    print("WRITE_OK: %d files written" % written)
+    return repo_check()
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--build",action="store_true")
     group.add_argument("--verify",action="store_true")
+    group.add_argument("--check",action="store_true")
+    group.add_argument("--write",action="store_true")
     args = parser.parse_args()
+    if args.check:
+        return repo_check()
+    if args.write:
+        return repo_write()
     if args.build:
         build()
     else:
