@@ -847,9 +847,34 @@ def verify():
     return 0
 
 
+# Single source for the Pre-Report Gate: step 4-bis of the system prompts. The
+# skill references carry a generated copy between markers (never hand-edited).
+GATE_SYNC = (("references/metodo.md", "prompts/critico_system.md"),
+             ("references/en/method.md", "prompts/critic_system.en.md"))
+GATE_BEGIN = "<!-- PRE-REPORT-GATE:BEGIN"
+GATE_END = "<!-- PRE-REPORT-GATE:END -->"
+
+
+def gate_step(prompt: str) -> str:
+    lines = [l for l in (BASE / prompt).read_text(encoding="utf-8").splitlines() if l.startswith("4-bis.")]
+    if len(lines) != 1:
+        raise GuardError("Expected exactly one 4-bis step in " + prompt)
+    return lines[0]
+
+
+def synced_reference(reference: str, prompt: str) -> bytes:
+    text = (SOURCE / reference).read_text(encoding="utf-8")
+    start = text.find(GATE_BEGIN)
+    end = text.find(GATE_END)
+    if start < 0 or end < start or text.count(GATE_BEGIN) != 1 or text.count(GATE_END) != 1:
+        raise GuardError("Pre-Report Gate markers missing or duplicated in " + reference)
+    head_end = text.index("\n", start) + 1
+    return (text[:head_end] + gate_step(prompt) + "\n" + text[end:]).encode("utf-8")
+
+
 def repo_sources():
     names = ["skills/critico/" + n for n in ("SKILL.md", "SKILL.es.md", *REFERENCES, "agents/openai.yaml")] + list(LEGAL)
-    names.append("scripts/package_cli_ide_skills.py")
+    names += ["scripts/package_cli_ide_skills.py"] + [prompt for _, prompt in GATE_SYNC]
     return {name: digest(BASE / name) for name in sorted(names)}
 
 
@@ -876,6 +901,9 @@ def repo_disk():
 
 def repo_problems(files, manifest_data):
     problems = []
+    for reference, prompt in GATE_SYNC:
+        if (SOURCE / reference).read_bytes() != synced_reference(reference, prompt):
+            problems.append("stale Pre-Report Gate block: skills/critico/%s (source %s)" % (reference, prompt))
     if len(variants()) != 13:
         problems.append(f"expected 13 variants, got {len(variants())}")
     disk = repo_disk()
@@ -905,6 +933,11 @@ def repo_check() -> int:
 
 
 def repo_write() -> int:
+    for reference, prompt in GATE_SYNC:
+        data = synced_reference(reference, prompt)
+        if (SOURCE / reference).read_bytes() != data:
+            (SOURCE / reference).write_bytes(data)
+            print("SYNCED", "skills/critico/" + reference, "<-", prompt)
     files = candidate_files()
     extra = sorted(set(repo_disk()) - set(files))
     if extra:
