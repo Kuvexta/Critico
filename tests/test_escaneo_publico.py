@@ -20,7 +20,9 @@ def test_02_golden_set_incluido_en_el_escaneo():
 
 def test_03_detecta_sinteticos(tmp_path, monkeypatch):
     f = tmp_path / "x.md"
-    f.write_text("contacto: persona@ejemplo.invalid · NIT 900.123.456-7 · ref BZ-20990101-001\n", encoding="utf-8")
+    # Construidos por concatenación para que este archivo no contenga el literal detectable.
+    sintetico = "contacto: persona" + "@" + "ejemplo.invalid · NIT 900.123" + ".456-7 · ref BZ-" + "20990101-001\n"
+    f.write_text(sintetico, encoding="utf-8")
     monkeypatch.setattr(esc, "BASE", tmp_path)
     reglas = {r for (_, r, _) in esc.new_findings(esc.scan(["x.md"]), esc.Counter())}
     assert {"email", "nit_cedula_co", "id_interno_bz"} <= reglas
@@ -35,3 +37,10 @@ def test_04_nombres_extra_por_entorno(tmp_path, monkeypatch):
 
 def test_05_versiones_no_son_nit():
     assert not esc.rules()["nit_cedula_co"].search("v3.6.0 · 01.00.01 · 2026-11-06")
+
+
+def test_06_no_escaneables_se_informan(tmp_path, monkeypatch):
+    (tmp_path / "b.bin").write_bytes(b"\xff\xfe\x00binario")
+    monkeypatch.setattr(esc, "BASE", tmp_path)
+    esc.scan(["b.bin"])
+    assert esc.SKIPPED == ["b.bin"]

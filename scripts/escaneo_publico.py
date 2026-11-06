@@ -51,8 +51,12 @@ def rules() -> dict[str, re.Pattern]:
     return compiled
 
 
+SKIPPED: list[str] = []  # archivos no legibles como texto UTF-8: se informan, nunca se omiten en silencio
+
+
 def scan(files: list[str] | None = None) -> Counter:
     found: Counter = Counter()
+    SKIPPED.clear()
     for name in files if files is not None else tracked_files():
         path = BASE / name
         if not path.is_file():
@@ -60,6 +64,7 @@ def scan(files: list[str] | None = None) -> Counter:
         try:
             text = path.read_text(encoding="utf-8")
         except (UnicodeDecodeError, OSError):
+            SKIPPED.append(name)
             continue
         for rule, pattern in rules().items():
             for match in pattern.findall(text):
@@ -100,7 +105,9 @@ def main() -> int:
         for path, rule, extra in nuevos:
             print(f"ESCANEO_FALLO: {path}: regla {rule}: {extra} coincidencia(s) nueva(s) (texto no mostrado)")
         return 1
-    print(f"ESCANEO_OK: {len(tracked_files())} archivos; 0 hallazgos nuevos (línea base: {sum(load_baseline().values())})")
+    for name in SKIPPED:
+        print(f"ESCANEO_AVISO: no escaneado (no es texto UTF-8): {name}")
+    print(f"ESCANEO_OK: {len(tracked_files())} archivos ({len(SKIPPED)} no escaneables, listados arriba); 0 hallazgos nuevos (línea base: {sum(load_baseline().values())})")
     return 0
 
 

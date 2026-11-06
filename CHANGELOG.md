@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## Sin publicar — PR-A CRITICO-SKILL-02 — skill: modo, ligadura y método v3.6 (sin freeze)
+
+- **Documentación:** `prompts/critico_system.md` y `critic_system.en.md` nombran los 15 ángulos de `critico_cli.ANGLES` (antes anunciaban 15 y nombraban 11; el EN decía «law/licensing» frente a «Legal/licensing» de `locales/en.json`). `09_golden_set/README.md` refleja que el harness offline sí corre.
+- **Skill** (`skills/critico/`): modo AUTOCONTROL/INDEPENDIENTE con ficha de independencia (solo INDEPENDIENTE emite GATE B); `artifact_binding` en el encabezado de salida (el veredicto no se extiende a otro binding: delta + adenda); 15 ángulos; Pre-Report Gate como bloque generado desde el paso 4-bis del prompt (fuente única); matriz declared/neighbor/boundary/failure; precedencia tests/mutaciones/escáneres/hashes > Crítico; `control_cost` en el ángulo de costos (P31); scorecard de 5 ejes opcional (sin tocar esquemas); `kuvexta.md`: P31, dos niveles, separación, expediente formal aparte y protocolo de AUTOCONTROL.
+- **Herramienta:** `scripts/package_cli_ide_skills.py` gana `--check` (idempotente, byte a byte) y `--write` con manifest en el repo (`docs/propuestas/SKILLS-CLI-IDE-01.manifest.json`; el hash de la propuesta anterior queda como referencia); `make_skill` deja de duplicar la cabecera; `licencias/DECISION_PENDIENTE.json` restaurado en la raíz como entrada declarada del generador. Las 13 variantes se regeneran con él (sin edición manual).
+- **NUEVO** `MANIFEST.json` + `scripts/build_manifest.py` (bundle_sha256 reproducible del artefacto). **NUEVO** `scripts/escaneo_publico.py` + `docs/escaneo_publico_baseline.json`; CI con gitleaks, generador `--check` y manifest `--check`.
+- `AGENTS.md`: bloque puntero al canon (2026.11.05.1) en lugar del kit copiado.
+- Tests nuevos: `test_skill_sync`, `test_skill_variants`, `test_manifest`, `test_agents_pointer`, `test_escaneo_publico` (166 → 191). `docs/SUITE_BASELINE` 166 → 191 (el ratchet solo sube).
+- **No toca** `03_rubric.yaml`, `04_critic.config.yaml`, `05_schema/`, `evals/validators.py`, `critic_version` ni `VERSION`. Rollback: revertir los commits del PR (vuelve a PR-0 / `d23241c`).
+
 ## Sin publicar — PR-0 CRITICO-SKILL-02 — corrección de `config_hash` (CAMBIO PROP-CONFIGHASH-001)
 
 - `04_critic.config.yaml`: **solo** `config_hash` `b9532948…` → `9aabf3a9b34f3b75…` (convención CONTRIBUTING: SHA-256 excluyendo la línea del propio campo). El valor de v3.6.0 no correspondía al fichero; `critic_version` sigue en 3.6.0 y ningún otro campo cambia.
