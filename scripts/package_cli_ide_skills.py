@@ -201,6 +201,7 @@ PLATFORMS = [
 REFERENCES = (
     "references/metodo.md", "references/kuvexta.md", "references/formato-salida.md",
     "references/en/method.md", "references/en/kuvexta.md", "references/en/output-format.md",
+    "references/integraciones.md", "references/en/integrations.md",
 )
 LEGAL = ("LICENSE", "AUTORIA.md", "licencias/DECISION_PENDIENTE.json")
 ORIGINAL_REFERENCE_LINKS = ("licencias/TERCEROS.md", "licencias/README.md", "docs/en/AUTHORSHIP.md")
