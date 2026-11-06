@@ -32,7 +32,13 @@ def test_04_nombres_extra_por_entorno(tmp_path, monkeypatch):
     (tmp_path / "y.md").write_text("Lo firmó Zacarías.\n", encoding="utf-8")
     monkeypatch.setattr(esc, "BASE", tmp_path)
     monkeypatch.setenv("ESCANEO_NOMBRES", "Zacarías")
-    assert any(r == "nombre_real_extra" for (_, r, _) in esc.scan(["y.md"]))
+    assert any(r == "nombre_real" for (_, r, _) in esc.scan(["y.md"]))
+
+
+def test_07_sin_nombres_fijos_en_el_codigo(monkeypatch):
+    monkeypatch.delenv("ESCANEO_NOMBRES", raising=False)
+    assert "nombre_real" not in esc.rules()
+    assert "nombre_real" not in esc.RULES
 
 
 def test_05_versiones_no_son_nit():

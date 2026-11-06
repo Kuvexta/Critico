@@ -6,8 +6,10 @@ reales. Falla (rc 1) solo ante hallazgos NUEVOS frente a la línea base
 `docs/escaneo_publico_baseline.json`, que registra huellas (sha256 de
 ruta|regla|coincidencia) y conteos, nunca el texto encontrado.
 
-Nombres reales: además del patrón base, `ESCANEO_NOMBRES="Nombre1,Nombre2"`
-añade nombres a buscar sin escribirlos en el repositorio.
+Nombres reales: SOLO por entorno, `ESCANEO_NOMBRES="Nombre1,Nombre2"`; nunca se
+escriben en el código. Sin la variable, la regla `nombre_real` no se aplica y el
+gate lo avisa (ESCANEO_AVISO). Las huellas de la línea base son las mismas
+(regla `nombre_real`), así que se reutilizan al definir la variable.
 
 Uso:
   python3 -B scripts/escaneo_publico.py                      # gate
@@ -33,7 +35,6 @@ RULES = {
     "nit_cedula_co": r"(?<![\d.])\d{1,3}(?:\.\d{3}){2,3}(?:-\d)?(?![\d.])|(?<!\d)\d{9}-\d(?!\d)",
     "id_interno_bz": r"\bBZ-\d{8}-\d{3}\b",
     "id_interno_enc": r"\bENC-[A-Z0-9]{2,}-\d+\b",
-    "nombre_real": r"\bAndr[eé]s\b",
 }
 IGNORED = {"docs/escaneo_publico_baseline.json"}
 
@@ -47,7 +48,7 @@ def rules() -> dict[str, re.Pattern]:
     compiled = {k: re.compile(v) for k, v in RULES.items()}
     extra = [n.strip() for n in os.environ.get("ESCANEO_NOMBRES", "").split(",") if n.strip()]
     if extra:
-        compiled["nombre_real_extra"] = re.compile(r"\b(?:" + "|".join(map(re.escape, extra)) + r")\b", re.I)
+        compiled["nombre_real"] = re.compile(r"\b(?:" + "|".join(map(re.escape, extra)) + r")\b", re.I)
     return compiled
 
 
@@ -105,6 +106,8 @@ def main() -> int:
         for path, rule, extra in nuevos:
             print(f"ESCANEO_FALLO: {path}: regla {rule}: {extra} coincidencia(s) nueva(s) (texto no mostrado)")
         return 1
+    if not os.environ.get("ESCANEO_NOMBRES", "").strip():
+        print("ESCANEO_AVISO: ESCANEO_NOMBRES no definido; la regla nombre_real no se aplicó")
     for name in SKIPPED:
         print(f"ESCANEO_AVISO: no escaneado (no es texto UTF-8): {name}")
     print(f"ESCANEO_OK: {len(tracked_files())} archivos ({len(SKIPPED)} no escaneables, listados arriba); 0 hallazgos nuevos (línea base: {sum(load_baseline().values())})")
