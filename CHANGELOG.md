@@ -5,7 +5,7 @@
 Release de **producto**: skill v3.6 con modo/ligadura, variantes, manifest,
 escaneo público y golden set de contrato. **`critic_version` sigue en `3.6.0`**:
 la propuesta de CAMBIO a `3.7.0` (`docs/propuestas/PROP-SKILL02-CRITIC370-001.md`)
-queda PENDIENTE del literal de Dirección y no se aplica en este release.
+se resolvió con la opción A (Dirección, 06/11, comentario en #3): no se aplica.
 
 - **Rollback:** volver a `d23241c` (tag `v3.6.0`, metodología `3.6.0`). En
   orden inverso: revertir PR-B (punto 10–12), PR-A (skill, variantes, manifest,
@@ -28,8 +28,9 @@ queda PENDIENTE del literal de Dirección y no se aplica en este release.
   - Tests 203 → 209; `docs/SUITE_BASELINE` 203 → 209.
 - **Decisiones de Dirección en #3 (06/11):** D1 = A (`critic_version` sigue en 3.6.0) y `ESCANEO_NOMBRES` como secreto del repositorio.
   - CI: el paso «Escaneo público — correos, NIT, nombres e IDs internos» recibe `ESCANEO_NOMBRES: ${{ secrets.ESCANEO_NOMBRES }}`. Sin el secreto (p. ej. un PR desde un fork) o con el secreto vacío, el escáner emite `ESCANEO_AVISO` y no falla.
-  - `escaneo_publico.py` imprime solo ruta, línea y regla de cada hallazgo nuevo; la coincidencia (nombre, correo, NIT…) nunca sale en claro.
-  - Tests `test_08` (con secreto: rc 1, `x.md:3: regla nombre_real`, sin el texto en la salida; mutación que imprime la coincidencia detectada), `test_09` (sin secreto o vacío: aviso, rc 0) y `test_10` (el workflow pasa el secreto al paso). Tests 209 → 212; `docs/SUITE_BASELINE` 209 → 212.
+  - `escaneo_publico.py` nunca imprime la coincidencia en claro. Las reglas de correo, NIT e IDs dan ruta, línea y regla. **`nombre_real` da solo el número de coincidencias**, sin ruta ni línea, porque en un log público de Actions ruta y línea bastan para deducir el nombre (decisión de Dirección en #3 tras dos runs con exposición, cuyos logs borró Dirección). En local, `--detalle` con `ESCANEO_NOMBRES` en el entorno muestra ruta y línea; en CI (`CI`/`GITHUB_ACTIONS`) `--detalle` se rechaza (rc 2).
+  - El secreto contiene solo nombres completos de personas; un término de producto que daba falsos positivos se retiró de la lista.
+  - Tests: `test_08` (modo CI: `regla nombre_real: 1 coincidencia(s)`, sin ruta, línea ni término; mutación que imprime la ubicación detectada), `test_08b` (`--detalle` local: ruta y línea, sin término), `test_08c` (`--detalle` rechazado en CI o sin secreto), `test_09` (sin secreto o vacío: aviso, rc 0), `test_10` (el workflow pasa el secreto al paso). Tests 209 → 214; `docs/SUITE_BASELINE` 209 → 214.
 
 ### PR-A — skill: modo, ligadura y método v3.6 (sin freeze)
 

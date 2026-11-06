@@ -8,7 +8,9 @@ ruta|regla|coincidencia) y conteos, nunca el texto encontrado.
 
 Nombres reales: SOLO por entorno, `ESCANEO_NOMBRES="Nombre1,Nombre2"` (en CI, el
 secreto del repositorio `ESCANEO_NOMBRES`); nunca se escriben en el código ni se
-imprimen: la salida da solo ruta, línea y regla. Sin la variable, la regla `nombre_real` no se aplica y el
+imprimen. Las demás reglas dan ruta, línea y regla; `nombre_real` da solo el número de
+coincidencias (en local, `--detalle` con el secreto en el entorno muestra ruta y línea;
+en CI, `--detalle` se rechaza). Sin la variable, la regla `nombre_real` no se aplica y el
 gate lo avisa (ESCANEO_AVISO). Las huellas de la línea base son las mismas
 (regla `nombre_real`), así que se reutilizan al definir la variable.
 
@@ -108,7 +110,15 @@ def new_locations(found: Counter, baseline: Counter) -> list[tuple[str, int, str
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--write-baseline", action="store_true")
+    parser.add_argument("--detalle", action="store_true",
+                        help="solo en local y con ESCANEO_NOMBRES: muestra ruta y línea también para nombre_real")
     args = parser.parse_args()
+    if args.detalle and (os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS")):
+        print("ESCANEO_ERROR: --detalle no se permite en CI (el log es público)")
+        return 2
+    if args.detalle and not os.environ.get("ESCANEO_NOMBRES", "").strip():
+        print("ESCANEO_ERROR: --detalle requiere ESCANEO_NOMBRES en el entorno")
+        return 2
     found = scan()
     if args.write_baseline:
         BASELINE.write_bytes(baseline_bytes(found))
@@ -117,8 +127,17 @@ def main() -> int:
     nuevos = new_findings(found, load_baseline())
     if nuevos:
         # Solo ruta, línea y regla: la coincidencia (correo, NIT, nombre…) nunca se imprime en claro.
+        # Solo ruta, línea y regla; la coincidencia nunca se imprime. Para nombre_real, ni
+        # siquiera ruta ni línea (en un log público delatarían el nombre): solo el número,
+        # salvo --detalle en local.
         for path, line, rule in new_locations(found, load_baseline()):
+            if rule == "nombre_real" and not args.detalle:
+                continue
             print(f"ESCANEO_FALLO: {path}:{line}: regla {rule} (coincidencia no mostrada)")
+        n_nombres = sum(e for _, r, e in nuevos if r == "nombre_real")
+        if n_nombres and not args.detalle:
+            print(f"ESCANEO_FALLO: regla nombre_real: {n_nombres} coincidencia(s) nueva(s) (ruta y línea ocultas; "
+                  "en local: ESCANEO_NOMBRES=… python3 -B scripts/escaneo_publico.py --detalle)")
         print(f"ESCANEO_FALLO: {sum(e for _, _, e in nuevos)} coincidencia(s) nueva(s); redacta o excluye y deja constancia en el PR")
         return 1
     if not os.environ.get("ESCANEO_NOMBRES", "").strip():

@@ -71,25 +71,44 @@ def _repo_temporal(tmp_path, contenido: str) -> Path:
     return repo
 
 
-def _correr(repo: Path, nombres: str | None):
+def _correr(repo: Path, nombres: str | None, *args: str, ci: bool = False):
     import os
     import subprocess as sp
-    env = {k: v for k, v in os.environ.items() if k != "ESCANEO_NOMBRES"}
+    env = {k: v for k, v in os.environ.items() if k not in ("ESCANEO_NOMBRES", "CI", "GITHUB_ACTIONS")}
     env["PYTHONDONTWRITEBYTECODE"] = "1"
+    if ci:
+        env["CI"] = env["GITHUB_ACTIONS"] = "true"
     if nombres is not None:
         env["ESCANEO_NOMBRES"] = nombres
-    r = sp.run([sys.executable, "-B", "scripts/escaneo_publico.py"], cwd=repo, capture_output=True, text=True, env=env)
+    r = sp.run([sys.executable, "-B", "scripts/escaneo_publico.py", *args], cwd=repo, capture_output=True, text=True, env=env)
     return r.returncode, r.stdout + r.stderr
 
 
-def test_08_con_secreto_falla_y_nunca_imprime_el_texto(tmp_path):
+def test_08_modo_ci_nombre_real_solo_cuenta_sin_ruta_linea_ni_termino(tmp_path):
     repo = _repo_temporal(tmp_path, f"uno\ndos\nfirma: {NOMBRE_SINTETICO}\ncuatro\ncontacto {CORREO_SINTETICO}\n")
-    rc, salida = _correr(repo, NOMBRE_SINTETICO)
+    rc, salida = _correr(repo, NOMBRE_SINTETICO, ci=True)
     assert rc == 1
-    assert "x.md:3: regla nombre_real" in salida
-    assert "x.md:5: regla email" in salida
+    assert "regla nombre_real: 1 coincidencia(s) nueva(s)" in salida
+    assert "x.md:3" not in salida and "x.md" not in [l for l in salida.splitlines() if "nombre_real" in l][0]
+    assert not any("nombre_real" in l and ":3" in l for l in salida.splitlines())
+    assert "x.md:5: regla email" in salida            # las demás reglas siguen con ruta y línea
     for secreto in (NOMBRE_SINTETICO, "Zacarías", "Quintanilla", CORREO_SINTETICO, "ejemplo.invalid"):
         assert secreto not in salida, secreto
+
+
+def test_08b_detalle_local_muestra_ruta_y_linea_pero_no_el_termino(tmp_path):
+    repo = _repo_temporal(tmp_path, f"uno\ndos\nfirma: {NOMBRE_SINTETICO}\n")
+    rc, salida = _correr(repo, NOMBRE_SINTETICO, "--detalle")
+    assert rc == 1 and "x.md:3: regla nombre_real" in salida
+    assert NOMBRE_SINTETICO not in salida and "Zacarías" not in salida
+
+
+def test_08c_detalle_rechazado_en_ci_o_sin_secreto(tmp_path):
+    repo = _repo_temporal(tmp_path, f"firma: {NOMBRE_SINTETICO}\n")
+    rc, salida = _correr(repo, NOMBRE_SINTETICO, "--detalle", ci=True)
+    assert rc == 2 and "no se permite en CI" in salida and "x.md" not in salida
+    rc, salida = _correr(repo, None, "--detalle")
+    assert rc == 2 and "requiere ESCANEO_NOMBRES" in salida
 
 
 def test_09_sin_secreto_o_vacio_avisa_y_no_falla(tmp_path):

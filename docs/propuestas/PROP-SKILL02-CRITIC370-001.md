@@ -1,6 +1,6 @@
 # PROP-SKILL02-CRITIC370-001 — ¿`critic_version` 3.6.0 → 3.7.0? (06-nov-2026)
 
-**Encargo:** CRITICO-SKILL-02, punto 12. **Estado: PENDIENTE del literal de Dirección. No aplicada:**
+**Encargo:** CRITICO-SKILL-02, punto 12. **Estado: DECIDIDA — opción A (Dirección, 06/11/2026, comentario en Kuvexta/Critico#3: «D1 = A: critic_version sigue en 3.6.0; solo VERSION pasa a 01.01.00»). No aplicada:**
 `04_critic.config.yaml` sigue en `critic_version: 3.6.0` y nada en PR-0/PR-A/PR-B lo cambia.
 **Clasificación si se aprueba:** producto congelado, CAMBIO con freeze.
 
