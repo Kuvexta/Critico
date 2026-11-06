@@ -1,0 +1,19 @@
+case_id: SC-002
+tag: ok_ligado_a_head_anterior
+description: "Veredicto PASA independiente, pero emitido sobre un head anterior al actual (sintético)"
+input:
+  artifact_current: &actual {head: "2222222222222222222222222222222222222222", bundle_sha256: "bbbb222222222222222222222222222222222222222222222222222222222222"}
+  review:
+    mode: INDEPENDIENTE
+    independence: {same_session: false, same_model_family: false, same_context: false, same_memory: false, same_author: false}
+    claims_gate_b: true
+    status: PASA
+    artifact_binding: {head: "1111111111111111111111111111111111111111", bundle_sha256: "aaaa111111111111111111111111111111111111111111111111111111111111"}
+    touches_integration: false
+expected:
+  mode: INDEPENDIENTE
+  status: NO_PASA
+  blockers: 1
+  codes: [VEREDICTO_NO_LIGADO]
+  artifact_binding: *actual
+metadata: {synthetic: true, created: "2026-11-06", source: "CRITICO-SKILL-02 punto 11 (b)"}
