@@ -20,10 +20,10 @@ fuente canónica. Antes de ejecutar un encargo, léela allí.
 
 ```yaml
 canon_path: 30_Transversales/T1_Gobernanza/Gobernanza_Oficial   # relativo al workspace; espejo privado declarado en su VERSION (MIRROR)
-canon_version: 2026.11.05.1                                     # VERSION=… del canon
+canon_version: 2026.11.06                                       # VERSION=… del canon
 canon_sha256:
-  VERSION: 6ddcb0a8072478b572fdf9db7992c39ed2bb007f88c0660fb732a70ff528b412
-  SHA256SUMS: 8efb01a4727de8010e2e7e99ceed6c36a392d1a68ea76bd54ac884f9448afb65
+  VERSION: 1c3e22bac96552ccf81a70979fb180568cdad6997ef1c87b6a09f064a773b06e
+  SHA256SUMS: 58aad232a789476fbbfe3c05628dcd1c31e332ab02612c6056312551fbca0345
 precedence: canon > encargo > AGENTS.md > resto del repositorio   # ante conflicto, manda el de la izquierda; si choca, detente y avisa
 stale_if_mismatch: true   # si VERSION o SHA256SUMS del canon no coinciden con estos hashes, este puntero está DESACTUALIZADO:
                           # no apliques de memoria lo que creas que dice el canon; léelo y avisa para actualizar el puntero

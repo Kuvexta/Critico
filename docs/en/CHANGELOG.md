@@ -8,7 +8,7 @@
 
 - Product release: skill v3.6 with mode/binding (AUTOCONTROL vs INDEPENDIENTE, independence card, `artifact_binding`), undeclared-case matrix, gate precedence, `control_cost`, optional scorecard, integrations reference (C1–C7); 13 variants regenerated with the existing generator (`--check` byte for byte); reproducible `MANIFEST.json`; public scan gate (gitleaks + baseline scanner); skill-contract golden set (`python -m evals.cli --skill-version old|new`).
 - `config_hash` of v3.6.0 corrected to the CONTRIBUTING convention (`9aabf3a9…`) and now checked by `verify_freeze`.
-- `critic_version` stays `3.6.0`; a 3.7.0 change proposal is pending. Rollback: `d23241c` / `v3.6.0`. See the [Spanish source](../../CHANGELOG.md) for detail.
+- D1 = A decided by Dirección: `critic_version` stays `3.6.0`; only `VERSION` moves to `01.01.00`; PROP-SKILL02-CRITIC370-001 closed as option A. Rollback: `d23241c` / `v3.6.0`. See the [Spanish source](../../CHANGELOG.md) for detail.
 
 ## 2026-10-27 — BILINGUE-CRITICO-01
 

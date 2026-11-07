@@ -23,7 +23,7 @@ documentación (BUP `docs/POLITICA_DOCUMENTACION.md` v2.1).
 | requirements.txt | vigente | dc961ede1b0c1f376a9fbdd02b429d0e744a9e2678289b3b931f2b74a2523e59 |
 | LICENSE | vigente | be3ceb0b98eeb7b5976a1ee0d51cd2fd13598a7f3b4ee4b5fdf926329b4fb309 |
 | docs/SUITE_BASELINE | vigente | 802b906a18591ead8a6dd809b262ace4c65c16e89764c40ae326cfcff811e10c |
-| AGENTS.md | vigente | b3a895df89c2728f7fa6cf7babc62672d96e9da95711cb6f20443e4ac91d32d6 |
+| AGENTS.md | vigente | 96fb8d3c77c83ff20b9326aaa59675e69a9d2a40718f3c77ad25dd6e0ab9aba1 |
 | tests/requirements.txt | vigente | 5bdf37e2e28251b8064532a50142344235098315ed7804d76f89e39f69d166cb |
 | docs/guia_subperfil_ops_cosecha.md | vigente | f2b6b30a2928764d1760a6c1a8b02156eee11c8964701e641ed634bd02574f69 |
 | docs/propuestas/PROP-COSECHA-001.md | vigente | a395a4ff5882fc097ea59d4413c6e99a4dd08107faf930882280c796bbc2878d |
