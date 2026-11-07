@@ -1,0 +1,14 @@
+# CRITICO-SKILL-02 · PR-B: finales de línea fijos para que los hashes verificados
+# (docs/HASHES.md, MANIFEST.json, config_hash, variantes byte a byte, freeze) den lo
+# mismo en cualquier checkout, también en Windows con core.autocrlf=true.
+* text=auto eol=lf
+
+# Versionados con CRLF a propósito: se conservan byte a byte (sin conversión).
+licencias/DECISION_PENDIENTE.json -text
+plataformas/*/licencias/DECISION_PENDIENTE.json -text
+docs/en/licensing/THIRD_PARTY_NOTICES.md -text
+
+# Binarios
+*.zip binary
+*.png binary
+*.pdf binary

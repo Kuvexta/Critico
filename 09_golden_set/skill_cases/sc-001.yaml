@@ -1,0 +1,19 @@
+case_id: SC-001
+tag: autocontrol_como_gate_b
+description: "Autocontrol en la misma sesión que se presenta como GATE B independiente (sintético)"
+input:
+  artifact_current: &actual {head: "1111111111111111111111111111111111111111", bundle_sha256: "aaaa111111111111111111111111111111111111111111111111111111111111"}
+  review:
+    mode: INDEPENDIENTE            # declarado, no demostrado
+    independence: {same_session: true, same_model_family: true, same_context: true, same_memory: false, same_author: true}
+    claims_gate_b: true
+    status: PASA
+    artifact_binding: *actual
+    touches_integration: false
+expected:
+  mode: AUTOCONTROL
+  status: NO_PASA
+  blockers: 1
+  codes: [AUTOCONTROL_COMO_GATE_B]
+  artifact_binding: *actual
+metadata: {synthetic: true, created: "2026-11-06", source: "CRITICO-SKILL-02 punto 11 (a)"}

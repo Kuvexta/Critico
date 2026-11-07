@@ -4,18 +4,18 @@
 
 ## 0. Mode and independence (declare it first)
 
-Before reviewing, fill in the independence card with checkable facts, not declarations:
+Before reviewing, fill in the independence card with checkable facts, not declarations. **Every field carries one evidence line** that someone else can check:
 
-| Field | Question |
-|---|---|
-| `same_session` | Are you reviewing in the same session in which the artifact was produced? |
-| `same_model_family` | Are you from the same model family as the author? |
-| `same_context` | Do you have the author's reasoning, drafts or instructions in context? |
-| `same_memory` | Do you share persistent memory with the author? |
-| `same_author` | Did you draft or design the artifact, or the gate that evaluates it? |
+| Field | Question | Expected evidence (example) |
+|---|---|---|
+| `same_session` | Are you reviewing in the same session in which the artifact was produced? | Product/client and session of the review versus the author's |
+| `same_model_family` | Are you from the same model family as the author? | Your model family and the author's, per the author's header |
+| `same_context` | Do you share the artifact's **production context** (the reasoning, drafts or instructions the author used to produce it)? Receiving the review assignment and the artifact does not count. | What you received to review and from where (e.g. only the PR and the review assignment) |
+| `same_memory` | Do you share persistent memory with the author? | Memory or store used in the review, or “none” |
+| `same_author` | Did you draft or design the artifact, or the gate that evaluates it? | Recorded authorship of the artifact and the gate (headers, commits) |
 
-- If **any** is true, or you cannot show it is false → `mode: AUTOCONTROL`. Self-review improves the delivery, **never counts as a gate** and does not replace independent review.
-- Only with all five false, and demonstrable → `mode: INDEPENDIENTE`. Only this mode issues a GATE B verdict.
+- If **any** is true, or you cannot show it is false → `mode: AUTOCONTROL`. **Without evidence, the field counts as true**: a field declared `false` without its evidence line leads to `mode: AUTOCONTROL`. Self-review improves the delivery, **never counts as a gate** and does not replace independent review.
+- Only with all five false, each with its evidence → `mode: INDEPENDIENTE`. Only this mode issues a GATE B verdict.
 - Do not review what you designed, and do not run the gate you designed.
 
 ## 1. Framing

@@ -4,11 +4,16 @@
 
 ## Mandatory header
 
-Open with these three lines before the recommendation:
+Open with this header before the recommendation:
 
 ```yaml
 mode: AUTOCONTROL | INDEPENDIENTE   # see the independence card in method.md §0
-independence: {same_session: …, same_model_family: …, same_context: …, same_memory: …, same_author: …}
+independence:                       # each field: value + one evidence line; without evidence it counts as true
+  same_session:      {value: false, evidence: "<review product/session vs. the author's>"}
+  same_model_family: {value: false, evidence: "<your family vs. the author's>"}
+  same_context:      {value: false, evidence: "<what you received to review and from where>"}
+  same_memory:       {value: false, evidence: "<memory used or “none”>"}
+  same_author:       {value: false, evidence: "<recorded authorship of the artifact and the gate>"}
 artifact_binding: {head: <sha>, tree: <sha>, bundle_sha256: <manifest sha256>, config_hash: <…>, critic_version: <…>}
 ```
 

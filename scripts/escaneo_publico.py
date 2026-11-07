@@ -6,8 +6,13 @@ reales. Falla (rc 1) solo ante hallazgos NUEVOS frente a la línea base
 `docs/escaneo_publico_baseline.json`, que registra huellas (sha256 de
 ruta|regla|coincidencia) y conteos, nunca el texto encontrado.
 
-Nombres reales: además del patrón base, `ESCANEO_NOMBRES="Nombre1,Nombre2"`
-añade nombres a buscar sin escribirlos en el repositorio.
+Nombres reales: SOLO por entorno, `ESCANEO_NOMBRES="Nombre1,Nombre2"` (en CI, el
+secreto del repositorio `ESCANEO_NOMBRES`); nunca se escriben en el código ni se
+imprimen. Las demás reglas dan ruta, línea y regla; `nombre_real` da solo el número de
+coincidencias (en local, `--detalle` con el secreto en el entorno muestra ruta y línea;
+en CI, `--detalle` se rechaza). Sin la variable, la regla `nombre_real` no se aplica y el
+gate lo avisa (ESCANEO_AVISO). Las huellas de la línea base son las mismas
+(regla `nombre_real`), así que se reutilizan al definir la variable.
 
 Uso:
   python3 -B scripts/escaneo_publico.py                      # gate
@@ -33,7 +38,6 @@ RULES = {
     "nit_cedula_co": r"(?<![\d.])\d{1,3}(?:\.\d{3}){2,3}(?:-\d)?(?![\d.])|(?<!\d)\d{9}-\d(?!\d)",
     "id_interno_bz": r"\bBZ-\d{8}-\d{3}\b",
     "id_interno_enc": r"\bENC-[A-Z0-9]{2,}-\d+\b",
-    "nombre_real": r"\bAndr[eé]s\b",
 }
 IGNORED = {"docs/escaneo_publico_baseline.json"}
 
@@ -47,16 +51,18 @@ def rules() -> dict[str, re.Pattern]:
     compiled = {k: re.compile(v) for k, v in RULES.items()}
     extra = [n.strip() for n in os.environ.get("ESCANEO_NOMBRES", "").split(",") if n.strip()]
     if extra:
-        compiled["nombre_real_extra"] = re.compile(r"\b(?:" + "|".join(map(re.escape, extra)) + r")\b", re.I)
+        compiled["nombre_real"] = re.compile(r"\b(?:" + "|".join(map(re.escape, extra)) + r")\b", re.I)
     return compiled
 
 
 SKIPPED: list[str] = []  # archivos no legibles como texto UTF-8: se informan, nunca se omiten en silencio
+LINES: dict[tuple[str, str, str], list[int]] = {}  # huella -> líneas; el texto encontrado NUNCA se guarda ni se imprime
 
 
 def scan(files: list[str] | None = None) -> Counter:
     found: Counter = Counter()
     SKIPPED.clear()
+    LINES.clear()
     for name in files if files is not None else tracked_files():
         path = BASE / name
         if not path.is_file():
@@ -67,9 +73,10 @@ def scan(files: list[str] | None = None) -> Counter:
             SKIPPED.append(name)
             continue
         for rule, pattern in rules().items():
-            for match in pattern.findall(text):
-                fp = hashlib.sha256(f"{name}|{rule}|{match}".encode("utf-8")).hexdigest()
+            for m in pattern.finditer(text):
+                fp = hashlib.sha256(f"{name}|{rule}|{m.group(0)}".encode("utf-8")).hexdigest()
                 found[(name, rule, fp)] += 1
+                LINES.setdefault((name, rule, fp), []).append(text.count("\n", 0, m.start()) + 1)
     return found
 
 
@@ -91,10 +98,27 @@ def new_findings(found: Counter, baseline: Counter) -> list[tuple[str, str, int]
     return [(p, r, c - baseline.get((p, r, f), 0)) for (p, r, f), c in sorted(found.items()) if c > baseline.get((p, r, f), 0)]
 
 
+def new_locations(found: Counter, baseline: Counter) -> list[tuple[str, int, str]]:
+    """(ruta, línea, regla) de cada huella con hallazgos nuevos. Sin texto: así se imprime en CI."""
+    out = []
+    for (p, r, f), c in sorted(found.items()):
+        if c > baseline.get((p, r, f), 0):
+            out += [(p, line, r) for line in LINES.get((p, r, f), [])]
+    return sorted(set(out))
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--write-baseline", action="store_true")
+    parser.add_argument("--detalle", action="store_true",
+                        help="solo en local y con ESCANEO_NOMBRES: muestra ruta y línea también para nombre_real")
     args = parser.parse_args()
+    if args.detalle and (os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS")):
+        print("ESCANEO_ERROR: --detalle no se permite en CI (el log es público)")
+        return 2
+    if args.detalle and not os.environ.get("ESCANEO_NOMBRES", "").strip():
+        print("ESCANEO_ERROR: --detalle requiere ESCANEO_NOMBRES en el entorno")
+        return 2
     found = scan()
     if args.write_baseline:
         BASELINE.write_bytes(baseline_bytes(found))
@@ -102,9 +126,22 @@ def main() -> int:
         return 0
     nuevos = new_findings(found, load_baseline())
     if nuevos:
-        for path, rule, extra in nuevos:
-            print(f"ESCANEO_FALLO: {path}: regla {rule}: {extra} coincidencia(s) nueva(s) (texto no mostrado)")
+        # Solo ruta, línea y regla: la coincidencia (correo, NIT, nombre…) nunca se imprime en claro.
+        # Solo ruta, línea y regla; la coincidencia nunca se imprime. Para nombre_real, ni
+        # siquiera ruta ni línea (en un log público delatarían el nombre): solo el número,
+        # salvo --detalle en local.
+        for path, line, rule in new_locations(found, load_baseline()):
+            if rule == "nombre_real" and not args.detalle:
+                continue
+            print(f"ESCANEO_FALLO: {path}:{line}: regla {rule} (coincidencia no mostrada)")
+        n_nombres = sum(e for _, r, e in nuevos if r == "nombre_real")
+        if n_nombres and not args.detalle:
+            print(f"ESCANEO_FALLO: regla nombre_real: {n_nombres} coincidencia(s) nueva(s) (ruta y línea ocultas; "
+                  "en local: ESCANEO_NOMBRES=… python3 -B scripts/escaneo_publico.py --detalle)")
+        print(f"ESCANEO_FALLO: {sum(e for _, _, e in nuevos)} coincidencia(s) nueva(s); redacta o excluye y deja constancia en el PR")
         return 1
+    if not os.environ.get("ESCANEO_NOMBRES", "").strip():
+        print("ESCANEO_AVISO: ESCANEO_NOMBRES no definido o vacío (p. ej. PR desde un fork sin secretos); la regla nombre_real no se aplicó")
     for name in SKIPPED:
         print(f"ESCANEO_AVISO: no escaneado (no es texto UTF-8): {name}")
     print(f"ESCANEO_OK: {len(tracked_files())} archivos ({len(SKIPPED)} no escaneables, listados arriba); 0 hallazgos nuevos (línea base: {sum(load_baseline().values())})")

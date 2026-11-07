@@ -4,11 +4,16 @@
 
 ## Encabezado obligatorio
 
-Abre con estas tres líneas antes de la recomendación:
+Abre con este encabezado antes de la recomendación:
 
 ```yaml
 mode: AUTOCONTROL | INDEPENDIENTE   # ver ficha de independencia en metodo.md §0
-independence: {same_session: …, same_model_family: …, same_context: …, same_memory: …, same_author: …}
+independence:                       # cada campo: valor + una línea de evidencia; sin evidencia cuenta como true
+  same_session:      {value: false, evidence: "<producto/sesión de la revisión vs. la del autor>"}
+  same_model_family: {value: false, evidence: "<tu familia vs. la del autor>"}
+  same_context:      {value: false, evidence: "<qué recibiste para revisar y de dónde>"}
+  same_memory:       {value: false, evidence: "<memoria usada o «ninguna»>"}
+  same_author:       {value: false, evidence: "<autoría registrada del artefacto y del gate>"}
 artifact_binding: {head: <sha>, tree: <sha>, bundle_sha256: <sha256 del manifest>, config_hash: <…>, critic_version: <…>}
 ```
 

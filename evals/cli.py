@@ -20,7 +20,30 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--json", action="store_true", help="solo el JSON de métricas")
     ap.add_argument("--fail-on-regression", action="store_true")
     ap.add_argument("--write-baseline", action="store_true")
+    ap.add_argument("--skill-version", choices=["old", "new"],
+                    help="golden set de CONTRATO de la skill (09_golden_set/skill_cases): old = v3.6.0, new = árbol actual")
+    ap.add_argument("--expect-all-pass", action="store_true",
+                    help="con --skill-version: rc 1 si algún caso no pasa")
     args = ap.parse_args(argv)
+
+    if args.skill_version:
+        from evals import skill_contract as sc
+        try:
+            out = sc.run(args.skill_version)
+        except sc.SkillSourceError as error:
+            print(f"skill-version {args.skill_version}: {error}", file=sys.stderr)
+            return 2
+        out["regression"] = sc.regression(out, sc.load_baseline())
+        if args.write_baseline:
+            sc.write_baseline(out)
+            print(f"baseline escrito: {sc.BASELINE}", file=sys.stderr)
+        print(json.dumps(out if not args.json else {k: out[k] for k in ("skill_version", "rules", "passed", "total", "regression")},
+                         ensure_ascii=False, indent=2))
+        if args.fail_on_regression and out["regression"]:
+            return 1
+        if args.expect_all_pass and out["passed"] != out["total"]:
+            return 1
+        return 0
 
     from evals.comparator import load_cases, load_actuals, run_comparison
     if args.mode != "offline":

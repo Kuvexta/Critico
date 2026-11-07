@@ -1,0 +1,25 @@
+case_id: SC-004
+tag: control_independiente_ligado
+description: "Control: revisión independiente demostrada, ligada al head actual, integración con matriz completa; ninguna versión debe bloquearla (sintético)"
+input:
+  artifact_current: &actual {head: "4444444444444444444444444444444444444444", bundle_sha256: "dddd444444444444444444444444444444444444444444444444444444444444"}
+  review:
+    mode: INDEPENDIENTE
+    independence:
+      same_session: {value: false, evidence: "revisión en otra sesión y otro producto que el autor"}
+      same_model_family: {value: false, evidence: "familia de modelo distinta de la del autor (encabezado)"}
+      same_context: {value: false, evidence: "solo el PR y el encargo de revisión"}
+      same_memory: {value: false, evidence: "ninguna"}
+      same_author: {value: false, evidence: "autoría del artefacto y del gate registrada a otro agente"}
+    claims_gate_b: true
+    status: PASA_CON_CONDICIONES
+    artifact_binding: *actual
+    touches_integration: true
+    cases_covered: [declared, neighbor, boundary, failure]
+expected:
+  mode: INDEPENDIENTE
+  status: PASA_CON_CONDICIONES
+  blockers: 0
+  codes: []
+  artifact_binding: *actual
+metadata: {synthetic: true, created: "2026-11-06", source: "control de precisión (no sobre-bloquear)"}

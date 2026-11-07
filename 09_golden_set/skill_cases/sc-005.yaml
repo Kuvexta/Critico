@@ -1,0 +1,19 @@
+case_id: SC-005
+tag: ficha_en_falso_sin_evidencia
+description: "Los cinco campos declarados false sin ninguna línea de evidencia, presentado como GATE B (O1 del GATE B de PR-A; sintético)"
+input:
+  artifact_current: &actual {head: "5555555555555555555555555555555555555555", bundle_sha256: "eeee555555555555555555555555555555555555555555555555555555555555"}
+  review:
+    mode: INDEPENDIENTE
+    independence: {same_session: false, same_model_family: false, same_context: false, same_memory: false, same_author: false}
+    claims_gate_b: true
+    status: PASA
+    artifact_binding: *actual
+    touches_integration: false
+expected:
+  mode: AUTOCONTROL
+  status: NO_PASA
+  blockers: 1
+  codes: [AUTOCONTROL_COMO_GATE_B]
+  artifact_binding: *actual
+metadata: {synthetic: true, created: "2026-11-06", source: "O1 del GATE B de PR-A (Kuvexta/Critico#2)"}

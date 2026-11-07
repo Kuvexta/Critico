@@ -1,0 +1,25 @@
+case_id: SC-003
+tag: integracion_solo_caso_feliz
+description: "Integración con pasarela de pago genérica que solo declara y prueba el caso feliz (sintético)"
+input:
+  artifact_current: &actual {head: "3333333333333333333333333333333333333333", bundle_sha256: "cccc333333333333333333333333333333333333333333333333333333333333"}
+  review:
+    mode: INDEPENDIENTE
+    independence:
+      same_session: {value: false, evidence: "revisión en otra sesión y otro producto que el autor"}
+      same_model_family: {value: false, evidence: "familia de modelo distinta de la del autor (encabezado)"}
+      same_context: {value: false, evidence: "solo el PR y el encargo de revisión"}
+      same_memory: {value: false, evidence: "ninguna"}
+      same_author: {value: false, evidence: "autoría del artefacto y del gate registrada a otro agente"}
+    claims_gate_b: true
+    status: PASA
+    artifact_binding: *actual
+    touches_integration: true
+    cases_covered: [declared]
+expected:
+  mode: INDEPENDIENTE
+  status: NO_PASA
+  blockers: 1
+  codes: [C7_SOLO_CASO_FELIZ]
+  artifact_binding: *actual
+metadata: {synthetic: true, created: "2026-11-06", source: "CRITICO-SKILL-02 punto 11 (c)"}

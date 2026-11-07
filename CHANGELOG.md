@@ -1,6 +1,38 @@
 # CHANGELOG
 
-## Sin publicar — PR-A CRITICO-SKILL-02 — skill: modo, ligadura y método v3.6 (sin freeze)
+## 01.01.00 — sin publicar (tag pendiente del literal de Dirección) — CRITICO-SKILL-02
+
+Release de **producto**: skill v3.6 con modo/ligadura, variantes, manifest,
+escaneo público y golden set de contrato. **`critic_version` sigue en `3.6.0`**:
+la propuesta de CAMBIO a `3.7.0` (`docs/propuestas/PROP-SKILL02-CRITIC370-001.md`)
+se resolvió con la opción A (Dirección, 06/11, comentario en #3): no se aplica.
+
+- **Rollback:** volver a `d23241c` (tag `v3.6.0`, metodología `3.6.0`). En
+  orden inverso: revertir PR-B (punto 10–12), PR-A (skill, variantes, manifest,
+  escaneo) y PR-0 (`config_hash`); ningún paso deja estado fuera del repo. La
+  instalación local se reinstala desde el tag `v3.6.0` con su `SKILL.md`.
+
+### PR-B — integraciones, golden set y release
+
+- **Skill:** `references/integraciones.md` y `en/integrations.md` (C1–C7), cargadas solo si el artefacto toca pagos, marketplace, envíos o APIs externas; proveedores solo como ejemplo neutro. Las 13 variantes se regeneran con el generador.
+- **Golden set de contrato de la skill:** `09_golden_set/skill_cases/sc-001..004` (sintéticos) + `evals/skill_contract.py` + `python -m evals.cli --skill-version old|new` con `baseline/skill_contract.json` y ratchet: la skill v3.6.0 pasa 1/4 y la nueva 4/4. Determinista: no ejecuta ni simula un modelo.
+- **Release:** `VERSION` 01.00.01 → 01.01.00 (producto) separado de `critic_version` (metodología, sin cambio). README con mapa VERSION · critic_version · tag · commit · config_hash; registra que los `config_hash` declarados en `v01.00.00`, `v01.00.01` y `v3.6.0` no coincidían con la convención (los tags no se modifican).
+- Tests nuevos: `test_skill_integraciones`, `test_skill_contract` (192 → 203; `docs/SUITE_BASELINE` 192 → 203).
+- **Cambios declarados por Dirección tras el GATE B de PR-A (06/11):**
+  - `.gitattributes`: `* text=auto eol=lf`; los 15 archivos versionados con CRLF a propósito (`licencias/DECISION_PENDIENTE.json` y sus 13 copias, `docs/en/licensing/THIRD_PARTY_NOTICES.md`) quedan `-text`. En `main` con `core.autocrlf=true`, `verificar_release` y `verify_freeze` fallaban; `tests/test_crlf_checkout.py` exige el mismo resultado con y sin CRLF.
+  - O1: una línea de evidencia por campo en la ficha de independencia; sin evidencia el campo cuenta como verdadero (AUTOCONTROL). Golden set de contrato: SC-005; la versión vieja pasa 1/5 y la nueva 5/5.
+  - O2: `same_context` = contexto de elaboración (recibir el encargo no cuenta).
+  - `AGENTS.md`, regla 1: el «solo lectura» aplica a la revisión con la skill; una revisión cruzada con encargo de verificación puede ejecutar pruebas y escribir en `_tmp_pruebas/` sin tocar el repo.
+  - O3: `escaneo_publico.py` sin nombres propios en el código (solo `ESCANEO_NOMBRES`; aviso si falta).
+  - `.coverage` fuera del índice y en `.gitignore` (contenía rutas locales).
+  - Tests 203 → 209; `docs/SUITE_BASELINE` 203 → 209.
+- **Decisiones de Dirección en #3 (06/11):** D1 = A (`critic_version` sigue en 3.6.0) y `ESCANEO_NOMBRES` como secreto del repositorio.
+  - CI: el paso «Escaneo público — correos, NIT, nombres e IDs internos» recibe `ESCANEO_NOMBRES: ${{ secrets.ESCANEO_NOMBRES }}`. Sin el secreto (p. ej. un PR desde un fork) o con el secreto vacío, el escáner emite `ESCANEO_AVISO` y no falla.
+  - `escaneo_publico.py` nunca imprime la coincidencia en claro. Las reglas de correo, NIT e IDs dan ruta, línea y regla. **`nombre_real` da solo el número de coincidencias**, sin ruta ni línea, porque en un log público de Actions ruta y línea bastan para deducir el nombre (decisión de Dirección en #3 tras dos runs con exposición, cuyos logs borró Dirección). En local, `--detalle` con `ESCANEO_NOMBRES` en el entorno muestra ruta y línea; en CI (`CI`/`GITHUB_ACTIONS`) `--detalle` se rechaza (rc 2).
+  - El secreto contiene solo nombres completos de personas; un término de producto que daba falsos positivos se retiró de la lista.
+  - Tests: `test_08` (modo CI: `regla nombre_real: 1 coincidencia(s)`, sin ruta, línea ni término; mutación que imprime la ubicación detectada), `test_08b` (`--detalle` local: ruta y línea, sin término), `test_08c` (`--detalle` rechazado en CI o sin secreto), `test_09` (sin secreto o vacío: aviso, rc 0), `test_10` (el workflow pasa el secreto al paso). Tests 209 → 214; `docs/SUITE_BASELINE` 209 → 214.
+
+### PR-A — skill: modo, ligadura y método v3.6 (sin freeze)
 
 - **Documentación:** `prompts/critico_system.md` y `critic_system.en.md` nombran los 15 ángulos de `critico_cli.ANGLES` (antes anunciaban 15 y nombraban 11; el EN decía «law/licensing» frente a «Legal/licensing» de `locales/en.json`). `09_golden_set/README.md` refleja que el harness offline sí corre.
 - **Skill** (`skills/critico/`): modo AUTOCONTROL/INDEPENDIENTE con ficha de independencia (solo INDEPENDIENTE emite GATE B); `artifact_binding` en el encabezado de salida (el veredicto no se extiende a otro binding: delta + adenda); 15 ángulos; Pre-Report Gate como bloque generado desde el paso 4-bis del prompt (fuente única); matriz declared/neighbor/boundary/failure; precedencia tests/mutaciones/escáneres/hashes > Crítico; `control_cost` en el ángulo de costos (P31); scorecard de 5 ejes opcional (sin tocar esquemas); `kuvexta.md`: P31, dos niveles, separación, expediente formal aparte y protocolo de AUTOCONTROL.
@@ -10,7 +42,7 @@
 - Tests nuevos: `test_skill_sync`, `test_skill_variants`, `test_manifest`, `test_agents_pointer`, `test_escaneo_publico` (166 → 192). `docs/SUITE_BASELINE` 166 → 192 (el ratchet solo sube).
 - **No toca** `03_rubric.yaml`, `04_critic.config.yaml`, `05_schema/`, `evals/validators.py`, `critic_version` ni `VERSION`. Rollback: revertir los commits del PR (vuelve a PR-0 / `d23241c`).
 
-## Sin publicar — PR-0 CRITICO-SKILL-02 — corrección de `config_hash` (CAMBIO PROP-CONFIGHASH-001)
+### PR-0 — corrección de `config_hash` (CAMBIO PROP-CONFIGHASH-001)
 
 - `04_critic.config.yaml`: **solo** `config_hash` `b9532948…` → `9aabf3a9b34f3b75…` (convención CONTRIBUTING: SHA-256 excluyendo la línea del propio campo). El valor de v3.6.0 no correspondía al fichero; `critic_version` sigue en 3.6.0 y ningún otro campo cambia.
 - `scripts/verify_freeze.py`: comprueba ahora que `config_hash` coincide con el recalculado (antes no lo hacía, por eso la deriva pasó el freeze). Prueba de mutación: con el valor viejo → rc 1.

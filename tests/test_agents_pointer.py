@@ -25,7 +25,7 @@ def _pointer() -> dict:
 def test_01_campos_del_puntero():
     p = _pointer()
     assert set(p) == {"canon_path", "canon_version", "canon_sha256", "precedence", "stale_if_mismatch"}
-    assert p["canon_version"] == "2026.11.05.1"
+    assert p["canon_version"] == "2026.11.06"
     assert p["stale_if_mismatch"] is True
     assert set(p["canon_sha256"]) == {"VERSION", "SHA256SUMS"}
     assert all(re.fullmatch(r"[0-9a-f]{64}", v) for v in p["canon_sha256"].values())
