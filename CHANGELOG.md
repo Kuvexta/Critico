@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## 01.01.00 — sin publicar (tag pendiente del literal de Dirección) — CRITICO-SKILL-02
+## Sin release — puntero al canon (25/11/2026)
+
+- `AGENTS.md`: el canon de gobernanza es `Kuvexta/Gobernanza@main` desde `2026.11.06` (U11); se actualizan `canon_path` y los hashes de `VERSION` y `SHA256SUMS` (el de `SHA256SUMS` ya no coincidía con `main`). Corrección mecánica por literal de Dirección del 25/11/2026 (sha256 `8a79099ce819ccc37dde132e742e0f0999b928264a3ca6d23cebfd4557a746de`). No toca el congelado: `critic_version` sigue en `3.6.0`.
+- `AGENTS.md` (ronda 2, 25/11/2026): el hash de `SHA256SUMS` del canon pasa a `cda6d0a3…` tras la segunda corrección mecánica de Gobernanza#9 (`14ee898b`); `VERSION` no cambia.
+- `README.md`: el release `01.01.00` está publicado (tag `v01.01.00` → `a22682f`).
+
+## 01.01.00 — publicado el 06/11/2026 (tag `v01.01.00` → `a22682f`) — CRITICO-SKILL-02
 
 Release de **producto**: skill v3.6 con modo/ligadura, variantes, manifest,
 escaneo público y golden set de contrato. **`critic_version` sigue en `3.6.0`**:

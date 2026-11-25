@@ -9,7 +9,7 @@ confianza), **veredicto** (PASA / PASA_CON_CONDICIONES / NO_PASA) y
 rector: **nada se simula y nada se declara demostrado sin evidencia
 verificable** (diseñado ≠ demostrado).
 
-- **Release del repositorio: `01.01.00`** (sin publicar: tag pendiente del literal de Dirección)
+- **Release del repositorio: `01.01.00`** (publicado: tag `v01.01.00` → `a22682f`, autorizado por Dirección el 06/11 en #3, comentario 6702373518)
 - **Metodología congelada: `v3.6.0`** (rúbrica de 108 dimensiones, 8 esquemas y config — verificada por `verify_freeze`)
 
 > **Mapeo de versiones (C2).** Son dos ejes separados: `VERSION` es el
