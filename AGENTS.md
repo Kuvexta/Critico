@@ -21,9 +21,9 @@ fuente canónica. Antes de ejecutar un encargo, léela allí.
 ```yaml
 canon_path: Kuvexta/Gobernanza@main                           # canon desde 2026.11.06 (U11): se escribe por PR y gana main; la carpeta T1 local se sincroniza desde el repo
 canon_version: 2026.11.06                                       # VERSION=… del canon
-canon_sha256:                                                   # VERSION y SHA256SUMS de Kuvexta/Gobernanza tras su corrección mecánica del 25/11/2026
+canon_sha256:                                                   # VERSION y SHA256SUMS de Kuvexta/Gobernanza tras su corrección mecánica del 25/11/2026 (ronda 2, Gobernanza@14ee898b)
   VERSION: e70673b8635208d7012effc80cf28a47a2c692dcad9352e604a572d29057e4de
-  SHA256SUMS: 075b0de2bc5bf89fdfc8bab502d39c91d2546a1cbbbb22da4ca9b8adb481a4fb
+  SHA256SUMS: cda6d0a38d04e650a2051b7991c4857c2570e0319a5d6c40f293e1a2c92bd1d0
 precedence: canon > encargo > AGENTS.md > resto del repositorio   # ante conflicto, manda el de la izquierda; si choca, detente y avisa
 stale_if_mismatch: true   # si VERSION o SHA256SUMS del canon no coinciden con estos hashes, este puntero está DESACTUALIZADO:
                           # no apliques de memoria lo que creas que dice el canon; léelo y avisa para actualizar el puntero
