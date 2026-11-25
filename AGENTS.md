@@ -19,11 +19,11 @@ Este repositorio **no** contiene las políticas de gobernanza; solo apunta a su
 fuente canónica. Antes de ejecutar un encargo, léela allí.
 
 ```yaml
-canon_path: 30_Transversales/T1_Gobernanza/Gobernanza_Oficial   # relativo al workspace; espejo privado declarado en su VERSION (MIRROR)
+canon_path: Kuvexta/Gobernanza@main                           # canon desde 2026.11.06 (U11): se escribe por PR y gana main; la carpeta T1 local se sincroniza desde el repo
 canon_version: 2026.11.06                                       # VERSION=… del canon
-canon_sha256:
-  VERSION: 1c3e22bac96552ccf81a70979fb180568cdad6997ef1c87b6a09f064a773b06e
-  SHA256SUMS: 58aad232a789476fbbfe3c05628dcd1c31e332ab02612c6056312551fbca0345
+canon_sha256:                                                   # VERSION y SHA256SUMS de Kuvexta/Gobernanza tras su corrección mecánica del 25/11/2026
+  VERSION: e70673b8635208d7012effc80cf28a47a2c692dcad9352e604a572d29057e4de
+  SHA256SUMS: 075b0de2bc5bf89fdfc8bab502d39c91d2546a1cbbbb22da4ca9b8adb481a4fb
 precedence: canon > encargo > AGENTS.md > resto del repositorio   # ante conflicto, manda el de la izquierda; si choca, detente y avisa
 stale_if_mismatch: true   # si VERSION o SHA256SUMS del canon no coinciden con estos hashes, este puntero está DESACTUALIZADO:
                           # no apliques de memoria lo que creas que dice el canon; léelo y avisa para actualizar el puntero
